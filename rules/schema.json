@@ -1,0 +1,68 @@
+
+{
+  "schema_version": "1.0",
+  "description": "Enhanced Rule Schema for AI-Enhanced Desktop Network Intrusion Detection System",
+  "required_fields": [
+    "id",
+    "name",
+    "category",
+    "protocol",
+    "conditions",
+    "severity",
+    "action",
+    "enabled"
+  ],
+  "rule_structure": {
+    "id": "integer (unique rule identifier)",
+    "name": "string (human readable rule name)",
+    "category": "string (SQLi | XSS | BruteForce | PortScan | DoS | DNS | Custom)",
+
+    "protocol": "string (TCP | UDP | HTTP | DNS | ICMP | ANY)",
+
+    "direction": "string (inbound | outbound | both)",
+
+    "src_ip": "string or null (CIDR supported)",
+    "dst_ip": "string or null (CIDR supported)",
+
+    "src_port": "integer or null",
+    "dst_port": "integer or null",
+
+    "payload_location": "string (raw | http_uri | http_body | dns_query | full_packet)",
+
+    "conditions": [
+      {
+        "pattern": "string",
+        "pattern_type": "string (contains | regex | exact | startswith | endswith)",
+        "case_sensitive": "boolean",
+        "negate": "boolean"
+      }
+    ],
+
+    "flow_required": "boolean (true if stateful detection required)",
+
+    "threshold": "integer or null",
+    "time_window_sec": "integer or null",
+
+    "track_by": "string (src_ip | dst_ip | session | global)",
+
+    "severity": "string (low | medium | high | critical)",
+    "confidence_score": "float (0.0 - 1.0)",
+
+    "action": "string (alert | log | block | quarantine)",
+
+    "ai_assist": "boolean (true if rule should also trigger AI validation)",
+
+    "performance_cost": "string (low | medium | high)",
+
+    "enabled": "boolean",
+
+    "created_at": "string (ISO timestamp)",
+    "updated_at": "string (ISO timestamp)",
+
+    "metadata": {
+      "author": "string",
+      "reference": "string (CVE or research link optional)",
+      "version": "string"
+    }
+  }
+}
