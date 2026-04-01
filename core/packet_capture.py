@@ -3,72 +3,45 @@
 import subprocess
 import os
 from datetime import datetime
+import time
 
-
+INTERFACE = "wlp2s0"  # change if needed
+PACKET_LIMIT = 500     # packets per file
 OUTPUT_DIR = "/home/muhammad-abdullah/ai-powered-nids/data/raw_packets"
 PACKET_COUNT = 500
 
+# Optional: time delay between captures (seconds)
+DELAY_BETWEEN_CAPTURES = 1  
 
+print("==== AI Powered NIDS - Live Packet Capture ====")
+print(f"Interface: {INTERFACE}")
+print(f"Packets per file: {PACKET_LIMIT}")
+print(f"Output directory: {OUTPUT_DIR}\n")
 
-# FUNCTIONS
-
-def list_interfaces():
-    """Show available network interfaces"""
-    print("\nAvailable Interfaces:\n")
-    subprocess.run(["tshark", "-D"])
-
-
-def get_interface():
-    """Ask user to select interface"""
-    interface = input("\nEnter interface (e.g. wlp2s0): ").strip()
-    return interface
-
-
-def create_output_file():
-    """Generate timestamped pcap file path"""
-    os.makedirs(OUTPUT_DIR, exist_ok=True)
-    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-    return os.path.join(OUTPUT_DIR, f"capture_{ts}.pcap")
-
-
-def capture_packets(interface, output_file):
-    """Run tshark capture"""
-    cmd = [
-        "tshark",
-        "-i", interface,
-        "-c", str(PACKET_COUNT),
-        "-w", output_file
-    ]
-
-    print("\nStarting packet capture...\n")
-
-    try:
-        subprocess.run(cmd, check=True)
-        print(f"\n✅ Packets saved to: {output_file}")
-
-    except subprocess.CalledProcessError:
-        print("\n❌ Error capturing packets!")
-        print("👉 Make sure to run with sudo:")
-        print("   sudo python3 packet_capture.py")
-
-
+# LIVE CAPTURE LOOP
 # =========================
-# MAIN
-# =========================
+try:
+    while True:
+        ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+        pcap_file = os.path.join(OUTPUT_DIR, f"capture_{ts}.pcap")
 
-def main():
-    print("==== AI Powered NIDS - Packet Capture ====")
+        print(f"📥 Capturing {PACKET_LIMIT} packets → {pcap_file}")
 
-    list_interfaces()
-    interface = get_interface()
+        cmd = [
+            "tshark",
+            "-i", INTERFACE,
+            "-c", str(PACKET_LIMIT),
+            "-w", pcap_file
+        ]
 
-    if not interface:
-        print("❌ No interface provided. Exiting.")
-        return
+        try:
+            subprocess.run(cmd, check=True)
+            print(f"✅ Saved packets to: {pcap_file}\n")
+        except subprocess.CalledProcessError:
+            print("❌ Error capturing packets. Make sure tshark is installed and permissions are correct.\n")
 
-    output_file = create_output_file()
-    capture_packets(interface, output_file)
+        # small delay to avoid tight loop
+        time.sleep(DELAY_BETWEEN_CAPTURES)
 
-
-if __name__ == "__main__":
-    main()
+except KeyboardInterrupt:
+    print("\n🛑 Live capture stopped by user.")
