@@ -1,7 +1,12 @@
 import subprocess
+import json
+import os
+import tempfile
+from core.flow_builder import build_flows
 
+print("🔥 PARSER CALLED")
 
-def parse_pcap(pcap_file):
+def parse_pcap(pcap_file, run_flow_builder=True):
     """
     Stable packet parser using tshark fields mode
     No JSON dependency → avoids empty parsing issues
@@ -86,4 +91,30 @@ def parse_pcap(pcap_file):
             continue
 
     print(f"📊 Parsed packets: {len(parsed_packets)}")
-    return parsed_packets
+
+    # ============================
+    # 🔥 SAFE FLOW PIPELINE ADDITION
+    # ============================
+    flows = []
+
+    if run_flow_builder and parsed_packets:
+
+        # 👉 TEMP FILE (safe handoff, avoids race condition)
+        # tmp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".json", mode="w")
+
+        # json.dump(parsed_packets, tmp_file)
+        # tmp_file.close()
+
+        # print(f"📁 Packets saved for flow builder: {tmp_file.name}")
+
+        print("⚙️ Running Flow Builder...")
+
+        # flow builder reads file instead of shared memory
+        flows = build_flows(parsed_packets)
+
+        print(f"📊 Flows generated: {len(flows)}")
+
+        # optional cleanup
+        # os.remove(tmp_file.name)
+
+    return parsed_packets, flows

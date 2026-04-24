@@ -52,7 +52,7 @@ def main_loop():
             # STEP 2: Parse (NO RACE CONDITION)
             packets = parse_pcap(pcap_file)
 
-            print(f"📦 Parsed packets: {len(packets)}")
+        
             print(f"File created: {pcap_file}")
             print(f"File size: {os.path.getsize(pcap_file)} bytes")
 
