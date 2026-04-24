@@ -2,46 +2,65 @@
 
 import subprocess
 import os
-from datetime import datetime
 import time
+from datetime import datetime
 
-INTERFACE = "wlp2s0"  # change if needed
-PACKET_LIMIT = 500     # packets per file
-OUTPUT_DIR = "/home/muhammad-abdullah/ai-powered-nids/data/raw_packets"
-PACKET_COUNT = 500
+# ✅ FIX: add project root to path
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-# Optional: time delay between captures (seconds)
-DELAY_BETWEEN_CAPTURES = 1  
+# ✅ now import works
+from core.packet_parser import parse_pcap
 
-print("==== AI Powered NIDS - Live Packet Capture ====")
-print(f"Interface: {INTERFACE}")
-print(f"Packets per file: {PACKET_LIMIT}")
-print(f"Output directory: {OUTPUT_DIR}\n")
 
-# LIVE CAPTURE LOOP
-# =========================
-try:
+INTERFACE = "wlp2s0"
+PACKET_LIMIT = 500
+OUTPUT_DIR = "data/raw_packets"
+DELAY = 1
+
+
+os.makedirs(OUTPUT_DIR, exist_ok=True)
+
+
+def capture_packets():
+    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+    pcap_file = os.path.join(OUTPUT_DIR, f"capture_{ts}.pcap")
+
+    print(f"\n📥 Capturing {PACKET_LIMIT} packets → {pcap_file}")
+
+    cmd = [
+        "tshark",
+        "-i", INTERFACE,
+        "-c", str(PACKET_LIMIT),
+        "-w", pcap_file
+    ]
+
+    subprocess.run(cmd, check=True)
+
+    print(f"✅ Capture complete: {pcap_file}")
+    return pcap_file
+
+
+def main_loop():
+    print("🚀 Starting Sequential Capture → Parse Pipeline")
+
     while True:
-        ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-        pcap_file = os.path.join(OUTPUT_DIR, f"capture_{ts}.pcap")
-
-        print(f"📥 Capturing {PACKET_LIMIT} packets → {pcap_file}")
-
-        cmd = [
-            "tshark",
-            "-i", INTERFACE,
-            "-c", str(PACKET_LIMIT),
-            "-w", pcap_file
-        ]
-
         try:
-            subprocess.run(cmd, check=True)
-            print(f"✅ Saved packets to: {pcap_file}\n")
-        except subprocess.CalledProcessError:
-            print("❌ Error capturing packets. Make sure tshark is installed and permissions are correct.\n")
+            # STEP 1: Capture
+            pcap_file = capture_packets()
 
-        # small delay to avoid tight loop
-        time.sleep(DELAY_BETWEEN_CAPTURES)
+            # STEP 2: Parse (NO RACE CONDITION)
+            packets = parse_pcap(pcap_file)
 
-except KeyboardInterrupt:
-    print("\n🛑 Live capture stopped by user.")
+            print(f"📦 Parsed packets: {len(packets)}")
+            print(f"File created: {pcap_file}")
+            print(f"File size: {os.path.getsize(pcap_file)} bytes")
+
+        except Exception as e:
+            print(f"❌ Error: {e}")
+
+        time.sleep(DELAY)
+
+
+if __name__ == "__main__":
+    main_loop()

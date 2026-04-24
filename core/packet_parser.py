@@ -1,68 +1,89 @@
-#!/usr/bin/env python3
-
-import os
-import time
 import subprocess
-from datetime import datetime
 
-# -----------------------
-RAW_DIR = "/home/muhammad-abdullah/ai-powered-nids/data/raw_packets"
-OUTPUT_DIR = "/home/muhammad-abdullah/ai-powered-nids/data/datasets"
-os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-# Keep track of already processed files
-processed_files = set()
+def parse_pcap(pcap_file):
+    """
+    Stable packet parser using tshark fields mode
+    No JSON dependency → avoids empty parsing issues
+    """
 
-print("==== Continuous PCAP Parser Started ====")
-print(f"Watching directory: {RAW_DIR}")
+    cmd = [
+        "tshark",
+        "-r", pcap_file,
 
-def is_file_stable(file_path, wait_time=2):
-    """Check if file size is stable for wait_time seconds"""
-    initial_size = os.path.getsize(file_path)
-    time.sleep(wait_time)
-    final_size = os.path.getsize(file_path)
-    return initial_size == final_size
+        # --------- DIRECT FIELDS OUTPUT (IMPORTANT) ----------
+        "-T", "fields",
 
-try:
-    while True:
-        files = sorted(os.listdir(RAW_DIR))
-        for file in files:
-            if file.endswith(".pcap") and file not in processed_files:
-                pcap_path = os.path.join(RAW_DIR, file)
+        "-e", "frame.time_epoch",
+        "-e", "ip.src",
+        "-e", "ip.dst",
+        "-e", "ipv6.src",
+        "-e", "ipv6.dst",
+        "-e", "ip.proto",
+        "-e", "tcp.srcport",
+        "-e", "tcp.dstport",
+        "-e", "udp.srcport",
+        "-e", "udp.dstport",
+        "-e", "frame.len",
 
-                if not is_file_stable(pcap_path):
-                    continue  # skip for now, check next loop
+        "-E", "separator=|",
+        "-E", "occurrence=f"
+    ]
 
-                csv_name = file.replace(".pcap", ".csv")
-                csv_path = os.path.join(OUTPUT_DIR, csv_name)
+    try:
+        result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+        lines = result.stdout.strip().split("\n")
 
-                print(f"📥 Parsing: {pcap_path} → {csv_path}")
+    except Exception as e:
+        print("❌ tshark failed:", e)
+        return []
 
-                cmd = [
-                    "tshark",
-                    "-r", pcap_path,
-                    "-T", "fields",
-                    "-e", "frame.time",
-                    "-e", "ip.src",
-                    "-e", "ip.dst",
-                    "-e", "ip.proto",
-                    "-e", "tcp.srcport",
-                    "-e", "tcp.dstport",
-                    "-e", "udp.srcport",
-                    "-e", "udp.dstport",
-                    "-E", "header=y",
-                    "-E", "separator=,"
-                ]
 
-                try:
-                    with open(csv_path, "w") as f:
-                        subprocess.run(cmd, stdout=f, check=True)
-                    print(f"✅ Parsed CSV saved: {csv_path}\n")
-                    processed_files.add(file)
-                except subprocess.CalledProcessError:
-                    print(f"❌ Error parsing {pcap_path}")
+    parsed_packets = []
 
-        time.sleep(1)
+    for line in lines:
+        try:
+            fields = line.split("|")
 
-except KeyboardInterrupt:
-    print("\n🛑 Continuous parser stopped by user.")
+            if len(fields) < 6:
+                continue
+
+            # -------------------
+            # Extract safely
+            # -------------------
+            timestamp = float(fields[0] or 0)
+
+            src_ip = fields[1] or fields[3]  # ipv6 fallback
+            dst_ip = fields[2] or fields[4]
+
+            # ❌ skip non-IP packets
+            if not src_ip or not dst_ip:
+                continue
+
+            protocol = int(fields[5] or 0)
+
+            tcp_s = fields[6]
+            tcp_d = fields[7]
+            udp_s = fields[8]
+            udp_d = fields[9]
+
+            src_port = int(tcp_s or udp_s or 0)
+            dst_port = int(tcp_d or udp_d or 0)
+
+            length = int(fields[10] or 0)
+
+            parsed_packets.append({
+                "timestamp": timestamp,
+                "src_ip": src_ip,
+                "dst_ip": dst_ip,
+                "src_port": src_port,
+                "dst_port": dst_port,
+                "protocol": protocol,
+                "length": length
+            })
+
+        except:
+            continue
+
+    print(f"📊 Parsed packets: {len(parsed_packets)}")
+    return parsed_packets

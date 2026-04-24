@@ -1,44 +1,64 @@
 #!/usr/bin/env python3
 
-import threading
 import subprocess
-import os
 import time
+import os
+import signal
+import sys
 
 # =========================
 # Script Paths
 # =========================
 CAPTURE_SCRIPT = os.path.join("core", "packet_capture.py")
-PARSER_SCRIPT = os.path.join("core", "packet_parser.py")
+PARSER_SCRIPT  = os.path.join("core", "packet_parser.py")
+FLOW_SCRIPT    = os.path.join("core", "flow_builder.py")
 
-# =========================
-# Function to run a script safely
-# =========================
-def run_script(script_path):
-    try:
-        subprocess.run(["python3", script_path], check=True)
-    except subprocess.CalledProcessError as e:
-        print(f"❌ Error running {script_path}: {e}")
+def start_process(script):
+    return subprocess.Popen(["python3", script])
 
-# =========================
-# Main
-# =========================
+def stop_all(procs):
+    print("\n🛑 Stopping IDS pipeline...")
+    for name, proc in procs.items():
+        try:
+            proc.terminate()
+            proc.wait(timeout=5)
+            print(f"   ✅ {name} stopped")
+        except Exception as e:
+            print(f"   ⚠️  {name} force kill: {e}")
+            proc.kill()
+    print("✅ All processes stopped cleanly.")
+
 if __name__ == "__main__":
     print("==== AI Powered NIDS - Live IDS Pipeline ====\n")
 
-    # Thread 1: Live Packet Capture
-    capture_thread = threading.Thread(target=run_script, args=(CAPTURE_SCRIPT,), daemon=True)
-    capture_thread.start()
-    print("📥 Packet capture started...")
-
-    # Thread 2: Continuous Stable Parsing
-    parser_thread = threading.Thread(target=run_script, args=(PARSER_SCRIPT,), daemon=True)
-    parser_thread.start()
-    print("📊 Continuous parser started...\n")
+    procs = {}
 
     try:
-        # Keep main thread alive while both threads run
+        procs["capture"] = start_process(CAPTURE_SCRIPT)
+        print("📥 Packet capture started...")
+        time.sleep(1)  # capture ko settle hone do
+
+        # procs["parser"] = start_process(PARSER_SCRIPT)
+        # print("📊 Parser started...")
+        # time.sleep(1)
+
+        # procs["flow_builder"] = start_process(FLOW_SCRIPT)
+        # print("🔹 Flow builder started...\n")
+
         while True:
-            time.sleep(1)  # just sleep, threads are daemon
+            # health check — agar koi crash kare to restart
+            for name, proc in procs.items():
+                if proc.poll() is not None:
+                    print(f"⚠️  {name} crashed! Restarting...")
+                    script_map = {
+                        "capture"      : CAPTURE_SCRIPT,
+                        "parser"       : PARSER_SCRIPT,
+                        "flow_builder" : FLOW_SCRIPT,
+                    }
+                    procs[name] = start_process(script_map[name])
+
+            time.sleep(2)
+
     except KeyboardInterrupt:
-        print("\n🛑 Stopping IDS pipeline... Please wait.")
+        stop_all(procs)
+        sys.exit(0)
