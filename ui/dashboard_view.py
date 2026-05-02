@@ -1,33 +1,82 @@
 import os
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QFrame
-from PySide6.QtCore import Qt
-from PySide6.QtGui import QPixmap, QPainter, QPainterPath
+import random
+import pyqtgraph as pg
+
+from PySide6.QtWidgets import (
+    QWidget, QVBoxLayout, QHBoxLayout, QLabel, QFrame,
+    QTableWidget, QTableWidgetItem, QSizePolicy
+)
+from PySide6.QtCore import Qt, QTimer
+from PySide6.QtGui import QPixmap, QPainter, QColor
+from PySide6.QtCore import QRectF
 
 
-# 🔥 Rounded pixmap function (SAFE)
-def get_rounded_pixmap(pixmap, radius=10):
-    rounded = QPixmap(pixmap.size())
-    rounded.fill(Qt.transparent)
-
-    painter = QPainter(rounded)
-    painter.setRenderHint(QPainter.Antialiasing)
-
-    path = QPainterPath()
-    path.addRoundedRect(0, 0, pixmap.width(), pixmap.height(), radius, radius)
-
-    painter.setClipPath(path)
-    painter.drawPixmap(0, 0, pixmap)
-    painter.end()
-
-    return rounded
-
-
+# =========================
+# 🔹 STAT CARD
+# =========================
 class StatCard(QFrame):
     def __init__(self, title, value, icon_path=None):
         super().__init__()
 
-        # ✅ Fixed small height (space for graph)
-        self.setFixedHeight(130)
+        self.setMinimumHeight(100)
+        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+
+        self.setStyleSheet("""
+            QFrame {
+                background-color: #1e1e2f;
+                border-radius: 12px;
+                padding: 8px;
+            }
+        """)
+
+        layout = QHBoxLayout(self)
+
+        if icon_path and os.path.exists(icon_path):
+            icon = QLabel()
+            pix = QPixmap(icon_path).scaled(45, 45, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+            icon.setPixmap(pix)
+            icon.setFixedWidth(55)
+            icon.setAlignment(Qt.AlignCenter)
+            layout.addWidget(icon)
+
+        text_layout = QVBoxLayout()
+
+        title_lbl = QLabel(title)
+        title_lbl.setStyleSheet("color: gray; font-size: 12px;")
+
+        value_lbl = QLabel(value)
+        value_lbl.setStyleSheet("color: white; font-size: 20px; font-weight: bold;")
+
+        text_layout.addWidget(title_lbl)
+        text_layout.addWidget(value_lbl)
+
+        layout.addLayout(text_layout)
+
+
+# =========================
+# 🔹 CARDS ROW
+# =========================
+class CardsRow(QWidget):
+    def __init__(self, base_path):
+        super().__init__()
+
+        layout = QHBoxLayout(self)
+        layout.setSpacing(5)
+
+        layout.addWidget(StatCard("Packets/sec", "1248", os.path.join(base_path, "icons/packet.png")))
+        layout.addWidget(StatCard("Flows/sec", "532", os.path.join(base_path, "icons/flow.png")))
+        layout.addWidget(StatCard("Alerts", "847", os.path.join(base_path, "icons/alert.png")))
+        layout.addWidget(StatCard("Hosts", "156", os.path.join(base_path, "icons/host.png")))
+
+
+# =========================
+# 🔹 TRAFFIC GRAPH
+# =========================
+class TrafficGraph(QFrame):
+    def __init__(self):
+        super().__init__()
+
+        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
 
         self.setStyleSheet("""
             QFrame {
@@ -37,102 +86,251 @@ class StatCard(QFrame):
             }
         """)
 
-        main_layout = QVBoxLayout()
-        top_layout = QHBoxLayout()
+        layout = QVBoxLayout(self)
 
-        # 🔹 ICON
-        if icon_path:
-            icon_label = QLabel()
+        title = QLabel("Traffic Overview")
+        title.setStyleSheet("color: white; font-weight: bold;")
+        layout.addWidget(title)
 
-            pixmap = QPixmap(icon_path)
+        self.graph = pg.PlotWidget()
+        self.graph.setBackground("#1e1e2f")
+        self.graph.showGrid(x=True, y=True, alpha=0.3)
 
-            print("ICON:", icon_path)
-            print("EXISTS:", os.path.exists(icon_path))
-            print("NULL:", pixmap.isNull())
+        layout.addWidget(self.graph)
 
-            ICON_SIZE = 40
+        self.packets = []
+        self.flows = []
 
-            if not pixmap.isNull():
-                pixmap = pixmap.scaled(
-                    ICON_SIZE,
-                    ICON_SIZE,
-                    Qt.KeepAspectRatio,
-                    Qt.SmoothTransformation
-                )
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.update_graph)
+        self.timer.start(1000)
 
-                pixmap = get_rounded_pixmap(pixmap, 8)
-                icon_label.setPixmap(pixmap)
-            else:
-                icon_label.setText("❌")
+    def update_graph(self):
+        self.packets.append(random.randint(80, 300))
+        self.flows.append(random.randint(20, 150))
 
-            icon_label.setFixedSize(ICON_SIZE, ICON_SIZE)
-            icon_label.setAlignment(Qt.AlignCenter)
+        if len(self.packets) > 30:
+            self.packets.pop(0)
+            self.flows.pop(0)
 
-            top_layout.addWidget(icon_label)
+        self.graph.clear()
 
-        # 🔹 TITLE
-        self.title = QLabel(title)
-        self.title.setStyleSheet("color: gray; font-size: 13px;")
-        top_layout.addWidget(self.title)
-
-        top_layout.addStretch()
-
-        # 🔹 VALUE
-        self.value = QLabel(value)
-        self.value.setStyleSheet(
-            "color: white; font-size: 20px; font-weight: bold;"
+        self.graph.plot(
+            self.packets,
+            pen=pg.mkPen("#4caf50", width=2),
+            fillLevel=0,
+            brush=pg.mkBrush(76, 175, 80, 100)
         )
 
-        main_layout.addLayout(top_layout)
-        main_layout.addWidget(self.value)
+        self.graph.plot(
+            self.flows,
+            pen=pg.mkPen("#2196f3", width=2),
+            fillLevel=0,
+            brush=pg.mkBrush(33, 150, 243, 80)
+        )
 
-        self.setLayout(main_layout)
+
+# =========================
+# 🔹 PIE CHART
+# =========================
+class ProtocolPie(QFrame):
+    def __init__(self):
+        super().__init__()
+
+        self.setMinimumHeight(100)
+
+        self.setStyleSheet("""
+            QFrame {
+                background-color: #1e1e2f;
+                border-radius: 12px;
+                padding: 10px;
+            }
+        """)
+
+        self.data = [
+            ("TCP", 40, "#4caf50"),
+            ("UDP", 25, "#2196f3"),
+            ("ICMP", 20, "#ff9800"),
+            ("Other", 15, "#f44336")
+        ]
+
+        layout = QVBoxLayout(self)
+
+        title = QLabel("Protocols")
+        title.setStyleSheet("color: white; font-weight: bold;")
+        layout.addWidget(title)
+
+        self.chart = QWidget()
+        layout.addWidget(self.chart)
+
+        self.chart.paintEvent = self.draw_chart
+
+    def draw_chart(self, event):
+        painter = QPainter(self.chart)
+        painter.setRenderHint(QPainter.Antialiasing)
+
+        rect = QRectF(20, 20, 140, 140)
+
+        total = sum(v for _, v, _ in self.data)
+        start = 0
+
+        for _, val, color in self.data:
+            angle = 360 * val / total
+            painter.setBrush(QColor(color))
+            painter.drawPie(rect, int(start * 16), int(angle * 16))
+            start += angle
 
 
+# =========================
+# 🔹 TOP SOURCE IP
+# =========================
+class TopSourceIPs(QFrame):
+    def __init__(self):
+        super().__init__()
+
+        self.setMinimumHeight(200)
+
+        self.setStyleSheet("""
+            QFrame {
+                background-color: #1e1e2f;
+                border-radius: 12px;
+                padding: 10px;
+            }
+        """)
+
+        layout = QVBoxLayout(self)
+
+        title = QLabel("Top Source IPs")
+        title.setStyleSheet("color: white; font-weight: bold;")
+        layout.addWidget(title)
+
+        for ip, val in [
+            ("192.168.1.10", 25),
+            ("10.0.0.5", 18),
+            ("172.16.0.2", 12),
+        ]:
+            row = QHBoxLayout()
+            row.addWidget(QLabel(ip))
+            row.addStretch()
+            row.addWidget(QLabel(str(val)))
+            layout.addLayout(row)
+
+
+# =========================
+# 🔹 MIDDLE ROW
+# =========================
+class MiddleRow(QWidget):
+    def __init__(self):
+        super().__init__()
+
+        layout = QHBoxLayout(self)
+        layout.setSpacing(5)
+
+        layout.addWidget(TrafficGraph(), 2)
+        layout.addWidget(ProtocolPie(), 1)
+        layout.addWidget(TopSourceIPs(), 1)
+
+
+# =========================
+# 🔹 ALERT TABLE
+# =========================
+class AlertsTable(QFrame):
+    def __init__(self):
+        super().__init__()
+
+        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+
+        self.setStyleSheet("""
+            QFrame {
+                background-color: #1e1e2f;
+                border-radius: 12px;
+                padding: 5px;
+            }
+            QTableWidget {
+                background: transparent;
+                color: white;
+            }
+        """)
+
+        layout = QVBoxLayout(self)
+
+        title = QLabel("Recent Alerts")
+        title.setStyleSheet("color: white; font-weight: bold;")
+        layout.addWidget(title)
+
+        table = QTableWidget(5, 5)
+        table.setHorizontalHeaderLabels(["Time", "Type", "IP"])
+
+        for r, row in enumerate([
+            ("12:01", "Port Scan", "192.168.1.10"),
+            ("12:02", "DoS", "10.0.0.5"),
+        ]):
+            for c, val in enumerate(row):
+                table.setItem(r, c, QTableWidgetItem(val))
+
+        layout.addWidget(table)
+
+
+# =========================
+# 🔹 DEST PORTS
+# =========================
+class TopPorts(QFrame):
+    def __init__(self):
+        super().__init__()
+
+        self.setMinimumWidth(200)
+
+        self.setStyleSheet("""
+            QFrame {
+                background-color: #1e1e2f;
+                border-radius: 12px;
+                padding: 5px;
+            }
+        """)
+
+        layout = QVBoxLayout(self)
+
+        layout.addWidget(QLabel("Top Ports"))
+
+        for p, v in [("80", 40), ("443", 30), ("22", 15)]:
+            row = QHBoxLayout()
+            row.addWidget(QLabel(p))
+            row.addStretch()
+            row.addWidget(QLabel(str(v)))
+            layout.addLayout(row)
+
+
+# =========================
+# 🔹 BOTTOM ROW
+# =========================
+class BottomRow(QWidget):
+    def __init__(self):
+        super().__init__()
+
+        layout = QHBoxLayout(self)
+        layout.setSpacing(2)
+
+        layout.addWidget(AlertsTable(), 2)
+        layout.addWidget(TopPorts(), 1)
+
+
+# =========================
+# 🔹 MAIN DASHBOARD
+# =========================
 class DashboardView(QWidget):
     def __init__(self):
         super().__init__()
 
-        main_layout = QVBoxLayout()
-        cards_layout = QHBoxLayout()
+        BASE = os.path.dirname(os.path.abspath(__file__))
 
-        # 🔥 SAFE PATH (works with python -m)
-        BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+        main = QVBoxLayout(self)
+        main.setSpacing(0.2)
 
-        packet_icon = os.path.join(BASE_DIR, "icons", "packet.png")
-        flow_icon = os.path.join(BASE_DIR, "icons", "flow.png")
-        alert_icon = os.path.join(BASE_DIR, "icons", "alert.png")
-        host_icon = os.path.join(BASE_DIR, "icons", "host.png")
+        main.addWidget(CardsRow(BASE))
+        main.addWidget(MiddleRow())
+        main.addWidget(BottomRow())
 
-        # 🔹 CARDS
-        self.packets_card = StatCard("Packets/sec", "0", packet_icon)
-        self.flows_card = StatCard("Flows/sec", "0", flow_icon)
-        self.alerts_card = StatCard("Alerts", "0", alert_icon)
-        self.hosts_card = StatCard("Active Hosts", "0", host_icon)
-
-        cards_layout.addWidget(self.packets_card, 1)
-        cards_layout.addWidget(self.flows_card, 1)
-        cards_layout.addWidget(self.alerts_card, 1)
-        cards_layout.addWidget(self.hosts_card, 1)
-
-        cards_layout.setSpacing(15)
-
-        # 🔥 Wrap cards (important)
-        cards_container = QWidget()
-        cards_container.setLayout(cards_layout)
-        cards_container.setMaximumHeight(150)
-
-        main_layout.addWidget(cards_container)
-
-        # 🔥 Placeholder for graph (next step)
-        graph_placeholder = QLabel("📊 Graph will come here")
-        graph_placeholder.setAlignment(Qt.AlignCenter)
-        graph_placeholder.setStyleSheet("""
-            color: gray;
-            font-size: 18px;
-            margin-top: 20px;
-        """)
-
-        main_layout.addWidget(graph_placeholder)
-
-        self.setLayout(main_layout)
+        # responsive stretch
+        main.setStretch(0, 1)
+        main.setStretch(1, 3)
+        main.setStretch(2, 3)

@@ -1,92 +1,171 @@
 from collections import defaultdict
+import logging
 
 FLOW_TIMEOUT = 30  # seconds
 
 
+# =========================
+# FLOW CLASS
+# =========================
 class Flow:
-    def __init__(self, key, pkt):
-        self.key = key
+    def __init__(self, pkt):
+        self.src_ip = pkt["src_ip"]
+        self.dst_ip = pkt["dst_ip"]
+        self.src_port = pkt["src_port"]
+        self.dst_port = pkt["dst_port"]
+        self.protocol = pkt["protocol"]
 
-        self.start_time = pkt.get("timestamp", 0)
-        self.last_seen = pkt.get("timestamp", 0)
+        # timing
+        self.start_time = pkt["timestamp"]
+        self.last_seen = pkt["timestamp"]
 
-        self.packet_count = 1
-        self.total_bytes = pkt.get("length", 0)
+        # forward stats
+        self.fwd_packets = 1
+        self.fwd_bytes = pkt["length"]
 
-        # 🔥 optional ML-ready stats (future use)
-        self.src_ip = pkt.get("src_ip")
-        self.dst_ip = pkt.get("dst_ip")
-        self.protocol = pkt.get("protocol")
+        # backward stats
+        self.bwd_packets = 0
+        self.bwd_bytes = 0
 
-    def update(self, pkt):
-        self.last_seen = pkt.get("timestamp", self.last_seen)
-        self.packet_count += 1
-        self.total_bytes += pkt.get("length", 0)
+        # flags
+        self.syn_count = 0
+        self.fin_count = 0
+        self.psh_count = 0
 
+        self._update_flags(pkt)
+
+    # =========================
+    def _update_flags(self, pkt):
+        flags = pkt.get("tcp_flags", "")
+        if "S" in flags:
+            self.syn_count += 1
+        if "F" in flags:
+            self.fin_count += 1
+        if "P" in flags:
+            self.psh_count += 1
+
+    # =========================
+    def update(self, pkt, direction):
+        self.last_seen = pkt["timestamp"]
+
+        if direction == "fwd":
+            self.fwd_packets += 1
+            self.fwd_bytes += pkt["length"]
+        else:
+            self.bwd_packets += 1
+            self.bwd_bytes += pkt["length"]
+
+        self._update_flags(pkt)
+
+    # =========================
     def duration(self):
         return max(0, self.last_seen - self.start_time)
 
+    def total_packets(self):
+        return self.fwd_packets + self.bwd_packets
+
+    def total_bytes(self):
+        return self.fwd_bytes + self.bwd_bytes
+
+    def packet_rate(self):
+        d = self.duration()
+        return self.total_packets() / d if d > 0 else self.total_packets()
+
+    def byte_rate(self):
+        d = self.duration()
+        return self.total_bytes() / d if d > 0 else self.total_bytes()
+
+    # =========================
     def to_dict(self):
         return {
-            "flow_id": self.key,
+            "flow_id": f"{self.src_ip}:{self.src_port}->{self.dst_ip}:{self.dst_port}",
+
             "src_ip": self.src_ip,
             "dst_ip": self.dst_ip,
+            "src_port": self.src_port,
+            "dst_port": self.dst_port,
             "protocol": self.protocol,
-
-            "packet_count": self.packet_count,
-            "total_bytes": self.total_bytes,
 
             "start_time": self.start_time,
             "end_time": self.last_seen,
-            "duration": self.duration()
+            "duration": self.duration(),
+
+            "fwd_packets": self.fwd_packets,
+            "bwd_packets": self.bwd_packets,
+            "total_packets": self.total_packets(),
+
+            "fwd_bytes": self.fwd_bytes,
+            "bwd_bytes": self.bwd_bytes,
+            "total_bytes": self.total_bytes(),
+
+            "packet_rate": self.packet_rate(),
+            "byte_rate": self.byte_rate(),
+
+            "syn_count": self.syn_count,
+            "fin_count": self.fin_count,
+            "psh_count": self.psh_count
         }
 
 
-def get_flow_key(pkt):
-    """
-    Bidirectional flow key (stable for ML + IDS)
-    """
-    ip_pair = sorted([pkt.get("src_ip", ""), pkt.get("dst_ip", "")])
-    port_pair = sorted([pkt.get("src_port", 0), pkt.get("dst_port", 0)])
+# =========================
+# FLOW KEY
+# =========================
+def get_flow_keys(pkt):
+    fwd_key = (
+        pkt["src_ip"],
+        pkt["src_port"],
+        pkt["dst_ip"],
+        pkt["dst_port"],
+        pkt["protocol"]
+    )
 
-    return f"{ip_pair[0]}-{ip_pair[1]}-{port_pair[0]}-{port_pair[1]}-{pkt.get('protocol', 0)}"
+    bwd_key = (
+        pkt["dst_ip"],
+        pkt["dst_port"],
+        pkt["src_ip"],
+        pkt["src_port"],
+        pkt["protocol"]
+    )
+
+    return fwd_key, bwd_key
 
 
-def build_flows(packets, flush_all=True):
+# =========================
+# MAIN BUILDER
+# =========================
+def build_flows(packets):
     flows = {}
-    completed_flows = []
-
-    if not packets:
-        return []
+    completed = []
 
     for pkt in packets:
 
-        # 🔥 safety guard (prevents parser crash leaks)
-        if not pkt.get("src_ip") or not pkt.get("dst_ip"):
-            continue
+        fwd_key, bwd_key = get_flow_keys(pkt)
+        now = pkt["timestamp"]
 
-        key = get_flow_key(pkt)
-        now = pkt.get("timestamp", 0)
+        if fwd_key in flows:
+            flow = flows[fwd_key]
+            direction = "fwd"
 
-        if key not in flows:
-            flows[key] = Flow(key, pkt)
+        elif bwd_key in flows:
+            flow = flows[bwd_key]
+            direction = "bwd"
 
         else:
-            flow = flows[key]
+            flows[fwd_key] = Flow(pkt)
+            continue
 
-            # timeout based split
-            if now - flow.last_seen > FLOW_TIMEOUT:
-                completed_flows.append(flow.to_dict())
-                flows[key] = Flow(key, pkt)
-            else:
-                flow.update(pkt)
+        # timeout handling
+        if now - flow.last_seen > FLOW_TIMEOUT:
+            completed.append(flow.to_dict())
+            flows[fwd_key] = Flow(pkt)
+            continue
 
-    # 🔥 final flush (controlled)
-    if flush_all:
-        for flow in flows.values():
-            completed_flows.append(flow.to_dict())
+        flow.update(pkt, direction)
 
-    print(f"📊 Total flows built: {len(completed_flows)}")
-    print(f"🧠 Active flow buckets: {len(flows)}")
+    # flush remaining
+    for flow in flows.values():
+        completed.append(flow.to_dict())
 
-    return completed_flows
+    logging.info(f"📊 Flows built: {len(completed)}")
+    
+    return completed

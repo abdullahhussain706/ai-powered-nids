@@ -1,0 +1,104 @@
+[
+  {
+    "id": 3001,
+    "name": "Botnet C2 - Periodic Beaconing",
+    "category": "Botnet",
+    "protocol": "ANY",
+    "metric": "periodic_interval",
+    "flow_required": true,
+    "threshold": 30,
+    "time_window_sec": 60,
+    "severity": "high",
+    "confidence_score": 0.9
+  },
+  {
+    "id": 3002,
+    "name": "Botnet C2 - Small Packet Frequent Check-in",
+    "category": "Botnet",
+    "metric": "small_packets_rate",
+    "flow_required": true,
+    "threshold": 100,
+    "time_window_sec": 10,
+    "severity": "high"
+  },
+  {
+    "id": 3003,
+    "name": "Botnet C2 - Repeated Destination Contact",
+    "category": "Botnet",
+    "metric": "dst_repetition",
+    "flow_required": true,
+    "threshold": 1,
+    "time_window_sec": 60,
+    "severity": "medium"
+  },
+  {
+    "id": 3004,
+    "name": "Botnet C2 - Sudden Outbound Spike",
+    "category": "Botnet",
+    "metric": "outbound_connections",
+    "flow_required": true,
+    "threshold": 50,
+    "time_window_sec": 10,
+    "severity": "critical"
+  },
+  {
+    "id": 3005,
+    "name": "Botnet C2 - Regular Time Interval Traffic",
+    "category": "Botnet",
+    "metric": "traffic_periodicity",
+    "flow_required": true,
+    "threshold": 80,
+    "time_window_sec": 120,
+    "severity": "high"
+  },
+  {
+    "id": 3006,
+    "name": "Botnet C2 - Low Data High Frequency",
+    "category": "Botnet",
+    "metric": "bytes_per_connection",
+    "flow_required": true,
+    "threshold": 500,
+    "time_window_sec": 10,
+    "severity": "high"
+  },
+  {
+    "id": 3007,
+    "name": "Botnet C2 - Idle System Activity",
+    "category": "Botnet",
+    "metric": "idle_outbound_activity",
+    "flow_required": true,
+    "threshold": 20,
+    "time_window_sec": 30,
+    "severity": "critical"
+  },
+  {
+    "id": 3008,
+    "name": "Botnet C2 - Same IP Reconnect Pattern",
+    "category": "Botnet",
+    "metric": "same_dst_ip_frequency",
+    "flow_required": true,
+    "threshold": 60,
+    "time_window_sec": 60,
+    "severity": "medium"
+  },
+  {
+    "id": 3009,
+    "name": "Botnet C2 - Steady Packet Size Pattern",
+    "category": "Botnet",
+    "metric": "packet_size_consistency",
+    "flow_required": true,
+    "threshold": 70,
+    "time_window_sec": 60,
+    "severity": "medium"
+  },
+  {
+    "id": 3010,
+    "name": "Botnet C2 - High Frequency Low Variance Traffic",
+    "category": "Botnet",
+    "metric": "variance_score",
+    "flow_required": true,
+    "threshold": 20,
+    "time_window_sec": 60,
+    "severity": "high"
+  }
+]

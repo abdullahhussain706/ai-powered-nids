@@ -1,0 +1,102 @@
+[
+  {
+    "id": 3101,
+    "name": "Anomaly - Sudden Bandwidth Spike",
+    "category": "Anomaly",
+    "metric": "bytes_per_sec",
+    "flow_required": true,
+    "threshold": 1000000,
+    "time_window_sec": 10,
+    "severity": "critical"
+  },
+  {
+    "id": 3102,
+    "name": "Anomaly - Traffic Baseline Deviation",
+    "category": "Anomaly",
+    "metric": "baseline_deviation",
+    "flow_required": true,
+    "threshold": 70,
+    "time_window_sec": 60,
+    "severity": "high"
+  },
+  {
+    "id": 3103,
+    "name": "Anomaly - Packet Size Variance",
+    "category": "Anomaly",
+    "metric": "packet_variance",
+    "flow_required": true,
+    "threshold": 80,
+    "time_window_sec": 30,
+    "severity": "medium"
+  },
+  {
+    "id": 3104,
+    "name": "Anomaly - Session Duration Spike",
+    "category": "Anomaly",
+    "metric": "session_duration",
+    "flow_required": true,
+    "threshold": 300,
+    "time_window_sec": 60,
+    "severity": "medium"
+  },
+  {
+    "id": 3105,
+    "name": "Anomaly - Rare Protocol Usage",
+    "category": "Anomaly",
+    "metric": "protocol_rarity",
+    "flow_required": true,
+    "threshold": 20,
+    "time_window_sec": 60,
+    "severity": "high"
+  },
+  {
+    "id": 3106,
+    "name": "Anomaly - Unusual Connection Burst",
+    "category": "Anomaly",
+    "metric": "connection_burst",
+    "flow_required": true,
+    "threshold": 200,
+    "time_window_sec": 10,
+    "severity": "critical"
+  },
+  {
+    "id": 3107,
+    "name": "Anomaly - Abnormal Traffic Direction Ratio",
+    "category": "Anomaly",
+    "metric": "in_out_ratio",
+    "flow_required": true,
+    "threshold": 5,
+    "time_window_sec": 60,
+    "severity": "high"
+  },
+  {
+    "id": 3108,
+    "name": "Anomaly - Unusual Session Count",
+    "category": "Anomaly",
+    "metric": "session_count",
+    "flow_required": true,
+    "threshold": 100,
+    "time_window_sec": 10,
+    "severity": "medium"
+  },
+  {
+    "id": 3109,
+    "name": "Anomaly - Irregular Traffic Timing",
+    "category": "Anomaly",
+    "metric": "timing_irregularity",
+    "flow_required": true,
+    "threshold": 60,
+    "time_window_sec": 120,
+    "severity": "high"
+  },
+  {
+    "id": 3110,
+    "name": "Anomaly - High Retransmission Rate",
+    "category": "Anomaly",
+    "metric": "retransmission_rate",
+    "flow_required": true,
+    "threshold": 150,
+    "time_window_sec": 10,
+    "severity": "medium"
+  }
+]

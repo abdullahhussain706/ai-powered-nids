@@ -1,120 +1,154 @@
 import subprocess
-import json
-import os
-import tempfile
-from core.flow_builder import build_flows
+import logging
 
-print("🔥 PARSER CALLED")
+# =========================
+# CONFIG
+# =========================
+TSHARK_FIELDS = [
+    "frame.time_epoch",
+    "ip.src",
+    "ip.dst",
+    "ipv6.src",
+    "ipv6.dst",
+    "ip.proto",
+    "tcp.srcport",
+    "tcp.dstport",
+    "udp.srcport",
+    "udp.dstport",
+    "frame.len",
+    "tcp.flags"
+]
 
-def parse_pcap(pcap_file, run_flow_builder=True):
-    """
-    Stable packet parser using tshark fields mode
-    No JSON dependency → avoids empty parsing issues
-    """
+
+# =========================
+# SAFE CONVERTERS
+# =========================
+def to_int(val, default=0):
+    try:
+        return int(val)
+    except:
+        return default
+
+
+def to_float(val, default=0.0):
+    try:
+        return float(val)
+    except:
+        return default
+
+
+# =========================
+# PARSE SINGLE LINE
+# =========================
+def parse_line(line):
+    parts = line.strip().split("|")
+
+    if len(parts) < len(TSHARK_FIELDS):
+        return None
+
+    try:
+        timestamp = to_float(parts[0])
+
+        src_ip = parts[1] or parts[3]
+        dst_ip = parts[2] or parts[4]
+
+        if not src_ip or not dst_ip:
+            return None
+
+        protocol = to_int(parts[5])
+
+        tcp_s, tcp_d = parts[6], parts[7]
+        udp_s, udp_d = parts[8], parts[9]
+
+        src_port = to_int(tcp_s or udp_s)
+        dst_port = to_int(tcp_d or udp_d)
+
+        length = to_int(parts[10])
+        tcp_flags = parts[11] if parts[11] else ""
+
+        return {
+            "timestamp": timestamp,
+            "src_ip": src_ip,
+            "dst_ip": dst_ip,
+            "src_port": src_port,
+            "dst_port": dst_port,
+            "protocol": protocol,
+            "length": length,
+            "tcp_flags": tcp_flags
+        }
+
+    except Exception as e:
+        logging.debug(f"Parse error: {e}")
+        return None
+
+
+# =========================
+# MAIN PIPELINE
+# =========================
+def parse_pcap(pcap_file, run_flow_builder=True, run_feature_engine=True):
 
     cmd = [
         "tshark",
         "-r", pcap_file,
-
-        # --------- DIRECT FIELDS OUTPUT (IMPORTANT) ----------
         "-T", "fields",
-
-        "-e", "frame.time_epoch",
-        "-e", "ip.src",
-        "-e", "ip.dst",
-        "-e", "ipv6.src",
-        "-e", "ipv6.dst",
-        "-e", "ip.proto",
-        "-e", "tcp.srcport",
-        "-e", "tcp.dstport",
-        "-e", "udp.srcport",
-        "-e", "udp.dstport",
-        "-e", "frame.len",
-
         "-E", "separator=|",
-        "-E", "occurrence=f"
+        "-E", "occurrence=f",
+        "-n"
     ]
 
+    for field in TSHARK_FIELDS:
+        cmd.extend(["-e", field])
+
+    packets = []
+
     try:
-        result = subprocess.run(cmd, capture_output=True, text=True, check=True)
-        lines = result.stdout.strip().split("\n")
+        process = subprocess.Popen(
+            cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True
+        )
+
+        # =========================
+        # STREAM PARSING
+        # =========================
+        for line in process.stdout:
+            pkt = parse_line(line)
+            if pkt:
+                packets.append(pkt)
+
+        process.wait()
+
+        if process.returncode != 0:
+            err = process.stderr.read()
+            logging.error(f"tshark error: {err}")
 
     except Exception as e:
-        print("❌ tshark failed:", e)
-        return []
+        logging.error(f"Parser failed: {e}")
+        return [], [], []
 
+    logging.info(f"📊 Parsed packets: {len(packets)}")
 
-    parsed_packets = []
-
-    for line in lines:
-        try:
-            fields = line.split("|")
-
-            if len(fields) < 6:
-                continue
-
-            # -------------------
-            # Extract safely
-            # -------------------
-            timestamp = float(fields[0] or 0)
-
-            src_ip = fields[1] or fields[3]  # ipv6 fallback
-            dst_ip = fields[2] or fields[4]
-
-            # ❌ skip non-IP packets
-            if not src_ip or not dst_ip:
-                continue
-
-            protocol = int(fields[5] or 0)
-
-            tcp_s = fields[6]
-            tcp_d = fields[7]
-            udp_s = fields[8]
-            udp_d = fields[9]
-
-            src_port = int(tcp_s or udp_s or 0)
-            dst_port = int(tcp_d or udp_d or 0)
-
-            length = int(fields[10] or 0)
-
-            parsed_packets.append({
-                "timestamp": timestamp,
-                "src_ip": src_ip,
-                "dst_ip": dst_ip,
-                "src_port": src_port,
-                "dst_port": dst_port,
-                "protocol": protocol,
-                "length": length
-            })
-
-        except:
-            continue
-
-    print(f"📊 Parsed packets: {len(parsed_packets)}")
-
-    # ============================
-    # 🔥 SAFE FLOW PIPELINE ADDITION
-    # ============================
+    # =========================
+    # FLOW BUILDER
+    # =========================
     flows = []
+    if run_flow_builder and packets:
+        from core.flow_builder import build_flows
+        flows = build_flows(packets)
+        logging.info(f"📊 Flows: {len(flows)}")
 
-    if run_flow_builder and parsed_packets:
+    # =========================
+    # FEATURE ENGINE
+    # =========================
+    features = []
+    if run_feature_engine and flows:
+        from core.feature_engine import extract_features_batch
+        features = extract_features_batch(flows)
+        logging.info(f"🧠 Features: {len(features)}")
 
-        # 👉 TEMP FILE (safe handoff, avoids race condition)
-        # tmp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".json", mode="w")
+    for pkt in packets[:10]:
+        print(pkt["src_port"], pkt["dst_port"])
 
-        # json.dump(parsed_packets, tmp_file)
-        # tmp_file.close()
 
-        # print(f"📁 Packets saved for flow builder: {tmp_file.name}")
-
-        print("⚙️ Running Flow Builder...")
-
-        # flow builder reads file instead of shared memory
-        flows = build_flows(parsed_packets)
-
-        print(f"📊 Flows generated: {len(flows)}")
-
-        # optional cleanup
-        # os.remove(tmp_file.name)
-
-    return parsed_packets, flows
+    return packets, flows, features
