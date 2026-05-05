@@ -1,105 +1,34 @@
 [
   {
-    "id": 3001,
-    "name": "HTTP Brute Force - High Frequency Login Attempts",
+    "id": 4001,
+    "name": "SSH Brute Force - Rapid Attempts",
     "category": "BruteForce",
-    "type": "signature_flow",
-    "protocol": "HTTP",
-    "time_window_sec": 60,
-    "conditions": {
-      "login_request_count": "> 20",
-      "failed_response_ratio": "> 0.6"
-    },
-    "features": [
-      "login_request_count",
-      "failed_response_ratio"
-    ],
-    "severity": "high",
-    "confidence_score": 0.9,
-    "action": "alert",
-    "description": "Detects brute force via high frequency login requests in short time window"
-  },
-
-  {
-    "id": 3002,
-    "name": "HTTP Brute Force - Login Endpoint Concentration",
-    "category": "BruteForce",
-    "type": "signature_flow",
-    "protocol": "HTTP",
-    "time_window_sec": 60,
-    "conditions": {
-      "endpoint_hit_count": "> 12",
-      "endpoint": "/login"
-    },
-    "features": [
-      "endpoint_hit_count"
-    ],
-    "severity": "medium",
-    "confidence_score": 0.85,
-    "action": "alert",
-    "description": "Detects repeated hits on login endpoint indicating brute force behavior"
-  },
-
-  {
-    "id": 3003,
-    "name": "Credential Guessing Pattern",
-    "category": "BruteForce",
-    "type": "signature_flow",
-    "protocol": "HTTP",
-    "time_window_sec": 60,
-    "conditions": {
-      "username_variation_count": "> 10",
-      "password_attempt_count": "> 15"
-    },
-    "features": [
-      "username_variation_count",
-      "password_attempt_count"
-    ],
-    "severity": "high",
-    "confidence_score": 0.88,
-    "action": "alert",
-    "description": "Detects systematic credential guessing behavior"
-  },
-
-  {
-    "id": 3004,
-    "name": "Auth Failure Burst Detection",
-    "category": "BruteForce",
-    "type": "signature_flow",
-    "protocol": "ANY",
+    "protocol": 6,
+    "dst_port": 22,
+    "pattern": "short_burst",
+    "flow_required": true,
+    "threshold": 20,
+    "min_packets": 8,
     "time_window_sec": 30,
-    "conditions": {
-      "auth_failure_count": "> 10",
-      "failure_ratio": "> 0.7"
-    },
-    "features": [
-      "auth_failure_count",
-      "failure_ratio"
-    ],
     "severity": "high",
-    "confidence_score": 0.9,
+    "confidence_score": 0.82,
     "action": "alert",
-    "description": "Detects burst of authentication failures in short time window"
+    "enabled": true
   },
-
   {
-    "id": 3005,
-    "name": "SSH / FTP Brute Force Pattern",
+    "id": 4002,
+    "name": "FTP Brute Force - Rapid Attempts",
     "category": "BruteForce",
-    "type": "signature_flow",
-    "protocol": "TCP",
-    "time_window_sec": 60,
-    "conditions": {
-      "connection_attempts": "> 15",
-      "auth_failures": "> 10"
-    },
-    "features": [
-      "connection_attempts",
-      "auth_failures"
-    ],
+    "protocol": 6,
+    "dst_port": 21,
+    "pattern": "short_burst",
+    "flow_required": true,
+    "threshold": 20,
+    "min_packets": 8,
+    "time_window_sec": 30,
     "severity": "high",
-    "confidence_score": 0.92,
+    "confidence_score": 0.82,
     "action": "alert",
-    "description": "Detects repeated login attempts on SSH/FTP services"
+    "enabled": true
   }
 ]

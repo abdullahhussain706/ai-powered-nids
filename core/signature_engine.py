@@ -87,6 +87,24 @@ def match_rule(features, rule):
             if features.get("dst_port") != rule_port:
                 return False
 
+        # Optional flow guards reduce false positives for broad patterns.
+        guard_map = {
+            "min_packets": ("total_packets", lambda actual, expected: actual >= expected),
+            "max_packets": ("total_packets", lambda actual, expected: actual <= expected),
+            "min_bytes": ("total_bytes", lambda actual, expected: actual >= expected),
+            "min_packet_rate": ("packet_rate", lambda actual, expected: actual >= expected),
+            "max_packet_rate": ("packet_rate", lambda actual, expected: actual <= expected),
+            "min_duration": ("duration", lambda actual, expected: actual >= expected),
+            "max_duration": ("duration", lambda actual, expected: actual <= expected),
+            "min_unique_dst_ports": ("unique_dst_ports", lambda actual, expected: actual >= expected),
+            "min_syn_ratio": ("syn_ratio", lambda actual, expected: actual >= expected),
+        }
+
+        for guard, (feature_name, compare) in guard_map.items():
+            if guard in rule:
+                if not compare(features.get(feature_name, 0), rule[guard]):
+                    return False
+
         threshold = rule.get("threshold", 0)
         pattern = rule.get("pattern")
 
@@ -172,6 +190,7 @@ def run_signature_engine(features):
                 "confidence": rule.get("confidence_score"),
                 "src_ip": features.get("src_ip"),
                 "dst_ip": features.get("dst_ip"),
+                "src_port": features.get("src_port"),
                 "dst_port": features.get("dst_port"),
                 "protocol": features.get("protocol"),
                 "flow_id": features.get("flow_id"),

@@ -55,6 +55,7 @@ def extract_features(flow):
             "flow_id": flow.get("flow_id"),
             "src_ip": flow.get("src_ip"),
             "dst_ip": flow.get("dst_ip"),
+            "src_port": flow.get("src_port"),
             "dst_port": flow.get("dst_port"),
             "protocol": flow.get("protocol"),
 

@@ -1,122 +1,79 @@
 [
   {
-    "id": 2001,
+    "id": 1001,
     "name": "Port Scan - Multiple Destination Ports",
-    "category": "port_scan",
-    "enabled": true,
-    "threshold": 70,
-    "conditions": [
-      { "feature": "unique_dst_ports", "op": ">", "value": 10, "weight": 50 },
-      { "feature": "is_multi_port", "op": "==", "value": true, "weight": 20 }
-    ]
+    "category": "PortScan",
+    "protocol": "ANY",
+    "pattern": "multi_port",
+    "flow_required": true,
+    "threshold": 10,
+    "time_window_sec": 30,
+    "severity": "high",
+    "confidence_score": 0.9,
+    "action": "alert",
+    "enabled": true
   },
-
   {
-    "id": 2002,
-    "name": "Port Scan - SYN Heavy",
-    "category": "port_scan",
-    "enabled": true,
-    "threshold": 60,
-    "conditions": [
-      { "feature": "syn_ratio", "op": ">", "value": 0.6, "weight": 40 },
-      { "feature": "is_unidirectional", "op": "==", "value": true, "weight": 20 }
-    ]
+    "id": 1002,
+    "name": "Port Scan - Aggressive Port Sweep",
+    "category": "PortScan",
+    "protocol": "ANY",
+    "pattern": "multi_port",
+    "flow_required": true,
+    "threshold": 20,
+    "time_window_sec": 30,
+    "severity": "critical",
+    "confidence_score": 0.95,
+    "action": "alert",
+    "enabled": true
   },
-
   {
-    "id": 2003,
-    "name": "Port Scan - Fast Scan",
-    "category": "port_scan",
-    "enabled": true,
-    "threshold": 70,
-    "conditions": [
-      { "feature": "packet_rate", "op": ">", "value": 50, "weight": 50 },
-      { "feature": "duration", "op": "<", "value": 10, "weight": 20 }
-    ]
+    "id": 1003,
+    "name": "Port Scan - SYN Heavy Probe",
+    "category": "PortScan",
+    "protocol": 6,
+    "pattern": "syn_heavy",
+    "flow_required": true,
+    "threshold": 0.5,
+    "min_packets": 1,
+    "min_syn_ratio": 0.6,
+    "min_unique_dst_ports": 5,
+    "time_window_sec": 30,
+    "severity": "medium",
+    "confidence_score": 0.8,
+    "action": "alert",
+    "enabled": true
   },
-
   {
-    "id": 2004,
-    "name": "Port Scan - Short Burst Scan",
-    "category": "port_scan",
-    "enabled": true,
-    "threshold": 60,
-    "conditions": [
-      { "feature": "is_short_flow", "op": "==", "value": true, "weight": 30 },
-      { "feature": "packet_rate", "op": ">", "value": 40, "weight": 30 }
-    ]
+    "id": 1004,
+    "name": "Port Scan - Fast Short Burst",
+    "category": "PortScan",
+    "protocol": "ANY",
+    "pattern": "short_burst",
+    "flow_required": true,
+    "threshold": 40,
+    "min_packets": 10,
+    "min_unique_dst_ports": 5,
+    "time_window_sec": 10,
+    "severity": "high",
+    "confidence_score": 0.85,
+    "action": "alert",
+    "enabled": true
   },
-
   {
-    "id": 2005,
-    "name": "Port Scan - SYN + Multi Port Combo",
-    "category": "port_scan",
-    "enabled": true,
-    "threshold": 80,
-    "conditions": [
-      { "feature": "syn_ratio", "op": ">", "value": 0.5, "weight": 30 },
-      { "feature": "unique_dst_ports", "op": ">", "value": 10, "weight": 50 }
-    ]
-  },
-
-  {
-    "id": 2006,
-    "name": "Port Scan - Low Response Scan",
-    "category": "port_scan",
-    "enabled": true,
-    "threshold": 60,
-    "conditions": [
-      { "feature": "is_unidirectional", "op": "==", "value": true, "weight": 40 },
-      { "feature": "total_packets", "op": ">", "value": 20, "weight": 20 }
-    ]
-  },
-
-  {
-    "id": 2007,
-    "name": "Port Scan - High Port Range Activity",
-    "category": "port_scan",
-    "enabled": true,
-    "threshold": 70,
-    "conditions": [
-      { "feature": "unique_dst_ports", "op": ">", "value": 20, "weight": 50 },
-      { "feature": "total_packets", "op": ">", "value": 30, "weight": 20 }
-    ]
-  },
-
-  {
-    "id": 2008,
-    "name": "Port Scan - High Packet Low Duration",
-    "category": "port_scan",
-    "enabled": true,
-    "threshold": 65,
-    "conditions": [
-      { "feature": "total_packets", "op": ">", "value": 50, "weight": 40 },
-      { "feature": "duration", "op": "<", "value": 5, "weight": 25 }
-    ]
-  },
-
-  {
-    "id": 2009,
-    "name": "Port Scan - SYN Flood Like Scan",
-    "category": "port_scan",
-    "enabled": true,
-    "threshold": 75,
-    "conditions": [
-      { "feature": "syn_ratio", "op": ">", "value": 0.7, "weight": 40 },
-      { "feature": "packet_rate", "op": ">", "value": 60, "weight": 35 }
-    ]
-  },
-
-  {
-    "id": 2010,
-    "name": "Port Scan - Aggressive Scanner",
-    "category": "port_scan",
-    "enabled": true,
-    "threshold": 85,
-    "conditions": [
-      { "feature": "unique_dst_ports", "op": ">", "value": 15, "weight": 40 },
-      { "feature": "packet_rate", "op": ">", "value": 70, "weight": 30 },
-      { "feature": "syn_ratio", "op": ">", "value": 0.5, "weight": 20 }
-    ]
+    "id": 1005,
+    "name": "Port Scan - No Response Probe",
+    "category": "PortScan",
+    "protocol": "ANY",
+    "pattern": "unidirectional",
+    "flow_required": true,
+    "threshold": 0,
+    "min_packets": 1,
+    "min_unique_dst_ports": 5,
+    "time_window_sec": 30,
+    "severity": "low",
+    "confidence_score": 0.65,
+    "action": "alert",
+    "enabled": true
   }
 ]

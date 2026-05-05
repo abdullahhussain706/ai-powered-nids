@@ -39,6 +39,7 @@ logging.getLogger("").addHandler(console)
 # =========================
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from core.packet_parser import parse_pcap
+from core.alert_manager import handle_alerts
 
 
 # =========================
@@ -139,9 +140,19 @@ def main_loop():
                 continue
 
             # STEP 2: Parse
-            packets, flows, alerts = parse_pcap(str(pcap_file))
+            packets, flows, feature_results = parse_pcap(str(pcap_file))
+            alerts = [
+                alert
+                for result in feature_results
+                for alert in result.get("alerts", [])
+            ]
+            saved_alerts = handle_alerts(alerts, source="signature")
 
-            logging.info(f"📊 Packets: {len(packets)} | Flows: {len(flows)} | Alerts: {len(alerts)}")
+            logging.info(
+                f"📊 Packets: {len(packets)} | Flows: {len(flows)} | "
+                f"Feature Records: {len(feature_results)} | "
+                f"Alerts: {len(alerts)} | New Alerts: {len(saved_alerts)}"
+            )
 
             # STEP 3: Rotate old files
             rotate_files()

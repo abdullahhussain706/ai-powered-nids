@@ -166,6 +166,15 @@ def build_flows(packets):
     for flow in flows.values():
         completed.append(flow.to_dict())
 
+    ports_by_peer = defaultdict(set)
+    for flow in completed:
+        key = (flow["src_ip"], flow["dst_ip"], flow["protocol"])
+        ports_by_peer[key].add(flow["dst_port"])
+
+    for flow in completed:
+        key = (flow["src_ip"], flow["dst_ip"], flow["protocol"])
+        flow["unique_dst_ports"] = len(ports_by_peer[key])
+
     logging.info(f"📊 Flows built: {len(completed)}")
     
     return completed

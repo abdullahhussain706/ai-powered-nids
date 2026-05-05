@@ -126,3 +126,15 @@ KeyError: 'total_packets'
 2026-05-02 23:34:26,837 [INFO] 🧠 Features: 247
 2026-05-02 23:34:26,838 [INFO] 📊 Packets: 486 | Flows: 247 | Alerts: 247
 2026-05-02 23:34:26,838 [INFO] 📥 Capturing 500 packets → data/raw_packets/capture_20260502_233426_838836.pcap
+2026-05-03 09:43:56,664 [INFO] 🚀 Starting IDS Capture Pipeline
+2026-05-03 09:43:59,546 [INFO] 🔌 Using interface: wlp2s0
+2026-05-03 09:43:59,547 [INFO] 📥 Capturing 500 packets → data/raw_packets/capture_20260503_094359_546954.pcap
+2026-05-03 09:45:32,389 [INFO] ✅ Capture complete: data/raw_packets/capture_20260503_094359_546954.pcap (75532 bytes)
+2026-05-03 09:45:34,379 [INFO] 📊 Parsed packets: 488
+2026-05-03 09:45:34,426 [INFO] 📊 Flows built: 238
+2026-05-03 09:45:34,429 [INFO] 📊 Flows: 238
+2026-05-03 09:45:34,465 [INFO] 📜 Rules loaded successfully: 22
+2026-05-03 09:45:34,497 [INFO] 🧠 Processed flows: 238
+2026-05-03 09:45:34,497 [INFO] 🧠 Features: 238
+2026-05-03 09:45:34,498 [INFO] 📊 Packets: 488 | Flows: 238 | Alerts: 238
+2026-05-03 09:45:34,498 [INFO] 📥 Capturing 500 packets → data/raw_packets/capture_20260503_094534_498792.pcap

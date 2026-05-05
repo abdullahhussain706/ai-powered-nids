@@ -147,8 +147,4 @@ def parse_pcap(pcap_file, run_flow_builder=True, run_feature_engine=True):
         features = extract_features_batch(flows)
         logging.info(f"🧠 Features: {len(features)}")
 
-    for pkt in packets[:10]:
-        print(pkt["src_port"], pkt["dst_port"])
-
-
     return packets, flows, features
