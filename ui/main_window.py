@@ -31,13 +31,15 @@ class MainWindow(QMainWindow):
 
         # Views
         from ui.dashboard_view import DashboardView
+        from ui.alerts_view import AlertsView  # Import alerts view
+        
         self.dashboard_view = DashboardView()
-        self.alerts_view = self.create_label_view("Alerts View")
+        self.alerts_view = AlertsView()  # Use real alerts view
         self.traffic_view = self.create_label_view("Traffic View")
         self.settings_view = self.create_label_view("Settings View")
 
         self.stack.addWidget(self.dashboard_view)
-        self.stack.addWidget(self.alerts_view)
+        self.stack.addWidget(self.alerts_view)  # Add to stack
         self.stack.addWidget(self.traffic_view)
         self.stack.addWidget(self.settings_view)
 
@@ -49,19 +51,19 @@ class MainWindow(QMainWindow):
         title.setStyleSheet("font-size: 22px; font-weight: bold; margin: 10px;")
         layout.addWidget(title)
 
-        # Buttons
+        # Original buttons - NO CHANGES
         btn_dashboard = QPushButton("Dashboard")
         btn_alerts = QPushButton("Alerts")
         btn_traffic = QPushButton("Traffic")
         btn_settings = QPushButton("Settings")
 
-        # Connect buttons
+        # Connect buttons - same as before
         btn_dashboard.clicked.connect(lambda: self.switch_page(0))
         btn_alerts.clicked.connect(lambda: self.switch_page(1))
         btn_traffic.clicked.connect(lambda: self.switch_page(2))
         btn_settings.clicked.connect(lambda: self.switch_page(3))
 
-        # Add buttons
+        # Add buttons - same as before
         for btn in [btn_dashboard, btn_alerts, btn_traffic, btn_settings]:
             btn.setFixedHeight(40)
             layout.addWidget(btn)
@@ -88,7 +90,8 @@ class MainWindow(QMainWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-
+    # No extra styling - keeping it original
+    
     window = MainWindow()
     window.show()
 
