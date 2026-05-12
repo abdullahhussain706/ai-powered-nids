@@ -1,7 +1,9 @@
 import os
-import random
 import math
+import re
+import sqlite3
 import pyqtgraph as pg
+from datetime import datetime
 
 from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QFrame,
@@ -10,6 +12,91 @@ from PySide6.QtWidgets import (
 from PySide6.QtCore import Qt, QTimer
 from PySide6.QtGui import QPixmap, QPainter, QColor, QPen, QFont
 from PySide6.QtCore import QRectF
+
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+LOG_PATH = os.path.join(BASE_DIR, "logs", "capture.log")
+DB_PATH = os.path.join(BASE_DIR, "database", "ids.db")
+SUMMARY_RE = re.compile(r"Packets:\s*(\d+)\s*\|\s*Flows:\s*(\d+)")
+CAPTURE_RE = re.compile(r"Capturing\s+\d+\s+packets")
+LOG_TIME_FORMAT = "%Y-%m-%d %H:%M:%S,%f"
+
+
+def _parse_log_time(line):
+    try:
+        return datetime.strptime(line[:23], LOG_TIME_FORMAT)
+    except ValueError:
+        return None
+
+
+def load_traffic_series(limit=30):
+    if not os.path.exists(LOG_PATH):
+        return [], [], []
+
+    records = []
+    capture_started_at = None
+    with open(LOG_PATH, "r", encoding="utf-8", errors="ignore") as f:
+        for line in f:
+            ts = _parse_log_time(line)
+            if not ts:
+                continue
+
+            if CAPTURE_RE.search(line):
+                capture_started_at = ts
+                continue
+
+            match = SUMMARY_RE.search(line)
+            if not match:
+                continue
+
+            start_ts = capture_started_at or ts
+            records.append((start_ts, ts, int(match.group(1)), int(match.group(2))))
+            capture_started_at = None
+
+    if not records:
+        return [], [], []
+
+    records = records[-limit:]
+    packet_rates = []
+    flow_rates = []
+    timeline = []
+
+    for start_ts, end_ts, packets, flows in records:
+        seconds = max((end_ts - start_ts).total_seconds(), 1)
+        packet_rates.append(round(packets / seconds, 1))
+        flow_rates.append(round(flows / seconds, 1))
+        timeline.append(end_ts.strftime("%H:%M:%S"))
+
+    return packet_rates, flow_rates, timeline
+
+
+def get_alert_count():
+    if not os.path.exists(DB_PATH):
+        return 0
+
+    try:
+        with sqlite3.connect(DB_PATH) as conn:
+            return conn.execute("SELECT COUNT(*) FROM alerts").fetchone()[0]
+    except sqlite3.Error:
+        return 0
+
+
+def get_host_count():
+    if not os.path.exists(DB_PATH):
+        return 0
+
+    try:
+        with sqlite3.connect(DB_PATH) as conn:
+            return conn.execute("""
+                SELECT COUNT(DISTINCT ip)
+                FROM (
+                    SELECT src_ip AS ip FROM alerts WHERE src_ip IS NOT NULL
+                    UNION
+                    SELECT dst_ip AS ip FROM alerts WHERE dst_ip IS NOT NULL
+                )
+            """).fetchone()[0]
+    except sqlite3.Error:
+        return 0
 
 
 # =========================
@@ -57,12 +144,15 @@ class StatCard(QFrame):
         text_layout.setSpacing(2)
         title_lbl = QLabel(title)
         title_lbl.setStyleSheet("color: #a0a0b0; font-size: 12px;")
-        value_lbl = QLabel(value)
-        value_lbl.setStyleSheet("color: white; font-size: 20px; font-weight: bold;")
+        self.value_lbl = QLabel(value)
+        self.value_lbl.setStyleSheet("color: white; font-size: 20px; font-weight: bold;")
         text_layout.addWidget(title_lbl)
-        text_layout.addWidget(value_lbl)
+        text_layout.addWidget(self.value_lbl)
         layout.addLayout(text_layout)
         layout.addStretch()
+
+    def set_value(self, value):
+        self.value_lbl.setText(str(value))
 
 
 # =========================
@@ -76,14 +166,25 @@ class CardsRow(QWidget):
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(5)
 
-        layout.addWidget(StatCard("Packets/sec", "1248",
-            os.path.join(base_path, "icons/packet.png"), border_color="#2196f3"))
-        layout.addWidget(StatCard("Flows/sec", "532",
-            os.path.join(base_path, "icons/flow.png"), border_color="#4caf50"))
-        layout.addWidget(StatCard("Alerts", "847",
-            os.path.join(base_path, "icons/alert.png"), border_color="#f44336"))
-        layout.addWidget(StatCard("Hosts", "156",
-            os.path.join(base_path, "icons/host.png"), border_color="#ff9800"))
+        self.packet_card = StatCard("Packets/sec", "0",
+            os.path.join(base_path, "icons/packet.png"), border_color="#2196f3")
+        self.flow_card = StatCard("Flows/sec", "0",
+            os.path.join(base_path, "icons/flow.png"), border_color="#4caf50")
+        self.alert_card = StatCard("Alerts", "0",
+            os.path.join(base_path, "icons/alert.png"), border_color="#f44336")
+        self.host_card = StatCard("Hosts", "0",
+            os.path.join(base_path, "icons/host.png"), border_color="#ff9800")
+
+        layout.addWidget(self.packet_card)
+        layout.addWidget(self.flow_card)
+        layout.addWidget(self.alert_card)
+        layout.addWidget(self.host_card)
+
+    def update_values(self, packet_rate, flow_rate, alerts, hosts):
+        self.packet_card.set_value(packet_rate)
+        self.flow_card.set_value(flow_rate)
+        self.alert_card.set_value(alerts)
+        self.host_card.set_value(hosts)
 
 
 # =========================
@@ -114,12 +215,13 @@ class TrafficGraph(QFrame):
         self.graph = pg.PlotWidget()
         self.graph.setBackground("#1e1e2f")
         self.graph.showGrid(x=True, y=True, alpha=0.3)
+        self.graph.setLabel("bottom", "Timeline")
+        self.graph.setLabel("left", "Rate/sec")
+        self.graph.getAxis("bottom").setTextPen("#a0a0b0")
+        self.graph.getAxis("left").setTextPen("#a0a0b0")
         layout.addWidget(self.graph)
         self.packets = []
         self.flows = []
-        self.timer = QTimer()
-        self.timer.timeout.connect(self.update_graph)
-        self.timer.start(1000)
 
     def legend_item(self, color, text):
         item = QLabel(f"<span style='color:{color}; font-size:18px;'>●</span> {text}")
@@ -137,16 +239,26 @@ class TrafficGraph(QFrame):
         """)
         return item
 
-    def update_graph(self):
-        self.packets.append(random.randint(80, 300))
-        self.flows.append(random.randint(20, 150))
-        if len(self.packets) > 30:
-            self.packets.pop(0)
-            self.flows.pop(0)
+    def set_series(self, packets, flows, timeline):
+        self.packets = packets[-30:]
+        self.flows = flows[-30:]
+        timeline = timeline[-30:]
+        x_values = list(range(len(self.packets)))
+
         self.graph.clear()
-        self.graph.plot(self.packets, pen=pg.mkPen("#2196f3", width=2),
+        if not x_values:
+            self.graph.getAxis("bottom").setTicks([])
+            return
+
+        tick_step = max(1, len(timeline) // 6)
+        ticks = [(i, label) for i, label in enumerate(timeline) if i % tick_step == 0]
+        if timeline and (len(timeline) - 1, timeline[-1]) not in ticks:
+            ticks.append((len(timeline) - 1, timeline[-1]))
+        self.graph.getAxis("bottom").setTicks([ticks])
+
+        self.graph.plot(x_values, self.packets, pen=pg.mkPen("#2196f3", width=2),
                         fillLevel=0, brush=pg.mkBrush(33, 150, 243, 80))
-        self.graph.plot(self.flows, pen=pg.mkPen("#4caf50", width=2),
+        self.graph.plot(x_values, self.flows, pen=pg.mkPen("#4caf50", width=2),
                         fillLevel=0, brush=pg.mkBrush(76, 175, 80, 100))
 
 
@@ -341,9 +453,13 @@ class MiddleRow(QWidget):
         layout = QHBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(8)
-        layout.addWidget(TrafficGraph(), 2)
+        self.traffic_graph = TrafficGraph()
+        layout.addWidget(self.traffic_graph, 2)
         layout.addWidget(ProtocolPie(), 1)
         layout.addWidget(TopSourceIPs(), 1)
+
+    def update_graph(self, packet_series, flow_series, timeline):
+        self.traffic_graph.set_series(packet_series, flow_series, timeline)
 
 
 # =========================
@@ -560,11 +676,32 @@ class DashboardView(QWidget):
         header_layout.addStretch()
         main.addWidget(header_widget)
 
-        main.addWidget(CardsRow(BASE))
-        main.addWidget(MiddleRow())
+        self.cards_row = CardsRow(BASE)
+        self.middle_row = MiddleRow()
+
+        main.addWidget(self.cards_row)
+        main.addWidget(self.middle_row)
         main.addWidget(BottomRow())
 
         main.setStretch(0, 0)
         main.setStretch(1, 0)
         main.setStretch(2, 3)
         main.setStretch(3, 4)
+
+        self.refresh_timer = QTimer()
+        self.refresh_timer.timeout.connect(self.refresh_metrics)
+        self.refresh_timer.start(2000)
+        self.refresh_metrics()
+
+    def refresh_metrics(self):
+        packet_series, flow_series, timeline = load_traffic_series()
+        packet_rate = packet_series[-1] if packet_series else 0
+        flow_rate = flow_series[-1] if flow_series else 0
+
+        self.cards_row.update_values(
+            packet_rate,
+            flow_rate,
+            get_alert_count(),
+            get_host_count()
+        )
+        self.middle_row.update_graph(packet_series, flow_series, timeline)

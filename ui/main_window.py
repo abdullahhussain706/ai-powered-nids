@@ -20,12 +20,12 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(main_widget)
 
         main_layout = QHBoxLayout(main_widget)
-        main_layout.setContentsMargins(0, 0, 0, 0)  # ✅ no outer padding
-        main_layout.setSpacing(0)                    # ✅ no gap between sidebar & content
+        main_layout.setContentsMargins(0, 0, 0, 0)
+        main_layout.setSpacing(0)
 
-        # Sidebar — wrapped in QWidget so stretch works correctly
+        # Sidebar
         self.sidebar_widget = self.create_sidebar()
-        main_layout.addWidget(self.sidebar_widget, 0)  # fixed width, no stretch
+        main_layout.addWidget(self.sidebar_widget, 0)
 
         # Thin divider line
         divider = QFrame()
@@ -33,30 +33,33 @@ class MainWindow(QMainWindow):
         divider.setStyleSheet("background-color: #2d2d3a;")
         main_layout.addWidget(divider)
 
-        # Stacked Views — takes all remaining space
+        # Stacked Views
         self.stack = QStackedWidget()
         self.stack.setStyleSheet("background-color: #12121f;")
-        main_layout.addWidget(self.stack, 1)           # ✅ stretch=1, fills rest
+        main_layout.addWidget(self.stack, 1)
 
         # Views
         from ui.dashboard_view import DashboardView
         from ui.alerts_view import AlertsView
+        from ui.settings_view import SettingsView
+        from ui.logs_view import LogsView        # new import
 
         self.dashboard_view = DashboardView()
         self.alerts_view = AlertsView()
         self.traffic_view = self.create_label_view("Traffic View")
-        self.settings_view = self.create_label_view("Settings View")
+        self.logs_view = LogsView()              # new instance
+        self.settings_view = SettingsView()
 
-        self.stack.addWidget(self.dashboard_view)
-        self.stack.addWidget(self.alerts_view)
-        self.stack.addWidget(self.traffic_view)
-        self.stack.addWidget(self.settings_view)
+        self.stack.addWidget(self.dashboard_view)   # index 0
+        self.stack.addWidget(self.alerts_view)      # index 1
+        self.stack.addWidget(self.traffic_view)     # index 2
+        self.stack.addWidget(self.logs_view)        # index 3
+        self.stack.addWidget(self.settings_view)    # index 4
 
         self.nav_buttons = []
-        self.switch_page(0)  # default to dashboard
+        self.switch_page(0)
 
     def create_sidebar(self):
-        # ✅ QWidget wrap — sidebar has fixed width, proper sizing
         sidebar = QWidget()
         sidebar.setFixedWidth(180)
         sidebar.setStyleSheet("background-color: #1e1e2f;")
@@ -83,12 +86,13 @@ class MainWindow(QMainWindow):
         title_layout.addWidget(title)
         layout.addWidget(title_container)
 
-        # Nav buttons
+        # Nav buttons – added "Logs"
         nav_items = [
             ("🏠  Dashboard", 0),
             ("🔔  Alerts",    1),
             ("📶  Traffic",   2),
-            ("⚙️  Settings",  3),
+            ("📋  Logs",      3),
+            ("⚙️  Settings",  4),
         ]
 
         self.nav_buttons = []

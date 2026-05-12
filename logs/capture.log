@@ -138,3 +138,224 @@ KeyError: 'total_packets'
 2026-05-03 09:45:34,497 [INFO] 🧠 Features: 238
 2026-05-03 09:45:34,498 [INFO] 📊 Packets: 488 | Flows: 238 | Alerts: 238
 2026-05-03 09:45:34,498 [INFO] 📥 Capturing 500 packets → data/raw_packets/capture_20260503_094534_498792.pcap
+2026-05-12 14:15:56,251 [INFO] 🚀 Starting IDS Capture Pipeline
+2026-05-12 14:15:58,766 [INFO] 🔌 Using interface: wlp2s0
+2026-05-12 14:15:58,767 [INFO] 📥 Capturing 500 packets → data/raw_packets/capture_20260512_141558_767145.pcap
+2026-05-12 14:16:00,668 [INFO] ✅ Capture complete: data/raw_packets/capture_20260512_141558_767145.pcap (564276 bytes)
+2026-05-12 14:16:01,049 [INFO] 📊 Parsed packets: 500
+2026-05-12 14:16:01,083 [INFO] 📊 Flows built: 11
+2026-05-12 14:16:01,084 [INFO] 📊 Flows: 11
+2026-05-12 14:16:01,124 [INFO] 📜 Rules loaded successfully: 22
+2026-05-12 14:16:01,125 [INFO] 🧠 Processed flows: 11
+2026-05-12 14:16:01,125 [INFO] 🧠 Features: 11
+2026-05-12 14:16:01,489 [WARNING] 🚨 New alerts saved: 3
+2026-05-12 14:16:01,489 [INFO] 📊 Packets: 500 | Flows: 11 | Feature Records: 11 | Alerts: 3 | New Alerts: 3
+2026-05-12 14:16:01,490 [INFO] 📥 Capturing 500 packets → data/raw_packets/capture_20260512_141601_490084.pcap
+2026-05-12 14:16:06,382 [INFO] ✅ Capture complete: data/raw_packets/capture_20260512_141601_490084.pcap (538780 bytes)
+2026-05-12 14:16:06,696 [INFO] 📊 Parsed packets: 498
+2026-05-12 14:16:06,697 [INFO] 📊 Flows built: 11
+2026-05-12 14:16:06,697 [INFO] 📊 Flows: 11
+2026-05-12 14:16:06,698 [INFO] 🧠 Processed flows: 11
+2026-05-12 14:16:06,698 [INFO] 🧠 Features: 11
+2026-05-12 14:16:06,698 [INFO] 📊 Packets: 498 | Flows: 11 | Feature Records: 11 | Alerts: 0 | New Alerts: 0
+2026-05-12 14:16:06,699 [INFO] 📥 Capturing 500 packets → data/raw_packets/capture_20260512_141606_698948.pcap
+2026-05-12 14:16:14,681 [INFO] ✅ Capture complete: data/raw_packets/capture_20260512_141606_698948.pcap (907172 bytes)
+2026-05-12 15:49:27,952 [INFO] 🚀 Starting IDS Capture Pipeline
+2026-05-12 15:49:31,581 [INFO] 🔌 Using interface: wlp2s0
+2026-05-12 15:49:31,581 [INFO] 📥 Capturing 500 packets → data/raw_packets/capture_20260512_154931_581494.pcap
+2026-05-12 15:52:31,194 [INFO] 🚀 Starting IDS Capture Pipeline
+2026-05-12 15:52:31,999 [INFO] 🔌 Using interface: wlp2s0
+2026-05-12 15:52:32,000 [INFO] 📥 Capturing 500 packets → data/raw_packets/capture_20260512_155231_999949.pcap
+2026-05-12 15:52:34,223 [INFO] ✅ Capture complete: data/raw_packets/capture_20260512_155231_999949.pcap (539384 bytes)
+2026-05-12 15:52:34,506 [INFO] 📊 Parsed packets: 500
+2026-05-12 15:52:34,550 [INFO] 📊 Flows built: 9
+2026-05-12 15:52:34,551 [INFO] 📊 Flows: 9
+2026-05-12 15:52:34,605 [INFO] 📜 Rules loaded successfully: 22
+2026-05-12 15:52:34,605 [INFO] 🧠 Processed flows: 9
+2026-05-12 15:52:34,606 [INFO] 🧠 Features: 9
+2026-05-12 15:52:35,055 [WARNING] 🚨 New alerts saved: 2
+2026-05-12 15:52:35,055 [INFO] 📊 Packets: 500 | Flows: 9 | Feature Records: 9 | Alerts: 2 | New Alerts: 2
+2026-05-12 15:52:35,059 [INFO] 📥 Capturing 500 packets → data/raw_packets/capture_20260512_155235_059538.pcap
+2026-05-12 15:52:36,807 [INFO] ✅ Capture complete: data/raw_packets/capture_20260512_155235_059538.pcap (559020 bytes)
+2026-05-12 15:52:37,096 [INFO] 📊 Parsed packets: 500
+2026-05-12 15:52:37,097 [INFO] 📊 Flows built: 3
+2026-05-12 15:52:37,097 [INFO] 📊 Flows: 3
+2026-05-12 15:52:37,097 [INFO] 🧠 Processed flows: 3
+2026-05-12 15:52:37,097 [INFO] 🧠 Features: 3
+2026-05-12 15:52:37,366 [WARNING] 🚨 New alerts saved: 2
+2026-05-12 15:52:37,366 [INFO] 📊 Packets: 500 | Flows: 3 | Feature Records: 3 | Alerts: 2 | New Alerts: 2
+2026-05-12 15:52:37,367 [INFO] 📥 Capturing 500 packets → data/raw_packets/capture_20260512_155237_367680.pcap
+2026-05-12 15:52:41,297 [INFO] ✅ Capture complete: data/raw_packets/capture_20260512_155237_367680.pcap (597184 bytes)
+2026-05-12 15:52:41,742 [INFO] 📊 Parsed packets: 500
+2026-05-12 15:52:41,744 [INFO] 📊 Flows built: 4
+2026-05-12 15:52:41,744 [INFO] 📊 Flows: 4
+2026-05-12 15:52:41,744 [INFO] 🧠 Processed flows: 4
+2026-05-12 15:52:41,744 [INFO] 🧠 Features: 4
+2026-05-12 15:52:41,745 [INFO] 📊 Packets: 500 | Flows: 4 | Feature Records: 4 | Alerts: 0 | New Alerts: 0
+2026-05-12 15:52:41,745 [INFO] 📥 Capturing 500 packets → data/raw_packets/capture_20260512_155241_745752.pcap
+2026-05-12 15:52:44,406 [INFO] ✅ Capture complete: data/raw_packets/capture_20260512_155241_745752.pcap (567144 bytes)
+2026-05-12 15:52:44,695 [INFO] 📊 Parsed packets: 500
+2026-05-12 15:52:44,696 [INFO] 📊 Flows built: 7
+2026-05-12 15:52:44,696 [INFO] 📊 Flows: 7
+2026-05-12 15:52:44,696 [INFO] 🧠 Processed flows: 7
+2026-05-12 15:52:44,696 [INFO] 🧠 Features: 7
+2026-05-12 15:52:44,855 [INFO] 📊 Packets: 500 | Flows: 7 | Feature Records: 7 | Alerts: 2 | New Alerts: 0
+2026-05-12 15:52:44,855 [INFO] 📥 Capturing 500 packets → data/raw_packets/capture_20260512_155244_855733.pcap
+2026-05-12 15:52:45,956 [INFO] ✅ Capture complete: data/raw_packets/capture_20260512_155244_855733.pcap (556652 bytes)
+2026-05-12 15:52:46,226 [INFO] 📊 Parsed packets: 500
+2026-05-12 15:52:46,227 [INFO] 📊 Flows built: 1
+2026-05-12 15:52:46,227 [INFO] 📊 Flows: 1
+2026-05-12 15:52:46,227 [INFO] 🧠 Processed flows: 1
+2026-05-12 15:52:46,227 [INFO] 🧠 Features: 1
+2026-05-12 15:52:46,388 [INFO] 📊 Packets: 500 | Flows: 1 | Feature Records: 1 | Alerts: 2 | New Alerts: 0
+2026-05-12 15:52:46,389 [INFO] 📥 Capturing 500 packets → data/raw_packets/capture_20260512_155246_389611.pcap
+2026-05-12 15:52:53,195 [INFO] ✅ Capture complete: data/raw_packets/capture_20260512_155246_389611.pcap (637900 bytes)
+2026-05-12 15:52:53,478 [INFO] 📊 Parsed packets: 498
+2026-05-12 15:52:53,479 [INFO] 📊 Flows built: 12
+2026-05-12 15:52:53,479 [INFO] 📊 Flows: 12
+2026-05-12 15:52:53,480 [INFO] 🧠 Processed flows: 12
+2026-05-12 15:52:53,480 [INFO] 🧠 Features: 12
+2026-05-12 15:52:53,588 [INFO] 📊 Packets: 498 | Flows: 12 | Feature Records: 12 | Alerts: 2 | New Alerts: 0
+2026-05-12 15:52:53,589 [INFO] 📥 Capturing 500 packets → data/raw_packets/capture_20260512_155253_589645.pcap
+2026-05-12 15:52:54,769 [INFO] ✅ Capture complete: data/raw_packets/capture_20260512_155253_589645.pcap (668532 bytes)
+2026-05-12 15:52:55,042 [INFO] 📊 Parsed packets: 500
+2026-05-12 15:52:55,043 [INFO] 📊 Flows built: 1
+2026-05-12 15:52:55,043 [INFO] 📊 Flows: 1
+2026-05-12 15:52:55,043 [INFO] 🧠 Processed flows: 1
+2026-05-12 15:52:55,043 [INFO] 🧠 Features: 1
+2026-05-12 15:52:55,233 [INFO] 📊 Packets: 500 | Flows: 1 | Feature Records: 1 | Alerts: 2 | New Alerts: 0
+2026-05-12 15:52:55,234 [INFO] 📥 Capturing 500 packets → data/raw_packets/capture_20260512_155255_234516.pcap
+2026-05-12 15:53:01,313 [INFO] ✅ Capture complete: data/raw_packets/capture_20260512_155255_234516.pcap (614348 bytes)
+2026-05-12 15:53:01,692 [INFO] 📊 Parsed packets: 500
+2026-05-12 15:53:01,693 [INFO] 📊 Flows built: 7
+2026-05-12 15:53:01,693 [INFO] 📊 Flows: 7
+2026-05-12 15:53:01,694 [INFO] 🧠 Processed flows: 7
+2026-05-12 15:53:01,694 [INFO] 🧠 Features: 7
+2026-05-12 15:53:01,900 [INFO] 📊 Packets: 500 | Flows: 7 | Feature Records: 7 | Alerts: 2 | New Alerts: 0
+2026-05-12 15:53:01,901 [INFO] 📥 Capturing 500 packets → data/raw_packets/capture_20260512_155301_901570.pcap
+2026-05-12 15:53:03,644 [INFO] ✅ Capture complete: data/raw_packets/capture_20260512_155301_901570.pcap (611724 bytes)
+2026-05-12 15:53:03,947 [INFO] 📊 Parsed packets: 500
+2026-05-12 15:53:03,949 [INFO] 📊 Flows built: 2
+2026-05-12 15:53:03,950 [INFO] 📊 Flows: 2
+2026-05-12 15:53:03,950 [INFO] 🧠 Processed flows: 2
+2026-05-12 15:53:03,950 [INFO] 🧠 Features: 2
+2026-05-12 15:53:04,368 [INFO] 📊 Packets: 500 | Flows: 2 | Feature Records: 2 | Alerts: 2 | New Alerts: 0
+2026-05-12 15:53:04,371 [INFO] 📥 Capturing 500 packets → data/raw_packets/capture_20260512_155304_371371.pcap
+2026-05-12 15:53:09,217 [INFO] ✅ Capture complete: data/raw_packets/capture_20260512_155304_371371.pcap (617476 bytes)
+2026-05-12 15:53:09,492 [INFO] 📊 Parsed packets: 500
+2026-05-12 15:53:09,493 [INFO] 📊 Flows built: 5
+2026-05-12 15:53:09,493 [INFO] 📊 Flows: 5
+2026-05-12 15:53:09,493 [INFO] 🧠 Processed flows: 5
+2026-05-12 15:53:09,493 [INFO] 🧠 Features: 5
+2026-05-12 15:53:09,634 [INFO] 📊 Packets: 500 | Flows: 5 | Feature Records: 5 | Alerts: 2 | New Alerts: 0
+2026-05-12 15:53:09,636 [INFO] 📥 Capturing 500 packets → data/raw_packets/capture_20260512_155309_636089.pcap
+2026-05-12 15:53:13,218 [INFO] ✅ Capture complete: data/raw_packets/capture_20260512_155309_636089.pcap (697372 bytes)
+2026-05-12 15:53:13,484 [INFO] 📊 Parsed packets: 500
+2026-05-12 15:53:13,485 [INFO] 📊 Flows built: 9
+2026-05-12 15:53:13,485 [INFO] 📊 Flows: 9
+2026-05-12 15:53:13,486 [INFO] 🧠 Processed flows: 9
+2026-05-12 15:53:13,486 [INFO] 🧠 Features: 9
+2026-05-12 15:53:13,487 [INFO] 📊 Packets: 500 | Flows: 9 | Feature Records: 9 | Alerts: 0 | New Alerts: 0
+2026-05-12 15:53:13,487 [INFO] 📥 Capturing 500 packets → data/raw_packets/capture_20260512_155313_487480.pcap
+2026-05-12 15:53:14,903 [INFO] ✅ Capture complete: data/raw_packets/capture_20260512_155313_487480.pcap (622332 bytes)
+2026-05-12 15:53:15,175 [INFO] 📊 Parsed packets: 500
+2026-05-12 15:53:15,176 [INFO] 📊 Flows built: 1
+2026-05-12 15:53:15,176 [INFO] 📊 Flows: 1
+2026-05-12 15:53:15,176 [INFO] 🧠 Processed flows: 1
+2026-05-12 15:53:15,177 [INFO] 🧠 Features: 1
+2026-05-12 15:53:15,402 [INFO] 📊 Packets: 500 | Flows: 1 | Feature Records: 1 | Alerts: 2 | New Alerts: 0
+2026-05-12 15:53:15,403 [INFO] 📥 Capturing 500 packets → data/raw_packets/capture_20260512_155315_403075.pcap
+2026-05-12 15:53:19,674 [INFO] ✅ Capture complete: data/raw_packets/capture_20260512_155315_403075.pcap (595748 bytes)
+2026-05-12 15:53:19,969 [INFO] 📊 Parsed packets: 498
+2026-05-12 15:53:19,971 [INFO] 📊 Flows built: 5
+2026-05-12 15:53:19,971 [INFO] 📊 Flows: 5
+2026-05-12 15:53:19,972 [INFO] 🧠 Processed flows: 5
+2026-05-12 15:53:19,972 [INFO] 🧠 Features: 5
+2026-05-12 15:53:19,973 [INFO] 📊 Packets: 498 | Flows: 5 | Feature Records: 5 | Alerts: 0 | New Alerts: 0
+2026-05-12 15:53:19,974 [INFO] 📥 Capturing 500 packets → data/raw_packets/capture_20260512_155319_974210.pcap
+2026-05-12 15:53:25,055 [INFO] ✅ Capture complete: data/raw_packets/capture_20260512_155319_974210.pcap (692532 bytes)
+2026-05-12 15:53:25,400 [INFO] 📊 Parsed packets: 500
+2026-05-12 15:53:25,403 [INFO] 📊 Flows built: 9
+2026-05-12 15:53:25,403 [INFO] 📊 Flows: 9
+2026-05-12 15:53:25,404 [INFO] 🧠 Processed flows: 9
+2026-05-12 15:53:25,405 [INFO] 🧠 Features: 9
+2026-05-12 15:53:25,406 [INFO] 📊 Packets: 500 | Flows: 9 | Feature Records: 9 | Alerts: 0 | New Alerts: 0
+2026-05-12 15:53:25,407 [INFO] 📥 Capturing 500 packets → data/raw_packets/capture_20260512_155325_407472.pcap
+2026-05-12 15:53:26,630 [INFO] ✅ Capture complete: data/raw_packets/capture_20260512_155325_407472.pcap (569764 bytes)
+2026-05-12 15:53:27,414 [INFO] 📊 Parsed packets: 500
+2026-05-12 15:53:27,418 [INFO] 📊 Flows built: 1
+2026-05-12 15:53:27,419 [INFO] 📊 Flows: 1
+2026-05-12 15:53:27,420 [INFO] 🧠 Processed flows: 1
+2026-05-12 15:53:27,422 [INFO] 🧠 Features: 1
+2026-05-12 15:53:27,558 [INFO] 📊 Packets: 500 | Flows: 1 | Feature Records: 1 | Alerts: 2 | New Alerts: 0
+2026-05-12 15:53:27,559 [INFO] 📥 Capturing 500 packets → data/raw_packets/capture_20260512_155327_559524.pcap
+2026-05-12 15:55:40,633 [INFO] 🚀 Starting IDS Capture Pipeline
+2026-05-12 15:55:41,031 [INFO] 🔌 Using interface: wlp2s0
+2026-05-12 15:55:41,031 [INFO] 📥 Capturing 500 packets → data/raw_packets/capture_20260512_155541_031842.pcap
+2026-05-12 15:55:51,451 [INFO] ✅ Capture complete: data/raw_packets/capture_20260512_155541_031842.pcap (475344 bytes)
+2026-05-12 15:55:51,729 [INFO] 📊 Parsed packets: 498
+2026-05-12 15:55:51,731 [INFO] 📊 Flows built: 20
+2026-05-12 15:55:51,731 [INFO] 📊 Flows: 20
+2026-05-12 15:55:51,732 [INFO] 📜 Rules loaded successfully: 22
+2026-05-12 15:55:51,733 [INFO] 🧠 Processed flows: 20
+2026-05-12 15:55:51,734 [INFO] 🧠 Features: 20
+2026-05-12 15:55:51,735 [INFO] 📊 Packets: 498 | Flows: 20 | Feature Records: 20 | Alerts: 0 | New Alerts: 0
+2026-05-12 15:55:51,735 [INFO] 📥 Capturing 500 packets → data/raw_packets/capture_20260512_155551_735886.pcap
+2026-05-12 15:56:04,865 [INFO] ✅ Capture complete: data/raw_packets/capture_20260512_155551_735886.pcap (499828 bytes)
+2026-05-12 15:56:05,133 [INFO] 📊 Parsed packets: 500
+2026-05-12 15:56:05,134 [INFO] 📊 Flows built: 9
+2026-05-12 15:56:05,134 [INFO] 📊 Flows: 9
+2026-05-12 15:56:05,135 [INFO] 🧠 Processed flows: 9
+2026-05-12 15:56:05,135 [INFO] 🧠 Features: 9
+2026-05-12 15:56:05,348 [WARNING] 🚨 New alerts saved: 2
+2026-05-12 15:56:05,349 [INFO] 📊 Packets: 500 | Flows: 9 | Feature Records: 9 | Alerts: 2 | New Alerts: 2
+2026-05-12 15:56:05,350 [INFO] 📥 Capturing 500 packets → data/raw_packets/capture_20260512_155605_350265.pcap
+2026-05-12 15:56:17,821 [INFO] ✅ Capture complete: data/raw_packets/capture_20260512_155605_350265.pcap (471032 bytes)
+2026-05-12 15:56:18,101 [INFO] 📊 Parsed packets: 498
+2026-05-12 15:56:18,102 [INFO] 📊 Flows built: 13
+2026-05-12 15:56:18,103 [INFO] 📊 Flows: 13
+2026-05-12 15:56:18,104 [INFO] 🧠 Processed flows: 13
+2026-05-12 15:56:18,104 [INFO] 🧠 Features: 13
+2026-05-12 15:56:18,104 [INFO] 📊 Packets: 498 | Flows: 13 | Feature Records: 13 | Alerts: 0 | New Alerts: 0
+2026-05-12 15:56:18,105 [INFO] 📥 Capturing 500 packets → data/raw_packets/capture_20260512_155618_105532.pcap
+2026-05-12 15:56:31,882 [INFO] ✅ Capture complete: data/raw_packets/capture_20260512_155618_105532.pcap (700004 bytes)
+2026-05-12 15:56:32,183 [INFO] 📊 Parsed packets: 500
+2026-05-12 15:56:32,184 [INFO] 📊 Flows built: 16
+2026-05-12 15:56:32,184 [INFO] 📊 Flows: 16
+2026-05-12 15:56:32,185 [INFO] 🧠 Processed flows: 16
+2026-05-12 15:56:32,185 [INFO] 🧠 Features: 16
+2026-05-12 15:56:32,186 [INFO] 📊 Packets: 500 | Flows: 16 | Feature Records: 16 | Alerts: 0 | New Alerts: 0
+2026-05-12 15:56:32,186 [INFO] 📥 Capturing 500 packets → data/raw_packets/capture_20260512_155632_186543.pcap
+2026-05-12 15:56:46,242 [INFO] ✅ Capture complete: data/raw_packets/capture_20260512_155632_186543.pcap (687056 bytes)
+2026-05-12 15:56:46,490 [INFO] 📊 Parsed packets: 498
+2026-05-12 15:56:46,491 [INFO] 📊 Flows built: 9
+2026-05-12 15:56:46,491 [INFO] 📊 Flows: 9
+2026-05-12 15:56:46,492 [INFO] 🧠 Processed flows: 9
+2026-05-12 15:56:46,492 [INFO] 🧠 Features: 9
+2026-05-12 15:56:46,492 [INFO] 📊 Packets: 498 | Flows: 9 | Feature Records: 9 | Alerts: 0 | New Alerts: 0
+2026-05-12 15:56:46,493 [INFO] 📥 Capturing 500 packets → data/raw_packets/capture_20260512_155646_493434.pcap
+2026-05-12 15:56:59,923 [INFO] ✅ Capture complete: data/raw_packets/capture_20260512_155646_493434.pcap (530424 bytes)
+2026-05-12 15:57:00,202 [INFO] 📊 Parsed packets: 500
+2026-05-12 15:57:00,203 [INFO] 📊 Flows built: 12
+2026-05-12 15:57:00,204 [INFO] 📊 Flows: 12
+2026-05-12 15:57:00,205 [INFO] 🧠 Processed flows: 12
+2026-05-12 15:57:00,205 [INFO] 🧠 Features: 12
+2026-05-12 15:57:00,273 [WARNING] 🚨 New alerts saved: 1
+2026-05-12 15:57:00,274 [INFO] 📊 Packets: 500 | Flows: 12 | Feature Records: 12 | Alerts: 1 | New Alerts: 1
+2026-05-12 15:57:00,275 [INFO] 📥 Capturing 500 packets → data/raw_packets/capture_20260512_155700_275538.pcap
+2026-05-12 15:57:13,665 [INFO] ✅ Capture complete: data/raw_packets/capture_20260512_155700_275538.pcap (543112 bytes)
+2026-05-12 15:57:13,938 [INFO] 📊 Parsed packets: 498
+2026-05-12 15:57:13,939 [INFO] 📊 Flows built: 13
+2026-05-12 15:57:13,939 [INFO] 📊 Flows: 13
+2026-05-12 15:57:13,940 [INFO] 🧠 Processed flows: 13
+2026-05-12 15:57:13,940 [INFO] 🧠 Features: 13
+2026-05-12 15:57:13,940 [INFO] 📊 Packets: 498 | Flows: 13 | Feature Records: 13 | Alerts: 0 | New Alerts: 0
+2026-05-12 15:57:13,941 [INFO] 📥 Capturing 500 packets → data/raw_packets/capture_20260512_155713_941351.pcap
+2026-05-12 15:58:13,417 [INFO] ✅ Capture complete: data/raw_packets/capture_20260512_155713_941351.pcap (165176 bytes)
+2026-05-12 15:58:13,671 [INFO] 📊 Parsed packets: 494
+2026-05-12 15:58:13,673 [INFO] 📊 Flows built: 53
+2026-05-12 15:58:13,673 [INFO] 📊 Flows: 53
+2026-05-12 15:58:13,675 [INFO] 🧠 Processed flows: 53
+2026-05-12 15:58:13,675 [INFO] 🧠 Features: 53
+2026-05-12 15:58:13,675 [INFO] 📊 Packets: 494 | Flows: 53 | Feature Records: 53 | Alerts: 0 | New Alerts: 0
+2026-05-12 15:58:13,676 [INFO] 📥 Capturing 500 packets → data/raw_packets/capture_20260512_155813_676795.pcap

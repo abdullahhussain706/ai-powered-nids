@@ -1,20 +1,18 @@
-# alerts_view.py - COMPLETE FINAL VERSION
-# All issues fixed: balanced layout, colored severity dots, tight spacing, 12-row table,
-# header subtitle inline, filters 2‑lines, pagination larger.
+# alerts_view.py - Full version with working CSV export
 
 import os
+import csv
+import sqlite3
 from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QFrame,
     QTableWidget, QTableWidgetItem, QHeaderView, QPushButton,
-    QComboBox, QLineEdit, QSizePolicy, QMessageBox
+    QComboBox, QLineEdit, QSizePolicy, QMessageBox, QFileDialog
 )
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QColor, QBrush, QPixmap, QPainter, QIcon
 
 
-# ─────────────────────────────────────────────────────────────
 def create_color_icon(color_hex, size=12):
-    """Create a colored circle icon for severity levels."""
     pixmap = QPixmap(size, size)
     pixmap.fill(Qt.transparent)
     painter = QPainter(pixmap)
@@ -26,9 +24,29 @@ def create_color_icon(color_hex, size=12):
     return QIcon(pixmap)
 
 
-# =========================
-# 🔹 STAT CARD (taller, better spacing)
-# =========================
+def format_timestamp(ts_str):
+    try:
+        if 'T' in ts_str:
+            date_part = ts_str.split('T')[0]
+            time_part = ts_str.split('T')[1].split('.')[0]
+            return f"{date_part} {time_part}"
+        return ts_str
+    except:
+        return ts_str
+
+
+def normalize_severity(sev):
+    if not sev:
+        return "Low"
+    s = sev.lower()
+    if s == "high":
+        return "High"
+    elif s == "medium":
+        return "Medium"
+    else:
+        return "Low"
+
+
 class AlertStatCard(QFrame):
     def __init__(self, title, value, icon_path=None, border_color=None):
         super().__init__()
@@ -79,9 +97,6 @@ class AlertStatCard(QFrame):
         layout.addStretch()
 
 
-# =========================
-# 🔹 STATS ROW (4 cards)
-# =========================
 class AlertsStatsRow(QWidget):
     def __init__(self, base_path):
         super().__init__()
@@ -105,9 +120,6 @@ class AlertsStatsRow(QWidget):
         layout.addWidget(self.total_card)
 
 
-# =========================
-# 🔹 FILTERS BAR (2 lines, comfortable)
-# =========================
 class FiltersBar(QFrame):
     def __init__(self):
         super().__init__()
@@ -149,7 +161,6 @@ class FiltersBar(QFrame):
         main_layout.setContentsMargins(4, 4, 4, 4)
         main_layout.setSpacing(5)
 
-        # Row 1: labels
         labels_layout = QHBoxLayout()
         labels_layout.setSpacing(8)
         labels_layout.setContentsMargins(0, 0, 0, 0)
@@ -173,7 +184,6 @@ class FiltersBar(QFrame):
         labels_layout.addStretch()
         main_layout.addLayout(labels_layout)
 
-        # Row 2: inputs + buttons
         controls_layout = QHBoxLayout()
         controls_layout.setSpacing(8)
 
@@ -198,11 +208,9 @@ class FiltersBar(QFrame):
         controls_layout.addWidget(self.src_ip)
 
         controls_layout.addStretch()
-
         self.apply_btn = QPushButton("Apply")
         self.apply_btn.setFixedWidth(65)
         controls_layout.addWidget(self.apply_btn)
-
         self.reset_btn = QPushButton("Reset")
         self.reset_btn.setObjectName("resetBtn")
         self.reset_btn.setFixedWidth(65)
@@ -211,13 +219,9 @@ class FiltersBar(QFrame):
         main_layout.addLayout(controls_layout)
 
 
-# =========================
-# 🔹 ALERTS TABLE (12 rows, colored dot icons)
-# =========================
 class AlertsTable(QFrame):
     def __init__(self):
         super().__init__()
-        # Header ~34px + 12 rows × 27px + 2px = 360px – exact fit, no scrollbar
         self.setFixedHeight(360)
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         self.setStyleSheet("""
@@ -265,75 +269,98 @@ class AlertsTable(QFrame):
         self.table.setColumnWidth(0, 150)
 
         self.all_alerts = []
+        self.filtered_alerts = []
         self.rows_per_page = 12
         self.current_page = 0
-        self.load_demo_data()
+        self.total_pages = 0
         layout.addWidget(self.table)
+        self.load_from_db()
 
-    def load_demo_data(self):
-        self.all_alerts = [
-            ("2025-05-24 12:45:21", "High", "Port Scan", "192.168.1.100", "10.0.0.5", "Multiple ports"),
-            ("2025-05-24 12:45:10", "High", "DoS Attack", "203.184.216.34", "192.168.1.1", "SYN flood"),
-            ("2025-05-24 12:44:58", "Medium", "Failed Logins", "10.0.0.5", "192.168.1.50", "SSH brute force"),
-            ("2025-05-24 12:44:37", "Medium", "ICMP Flood", "172.16.0.23", "192.168.1.1", "High ICMP"),
-            ("2025-05-24 12:44:21", "Low", "Suspicious", "192.168.1.77", "8.8.8.8", "Unusual pattern"),
-            ("2025-05-24 12:43:58", "Medium", "DNS Amplification", "10.0.0.15", "192.168.1.100", "DNS reflection"),
-            ("2025-05-24 12:43:33", "High", "Port Scan", "192.168.1.200", "10.0.0.10", "Ports 22,80,443"),
-            ("2025-05-24 12:42:59", "Medium", "Brute Force", "172.16.0.50", "192.168.1.20", "FTP attack"),
-            ("2025-05-24 12:42:30", "Low", "Policy Violation", "192.168.1.150", "10.0.0.30", "Blocked protocol"),
-            ("2025-05-24 12:41:55", "Medium", "Malformed Packet", "10.0.0.60", "192.168.1.40", "Invalid flags"),
-            ("2025-05-24 12:40:22", "High", "Port Scan", "192.168.1.55", "10.0.0.8", "Port 445"),
-            ("2025-05-24 12:39:10", "Medium", "Failed Logins", "10.0.0.9", "192.168.1.70", "RDP brute"),
-            ("2025-05-24 12:38:05", "Low", "Suspicious", "8.8.8.8", "192.168.1.90", "DNS tunneling"),
-            ("2025-05-24 12:37:22", "High", "DoS Attack", "203.184.216.35", "192.168.1.1", "UDP flood"),
-            ("2025-05-24 12:36:44", "Medium", "ICMP Flood", "172.16.0.77", "192.168.1.1", "Ping flood"),
-            ("2025-05-24 12:35:33", "Low", "Policy Violation", "192.168.1.120", "10.0.0.45", "Torrent"),
-            ("2025-05-24 12:34:20", "High", "Port Scan", "192.168.1.202", "10.0.0.30", "Port 22,23"),
-            ("2025-05-24 12:33:15", "Medium", "Brute Force", "10.0.0.80", "192.168.1.30", "SSH attack"),
-            ("2025-05-24 12:32:02", "Low", "Malformed Packet", "192.168.1.99", "10.0.0.99", "Invalid TCP"),
-            ("2025-05-24 12:30:45", "High", "DoS Attack", "203.184.216.36", "192.168.1.1", "SYN flood")
-        ]
-        self.total_alerts = len(self.all_alerts)
+    def load_from_db(self):
+        db_path = "database/ids.db"
+        if not os.path.exists(db_path):
+            QMessageBox.warning(self, "Database Missing", f"Database not found:\n{db_path}\nUsing empty data.")
+            self.all_alerts = []
+        else:
+            try:
+                conn = sqlite3.connect(db_path)
+                cursor = conn.cursor()
+                cursor.execute("""
+                    SELECT first_seen, severity, category, src_ip, dst_ip, protocol, name
+                    FROM alerts
+                    ORDER BY first_seen DESC
+                """)
+                rows = cursor.fetchall()
+                conn.close()
+                self.all_alerts = []
+                for row in rows:
+                    ts_raw = row[0]
+                    ts_display = format_timestamp(ts_raw)
+                    sev_normalized = normalize_severity(row[1])
+                    self.all_alerts.append((ts_display, sev_normalized, row[2], row[3], row[4], row[5], row[6]))
+            except Exception as e:
+                QMessageBox.critical(self, "DB Error", f"Failed to read alerts:\n{str(e)}")
+                self.all_alerts = []
+
+        self.filtered_alerts = self.all_alerts.copy()
+        self.update_pagination()
         self.update_display()
+
+    def apply_filter(self, severity, alert_type, protocol, src_ip):
+        filtered = []
+        for alert in self.all_alerts:
+            if severity != "All" and alert[1] != severity:
+                continue
+            if alert_type != "All" and alert[2] != alert_type:
+                continue
+            if protocol != "All" and alert[5] != protocol:
+                continue
+            if src_ip and src_ip not in alert[3]:
+                continue
+            filtered.append(alert)
+        return filtered
+
+    def update_pagination(self):
+        total = len(self.filtered_alerts)
+        self.total_pages = (total + self.rows_per_page - 1) // self.rows_per_page if total > 0 else 1
+        if self.current_page >= self.total_pages:
+            self.current_page = self.total_pages - 1
+        if self.current_page < 0:
+            self.current_page = 0
 
     def update_display(self):
         start = self.current_page * self.rows_per_page
-        end = min(start + self.rows_per_page, self.total_alerts)
-        page_alerts = self.all_alerts[start:end]
+        end = min(start + self.rows_per_page, len(self.filtered_alerts))
+        page_alerts = self.filtered_alerts[start:end]
+
         self.table.setRowCount(len(page_alerts))
-
-        for row, (time, severity, atype, src, dst, det) in enumerate(page_alerts):
-            self.table.setItem(row, 0, QTableWidgetItem(time))
-
-            # Create colored dot icon based on severity
+        for row, alert in enumerate(page_alerts):
+            timestamp, severity, atype, src, dst, proto, name = alert
+            self.table.setItem(row, 0, QTableWidgetItem(timestamp))
+            sev_item = QTableWidgetItem(severity)
             if severity == "High":
                 icon = create_color_icon("#f44336")
-            elif severity == "Medium":
-                icon = create_color_icon("#ff9800")
-            else:
-                icon = create_color_icon("#4caf50")
-
-            sev_item = QTableWidgetItem(severity)
-            sev_item.setIcon(icon)                # icon appears left of text
-            if severity == "High":
                 sev_item.setForeground(QBrush(QColor("#f44336")))
             elif severity == "Medium":
+                icon = create_color_icon("#ff9800")
                 sev_item.setForeground(QBrush(QColor("#ff9800")))
             else:
+                icon = create_color_icon("#4caf50")
                 sev_item.setForeground(QBrush(QColor("#4caf50")))
+            sev_item.setIcon(icon)
             self.table.setItem(row, 1, sev_item)
-
             self.table.setItem(row, 2, QTableWidgetItem(atype))
             self.table.setItem(row, 3, QTableWidgetItem(src))
             self.table.setItem(row, 4, QTableWidgetItem(dst))
-            self.table.setItem(row, 5, QTableWidgetItem(det))
+            self.table.setItem(row, 5, QTableWidgetItem(name))
+        self.table.resizeRowsToContents()
 
     def go_to_page(self, page):
         self.current_page = page
         self.update_display()
 
     def next_page(self):
-        if (self.current_page + 1) * self.rows_per_page < self.total_alerts:
+        if self.current_page + 1 < self.total_pages:
             self.current_page += 1
             self.update_display()
             return True
@@ -347,9 +374,6 @@ class AlertsTable(QFrame):
         return False
 
 
-# =========================
-# 🔹 PAGINATION BAR (larger buttons, clear info)
-# =========================
 class PaginationBar(QFrame):
     def __init__(self, on_page_change, on_next, on_prev):
         super().__init__()
@@ -446,9 +470,6 @@ class PaginationBar(QFrame):
         self._set_active(current_page)
 
 
-# =========================
-# 🔹 MAIN ALERTS VIEW (compact, subtitle inline, complete)
-# =========================
 class AlertsView(QWidget):
     def __init__(self):
         super().__init__()
@@ -457,7 +478,6 @@ class AlertsView(QWidget):
         main_layout.setSpacing(6)
         main_layout.setContentsMargins(4, 4, 4, 4)
 
-        # Header row: title + subtitle inline, export button right
         header_layout = QHBoxLayout()
         header_layout.setContentsMargins(0, 0, 0, 0)
         header_layout.setSpacing(8)
@@ -472,7 +492,6 @@ class AlertsView(QWidget):
         header_layout.addWidget(subtitle)
 
         header_layout.addStretch()
-
         self.export_btn = QPushButton("📎 Export CSV")
         self.export_btn.setStyleSheet("""
             QPushButton {
@@ -492,19 +511,15 @@ class AlertsView(QWidget):
 
         main_layout.addLayout(header_layout)
 
-        # Stats row
         self.stats_row = AlertsStatsRow(BASE)
         main_layout.addWidget(self.stats_row)
 
-        # Filters bar
         self.filters_bar = FiltersBar()
         main_layout.addWidget(self.filters_bar)
 
-        # Table (12 rows, colored severity dots)
         self.alerts_table = AlertsTable()
         main_layout.addWidget(self.alerts_table)
 
-        # Pagination
         self.pagination = PaginationBar(
             on_page_change=self.on_page_change,
             on_next=self.on_next_page,
@@ -512,28 +527,57 @@ class AlertsView(QWidget):
         )
         main_layout.addWidget(self.pagination)
 
-        # Connect filter buttons
         self.filters_bar.apply_btn.clicked.connect(self.apply_filters)
         self.filters_bar.reset_btn.clicked.connect(self.reset_filters)
 
+        self.update_stats()
         self.update_pagination_info()
-        self.update_demo_stats()
 
-    def update_demo_stats(self):
-        # placeholder stats – replace with backend later
-        self.stats_row.high_card.value_lbl.setText("5")
-        self.stats_row.medium_card.value_lbl.setText("9")
-        self.stats_row.low_card.value_lbl.setText("6")
-        self.stats_row.total_card.value_lbl.setText("20")
+    def update_stats(self):
+        total = len(self.alerts_table.all_alerts)
+        high = sum(1 for a in self.alerts_table.all_alerts if a[1] == "High")
+        medium = sum(1 for a in self.alerts_table.all_alerts if a[1] == "Medium")
+        low = sum(1 for a in self.alerts_table.all_alerts if a[1] == "Low")
+        self.stats_row.high_card.value_lbl.setText(str(high))
+        self.stats_row.medium_card.value_lbl.setText(str(medium))
+        self.stats_row.low_card.value_lbl.setText(str(low))
+        self.stats_row.total_card.value_lbl.setText(str(total))
+
+    def apply_filters(self):
+        severity = self.filters_bar.severity_combo.currentText()
+        alert_type = self.filters_bar.type_combo.currentText()
+        protocol = self.filters_bar.protocol_combo.currentText()
+        src_ip = self.filters_bar.src_ip.text().strip()
+        filtered = self.alerts_table.apply_filter(severity, alert_type, protocol, src_ip)
+        self.alerts_table.filtered_alerts = filtered
+        self.alerts_table.current_page = 0
+        self.alerts_table.update_pagination()
+        self.alerts_table.update_display()
+        self.update_pagination_info()
+
+    def reset_filters(self):
+        self.filters_bar.severity_combo.setCurrentIndex(0)
+        self.filters_bar.type_combo.setCurrentIndex(0)
+        self.filters_bar.protocol_combo.setCurrentIndex(0)
+        self.filters_bar.src_ip.clear()
+        self.alerts_table.filtered_alerts = self.alerts_table.all_alerts.copy()
+        self.alerts_table.current_page = 0
+        self.alerts_table.update_pagination()
+        self.alerts_table.update_display()
+        self.update_pagination_info()
+        QMessageBox.information(self, "Reset", "Filters reset to show all alerts.")
 
     def update_pagination_info(self):
-        total = self.alerts_table.total_alerts
+        total = len(self.alerts_table.filtered_alerts)
         per_page = self.alerts_table.rows_per_page
         current = self.alerts_table.current_page
         start = current * per_page + 1
         end = min((current + 1) * per_page, total)
+        if total == 0:
+            start = 0
+            end = 0
         self.pagination.update_info(start, end, total)
-        total_pages = (total + per_page - 1) // per_page
+        total_pages = (total + per_page - 1) // per_page if total > 0 else 1
         self.pagination.set_page_buttons(current, total_pages)
 
     def on_page_change(self, page_index):
@@ -550,15 +594,24 @@ class AlertsView(QWidget):
         self.alerts_table.prev_page()
         self.update_pagination_info()
 
-    def apply_filters(self):
-        QMessageBox.information(self, "Filter", "Filter feature will be implemented in backend.")
-
-    def reset_filters(self):
-        self.filters_bar.severity_combo.setCurrentIndex(0)
-        self.filters_bar.type_combo.setCurrentIndex(0)
-        self.filters_bar.protocol_combo.setCurrentIndex(0)
-        self.filters_bar.src_ip.clear()
-        QMessageBox.information(self, "Reset", "Filters reset.")
-
     def export_csv(self):
-        QMessageBox.information(self, "Export CSV", "📎 Export CSV feature will be implemented in the backend.\nThis is a frontend placeholder.")
+        """Export the current filtered alerts to a CSV file."""
+        if not self.alerts_table.filtered_alerts:
+            QMessageBox.warning(self, "No Data", "No alerts to export.")
+            return
+
+        file_path, _ = QFileDialog.getSaveFileName(
+            self, "Save CSV File", "alerts_export.csv", "CSV Files (*.csv);;All Files (*)"
+        )
+        if not file_path:
+            return
+
+        try:
+            with open(file_path, 'w', newline='', encoding='utf-8') as csvfile:
+                writer = csv.writer(csvfile)
+                writer.writerow(["Time", "Severity", "Alert Type", "Source IP", "Destination IP", "Details"])
+                for alert in self.alerts_table.filtered_alerts:
+                    writer.writerow([alert[0], alert[1], alert[2], alert[3], alert[4], alert[5]])
+            QMessageBox.information(self, "Export Successful", f"Alerts exported to:\n{file_path}")
+        except Exception as e:
+            QMessageBox.critical(self, "Export Error", f"Failed to export CSV:\n{str(e)}")
