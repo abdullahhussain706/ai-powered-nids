@@ -1,7 +1,7 @@
 # settings_view.py - Clean, no background glitches
 
 import json
-import os
+from pathlib import Path
 from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QFrame,
     QGroupBox, QFormLayout, QCheckBox, QComboBox, QLineEdit,
@@ -11,23 +11,21 @@ from PySide6.QtWidgets import (
 from PySide6.QtCore import Qt, QTimer
 
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-RULE_DIR = os.path.join(BASE_DIR, "rule")
+BASE_DIR = Path(__file__).resolve().parent.parent
+RULE_DIR = BASE_DIR / "rule"
+DEFAULT_ALERT_LOG = BASE_DIR / "logs" / "alerts.jsonl"
+DEFAULT_ALERT_LOG.parent.mkdir(parents=True, exist_ok=True)
 
 
 def load_rule_rows():
     rows = []
 
-    if not os.path.isdir(RULE_DIR):
+    if not RULE_DIR.is_dir():
         return rows
 
-    for filename in sorted(os.listdir(RULE_DIR)):
-        if not filename.endswith(".json"):
-            continue
-
-        path = os.path.join(RULE_DIR, filename)
+    for path in sorted(RULE_DIR.glob("*.json")):
         try:
-            with open(path, "r", encoding="utf-8") as f:
+            with path.open("r", encoding="utf-8") as f:
                 rules = json.load(f)
         except Exception:
             continue
@@ -39,7 +37,7 @@ def load_rule_rows():
             rows.append((
                 rule.get("id", ""),
                 rule.get("name", "Unnamed Rule"),
-                rule.get("category", filename),
+                rule.get("category", path.name),
                 "Enabled" if rule.get("enabled", True) else "Disabled",
             ))
 
@@ -187,7 +185,7 @@ class SettingsView(QWidget):
         self.log_format.setCurrentText("JSON")
         log_layout.addRow("Log Format:", self.log_format)
 
-        self.log_file_path = QLineEdit("/var/log/ids/alerts.json")
+        self.log_file_path = QLineEdit(str(DEFAULT_ALERT_LOG))
         log_layout.addRow("Log File Path:", self.log_file_path)
 
         self.max_log_size = QSpinBox()
@@ -375,7 +373,7 @@ class SettingsView(QWidget):
         # Logging Settings
         self.logging_enabled.setChecked(True)
         self.log_format.setCurrentText("JSON")
-        self.log_file_path.setText("/var/log/ids/alerts.json")
+        self.log_file_path.setText(str(DEFAULT_ALERT_LOG))
         self.max_log_size.setValue(100)
         self.auto_delete.setChecked(True)
         self.delete_after_days.setValue(7)

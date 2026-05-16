@@ -1,9 +1,9 @@
-import os
 import math
 import re
 import sqlite3
 import pyqtgraph as pg
 from datetime import datetime
+from pathlib import Path
 
 from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QFrame,
@@ -14,9 +14,12 @@ from PySide6.QtGui import QPixmap, QPainter, QColor, QPen, QFont
 from PySide6.QtCore import QRectF
 
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-LOG_PATH = os.path.join(BASE_DIR, "logs", "capture.log")
-DB_PATH = os.path.join(BASE_DIR, "database", "ids.db")
+BASE_DIR = Path(__file__).resolve().parent.parent
+UI_DIR = BASE_DIR / "ui"
+LOG_PATH = BASE_DIR / "logs" / "capture.log"
+DB_PATH = BASE_DIR / "database" / "ids.db"
+LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
+DB_PATH.parent.mkdir(parents=True, exist_ok=True)
 SUMMARY_RE = re.compile(r"Packets:\s*(\d+)\s*\|\s*Flows:\s*(\d+)")
 CAPTURE_RE = re.compile(r"Capturing\s+\d+\s+packets")
 LOG_TIME_FORMAT = "%Y-%m-%d %H:%M:%S,%f"
@@ -30,12 +33,12 @@ def _parse_log_time(line):
 
 
 def load_traffic_series(limit=30):
-    if not os.path.exists(LOG_PATH):
+    if not LOG_PATH.exists():
         return [], [], []
 
     records = []
     capture_started_at = None
-    with open(LOG_PATH, "r", encoding="utf-8", errors="ignore") as f:
+    with LOG_PATH.open("r", encoding="utf-8", errors="ignore") as f:
         for line in f:
             ts = _parse_log_time(line)
             if not ts:
@@ -71,7 +74,7 @@ def load_traffic_series(limit=30):
 
 
 def get_alert_count():
-    if not os.path.exists(DB_PATH):
+    if not DB_PATH.exists():
         return 0
 
     try:
@@ -82,7 +85,7 @@ def get_alert_count():
 
 
 def get_host_count():
-    if not os.path.exists(DB_PATH):
+    if not DB_PATH.exists():
         return 0
 
     try:
@@ -126,9 +129,10 @@ class StatCard(QFrame):
         layout.setContentsMargins(10, 6, 10, 6)
         layout.setSpacing(8)
 
-        if icon_path and os.path.exists(icon_path):
+        icon_path = Path(icon_path) if icon_path else None
+        if icon_path and icon_path.exists():
             icon = QLabel()
-            pix = QPixmap(icon_path).scaled(45, 45, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+            pix = QPixmap(str(icon_path)).scaled(45, 45, Qt.KeepAspectRatio, Qt.SmoothTransformation)
             icon.setPixmap(pix)
             icon.setFixedWidth(55)
             icon.setAlignment(Qt.AlignCenter)
@@ -167,13 +171,13 @@ class CardsRow(QWidget):
         layout.setSpacing(5)
 
         self.packet_card = StatCard("Packets/sec", "0",
-            os.path.join(base_path, "icons/packet.png"), border_color="#2196f3")
+            base_path / "icons" / "packet.png", border_color="#2196f3")
         self.flow_card = StatCard("Flows/sec", "0",
-            os.path.join(base_path, "icons/flow.png"), border_color="#4caf50")
+            base_path / "icons" / "flow.png", border_color="#4caf50")
         self.alert_card = StatCard("Alerts", "0",
-            os.path.join(base_path, "icons/alert.png"), border_color="#f44336")
+            base_path / "icons" / "alert.png", border_color="#f44336")
         self.host_card = StatCard("Hosts", "0",
-            os.path.join(base_path, "icons/host.png"), border_color="#ff9800")
+            base_path / "icons" / "host.png", border_color="#ff9800")
 
         layout.addWidget(self.packet_card)
         layout.addWidget(self.flow_card)
@@ -652,8 +656,6 @@ class DashboardView(QWidget):
     def __init__(self):
         super().__init__()
 
-        BASE = os.path.dirname(os.path.abspath(__file__))
-
         main = QVBoxLayout(self)
         main.setContentsMargins(16, 16, 16, 16)
         main.setSpacing(8)
@@ -676,7 +678,7 @@ class DashboardView(QWidget):
         header_layout.addStretch()
         main.addWidget(header_widget)
 
-        self.cards_row = CardsRow(BASE)
+        self.cards_row = CardsRow(UI_DIR)
         self.middle_row = MiddleRow()
 
         main.addWidget(self.cards_row)

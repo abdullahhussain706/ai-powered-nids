@@ -3,12 +3,17 @@
 import subprocess
 import sys
 import time
+import platform
 from pathlib import Path
 
 
 BASE_DIR = Path(__file__).resolve().parent
 BACKEND_SCRIPT = BASE_DIR / "core" / "packet_capture.py"
-VENV_PYTHON = BASE_DIR / "venv" / "bin" / "python"
+VENV_PYTHON = (
+    BASE_DIR / "venv" / "Scripts" / "python.exe"
+    if platform.system() == "Windows"
+    else BASE_DIR / "venv" / "bin" / "python"
+)
 PYTHON = VENV_PYTHON if VENV_PYTHON.exists() else Path(sys.executable)
 
 

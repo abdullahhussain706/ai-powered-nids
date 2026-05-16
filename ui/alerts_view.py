@@ -1,8 +1,8 @@
 # alerts_view.py - Full version with working CSV export
 
-import os
 import csv
 import sqlite3
+from pathlib import Path
 from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QFrame,
     QTableWidget, QTableWidgetItem, QHeaderView, QPushButton,
@@ -10,6 +10,12 @@ from PySide6.QtWidgets import (
 )
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QColor, QBrush, QPixmap, QPainter, QIcon
+
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+UI_DIR = BASE_DIR / "ui"
+DB_PATH = BASE_DIR / "database" / "ids.db"
+DB_PATH.parent.mkdir(parents=True, exist_ok=True)
 
 
 def create_color_icon(color_hex, size=12):
@@ -71,9 +77,10 @@ class AlertStatCard(QFrame):
         layout.setContentsMargins(10, 6, 10, 6)
         layout.setSpacing(8)
 
-        if icon_path and os.path.exists(icon_path):
+        icon_path = Path(icon_path) if icon_path else None
+        if icon_path and icon_path.exists():
             icon = QLabel()
-            pix = QPixmap(icon_path).scaled(34, 34, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+            pix = QPixmap(str(icon_path)).scaled(34, 34, Qt.KeepAspectRatio, Qt.SmoothTransformation)
             icon.setPixmap(pix)
             icon.setFixedWidth(40)
             icon.setAlignment(Qt.AlignCenter)
@@ -106,13 +113,13 @@ class AlertsStatsRow(QWidget):
         layout.setSpacing(8)
 
         self.high_card = AlertStatCard("High Severity", "0",
-            os.path.join(base_path, "icons/high.png"), border_color="#f44336")
+            base_path / "icons" / "high.png", border_color="#f44336")
         self.medium_card = AlertStatCard("Medium Severity", "0",
-            os.path.join(base_path, "icons/medium.png"), border_color="#ff9800")
+            base_path / "icons" / "medium.png", border_color="#ff9800")
         self.low_card = AlertStatCard("Low Severity", "0",
-            os.path.join(base_path, "icons/low.png"), border_color="#4caf50")
+            base_path / "icons" / "low.png", border_color="#4caf50")
         self.total_card = AlertStatCard("Total Alerts", "0",
-            os.path.join(base_path, "icons/total.png"), border_color="#2196f3")
+            base_path / "icons" / "total.png", border_color="#2196f3")
 
         layout.addWidget(self.high_card)
         layout.addWidget(self.medium_card)
@@ -277,13 +284,12 @@ class AlertsTable(QFrame):
         self.load_from_db()
 
     def load_from_db(self):
-        db_path = "database/ids.db"
-        if not os.path.exists(db_path):
-            QMessageBox.warning(self, "Database Missing", f"Database not found:\n{db_path}\nUsing empty data.")
+        if not DB_PATH.exists():
+            QMessageBox.warning(self, "Database Missing", f"Database not found:\n{DB_PATH}\nUsing empty data.")
             self.all_alerts = []
         else:
             try:
-                conn = sqlite3.connect(db_path)
+                conn = sqlite3.connect(DB_PATH)
                 cursor = conn.cursor()
                 cursor.execute("""
                     SELECT first_seen, severity, category, src_ip, dst_ip, protocol, name
@@ -473,7 +479,6 @@ class PaginationBar(QFrame):
 class AlertsView(QWidget):
     def __init__(self):
         super().__init__()
-        BASE = os.path.dirname(os.path.abspath(__file__))
         main_layout = QVBoxLayout(self)
         main_layout.setSpacing(6)
         main_layout.setContentsMargins(4, 4, 4, 4)
@@ -511,7 +516,7 @@ class AlertsView(QWidget):
 
         main_layout.addLayout(header_layout)
 
-        self.stats_row = AlertsStatsRow(BASE)
+        self.stats_row = AlertsStatsRow(UI_DIR)
         main_layout.addWidget(self.stats_row)
 
         self.filters_bar = FiltersBar()
@@ -607,7 +612,7 @@ class AlertsView(QWidget):
             return
 
         try:
-            with open(file_path, 'w', newline='', encoding='utf-8') as csvfile:
+            with Path(file_path).open("w", newline="", encoding="utf-8") as csvfile:
                 writer = csv.writer(csvfile)
                 writer.writerow(["Time", "Severity", "Alert Type", "Source IP", "Destination IP", "Details"])
                 for alert in self.alerts_table.filtered_alerts:

@@ -1,9 +1,9 @@
 # logs_view.py - Real log file reader with pagination
 
-import os
 import re
 from datetime import datetime
 from collections import Counter
+from pathlib import Path
 from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QFrame,
     QTableWidget, QTableWidgetItem, QHeaderView,
@@ -14,7 +14,9 @@ from PySide6.QtGui import QColor, QBrush, QPixmap
 
 
 # === CONFIGURATION ===
-LOG_FILE_PATH = "logs/capture.log"   # Change to your actual log file path
+BASE_DIR = Path(__file__).resolve().parent.parent
+LOG_FILE_PATH = BASE_DIR / "logs" / "capture.log"
+LOG_FILE_PATH.parent.mkdir(parents=True, exist_ok=True)
 ROWS_PER_PAGE = 10
 
 
@@ -233,7 +235,7 @@ class LogsView(QWidget):
 
     def load_logs_from_file(self):
         """Read log file and populate self.all_logs."""
-        if not os.path.exists(LOG_FILE_PATH):
+        if not LOG_FILE_PATH.exists():
             QMessageBox.warning(self, "Log File Missing", f"Log file not found:\n{LOG_FILE_PATH}")
             self.all_logs = []
             self.update_stats()
@@ -242,7 +244,7 @@ class LogsView(QWidget):
 
         self.all_logs = []
         try:
-            with open(LOG_FILE_PATH, 'r', encoding='utf-8', errors='ignore') as f:
+            with LOG_FILE_PATH.open("r", encoding="utf-8", errors="ignore") as f:
                 for line in f:
                     parsed = self.parse_log_line(line)
                     if parsed:

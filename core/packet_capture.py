@@ -11,18 +11,20 @@ from pathlib import Path
 # =========================
 # CONFIG
 # =========================
-INTERFACE = os.getenv("IDS_INTERFACE", "wlp2s0")
+BASE_DIR = Path(__file__).resolve().parent.parent
+INTERFACE = os.getenv("IDS_INTERFACE")
 PACKET_LIMIT = int(os.getenv("IDS_PACKET_LIMIT", 500))
-OUTPUT_DIR = Path("data/raw_packets")
+OUTPUT_DIR = BASE_DIR / "data" / "raw_packets"
 DELAY = float(os.getenv("IDS_DELAY", 1))
 MAX_FILES = int(os.getenv("IDS_MAX_FILES", 50))
 TSHARK_TIMEOUT = int(os.getenv("IDS_TSHARK_TIMEOUT", 120))
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 # =========================
 # LOGGING SETUP
 # =========================
-LOG_DIR = Path("logs")
-LOG_DIR.mkdir(exist_ok=True)
+LOG_DIR = BASE_DIR / "logs"
+LOG_DIR.mkdir(parents=True, exist_ok=True)
 
 logging.basicConfig(
     filename=LOG_DIR / "capture.log",
@@ -37,7 +39,7 @@ logging.getLogger("").addHandler(console)
 # =========================
 # IMPORT PARSER
 # =========================
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.append(str(BASE_DIR))
 from core.packet_parser import parse_pcap
 from core.alert_manager import handle_alerts
 
@@ -60,9 +62,18 @@ def get_interfaces():
     return result.stdout
 
 
+def get_default_interface():
+    """Pick the first tshark interface when IDS_INTERFACE is not configured."""
+    for line in get_interfaces().splitlines():
+        if "." not in line:
+            continue
+        return line.split(".", 1)[0].strip()
+    return None
+
+
 def rotate_files():
     """Delete old pcaps if limit exceeded"""
-    files = sorted(OUTPUT_DIR.glob("*.pcap"), key=os.path.getmtime)
+    files = sorted(OUTPUT_DIR.glob("*.pcap"), key=lambda path: path.stat().st_mtime)
 
     if len(files) > MAX_FILES:
         for f in files[:len(files) - MAX_FILES]:
@@ -81,14 +92,14 @@ def generate_filename():
 # =========================
 # CAPTURE FUNCTION
 # =========================
-def capture_packets():
+def capture_packets(interface):
     pcap_file = generate_filename()
 
     logging.info(f"📥 Capturing {PACKET_LIMIT} packets → {pcap_file}")
 
     cmd = [
         "tshark",
-        "-i", INTERFACE,
+        "-i", interface,
         "-c", str(PACKET_LIMIT),
         "-w", str(pcap_file)
     ]
@@ -124,9 +135,13 @@ def main_loop():
     logging.info("🚀 Starting IDS Capture Pipeline")
 
     check_tshark()
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-    logging.info(f"🔌 Using interface: {INTERFACE}")
+    interface = INTERFACE or get_default_interface()
+    if not interface:
+        logging.error("❌ No capture interface found. Set IDS_INTERFACE manually.")
+        sys.exit(1)
+
+    logging.info(f"🔌 Using interface: {interface}")
 
     iteration = 0
 
@@ -135,7 +150,7 @@ def main_loop():
 
         try:
             # STEP 1: Capture
-            pcap_file = capture_packets()
+            pcap_file = capture_packets(interface)
             if not pcap_file:
                 continue
 

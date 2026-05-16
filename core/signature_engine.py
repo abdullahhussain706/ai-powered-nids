@@ -1,8 +1,8 @@
 # core/signature_engine.py
 
 import json
-import os
 import logging
+from pathlib import Path
 
 # =========================
 # GLOBAL CACHE
@@ -14,8 +14,8 @@ RULES_LOADED = False
 # =========================
 # PATH HANDLING (IMPORTANT FIX)
 # =========================
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-RULES_DIR = os.path.join(BASE_DIR, "rule")
+BASE_DIR = Path(__file__).resolve().parent.parent
+RULES_DIR = BASE_DIR / "rule"
 
 
 # =========================
@@ -30,33 +30,31 @@ def load_rules():
     RULES = []
 
     try:
-        if not os.path.exists(RULES_DIR):
+        if not RULES_DIR.exists():
             logging.error(f"❌ Rules directory not found: {RULES_DIR}")
             return []
 
-        files = [f for f in os.listdir(RULES_DIR) if f.endswith(".json")]
+        files = sorted(RULES_DIR.glob("*.json"))
 
         if not files:
             logging.warning("⚠️ No rule files found")
             return []
 
-        for file in files:
-            path = os.path.join(RULES_DIR, file)
-
+        for path in files:
             try:
-                with open(path, "r") as f:
+                with path.open("r", encoding="utf-8") as f:
                     data = json.load(f)
 
                     if isinstance(data, list):
                         RULES.extend(data)
                     else:
-                        logging.warning(f"⚠️ Skipping invalid rule format: {file}")
+                        logging.warning(f"⚠️ Skipping invalid rule format: {path.name}")
 
             except json.JSONDecodeError as e:
-                logging.error(f"❌ JSON error in {file}: {e}")
+                logging.error(f"❌ JSON error in {path.name}: {e}")
 
             except Exception as e:
-                logging.error(f"❌ Failed reading {file}: {e}")
+                logging.error(f"❌ Failed reading {path.name}: {e}")
 
         RULES_LOADED = True
         logging.info(f"📜 Rules loaded successfully: {len(RULES)}")

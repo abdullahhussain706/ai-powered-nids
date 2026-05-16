@@ -9,6 +9,7 @@ from database.db_manager import DB_PATH, get_connection, init_db
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 ALERT_LOG = BASE_DIR / "logs" / "alerts.jsonl"
+ALERT_LOG.parent.mkdir(parents=True, exist_ok=True)
 
 SEVERITY_RANK = {
     "low": 1,
