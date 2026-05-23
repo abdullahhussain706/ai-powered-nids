@@ -359,3 +359,23 @@ KeyError: 'total_packets'
 2026-05-12 15:58:13,675 [INFO] 🧠 Features: 53
 2026-05-12 15:58:13,675 [INFO] 📊 Packets: 494 | Flows: 53 | Feature Records: 53 | Alerts: 0 | New Alerts: 0
 2026-05-12 15:58:13,676 [INFO] 📥 Capturing 500 packets → data/raw_packets/capture_20260512_155813_676795.pcap
+2026-05-16 19:06:07,568 [INFO] \U0001f680 Starting IDS Capture Pipeline
+2026-05-16 19:06:07,602 [ERROR] \u274c tshark not installed!
+2026-05-16 19:06:09,294 [INFO] \U0001f680 Starting IDS Capture Pipeline
+2026-05-16 19:06:09,309 [ERROR] \u274c tshark not installed!
+2026-05-16 19:06:10,919 [INFO] \U0001f680 Starting IDS Capture Pipeline
+2026-05-16 19:06:10,939 [ERROR] \u274c tshark not installed!
+2026-05-16 19:06:13,072 [INFO] \U0001f680 Starting IDS Capture Pipeline
+2026-05-16 19:06:13,081 [ERROR] \u274c tshark not installed!
+2026-05-16 19:06:15,168 [INFO] \U0001f680 Starting IDS Capture Pipeline
+2026-05-16 19:06:15,176 [ERROR] \u274c tshark not installed!
+2026-05-16 19:06:17,061 [INFO] \U0001f680 Starting IDS Capture Pipeline
+2026-05-16 19:06:17,070 [ERROR] \u274c tshark not installed!
+2026-05-16 19:14:46,167 [INFO] \U0001f680 Starting IDS Capture Pipeline
+2026-05-16 19:14:50,783 [INFO] \U0001f50c Using interface: 1
+2026-05-16 19:14:50,784 [INFO] \U0001f4e5 Capturing 500 packets \u2192 E:\ai-powered-nids\data\raw_packets\capture_20260516_191450_784389.pcap
+2026-05-16 19:16:50,880 [ERROR] \u23f3 tshark timeout � killing process
+2026-05-16 19:16:50,889 [INFO] \U0001f4e5 Capturing 500 packets \u2192 E:\ai-powered-nids\data\raw_packets\capture_20260516_191650_889227.pcap
+2026-05-16 19:18:10,405 [INFO] \U0001f680 Starting IDS Capture Pipeline
+2026-05-16 19:18:12,794 [INFO] \U0001f50c Using interface: 1
+2026-05-16 19:18:12,794 [INFO] \U0001f4e5 Capturing 500 packets \u2192 E:\ai-powered-nids\data\raw_packets\capture_20260516_191812_794768.pcap

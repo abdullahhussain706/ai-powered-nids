@@ -31,6 +31,11 @@ class Flow:
         self.syn_count = 0
         self.fin_count = 0
         self.psh_count = 0
+        self.ack_count = 0
+        self.rst_count = 0
+
+        # packet stats
+        self.packet_sizes = [pkt["length"]]
 
         self._update_flags(pkt)
 
@@ -43,6 +48,10 @@ class Flow:
             self.fin_count += 1
         if "P" in flags:
             self.psh_count += 1
+        if "A" in flags:
+            self.ack_count += 1
+        if "R" in flags:
+            self.rst_count += 1
 
     # =========================
     def update(self, pkt, direction):
@@ -55,6 +64,7 @@ class Flow:
             self.bwd_packets += 1
             self.bwd_bytes += pkt["length"]
 
+        self.packet_sizes.append(pkt["length"])
         self._update_flags(pkt)
 
     # =========================
@@ -103,7 +113,10 @@ class Flow:
 
             "syn_count": self.syn_count,
             "fin_count": self.fin_count,
-            "psh_count": self.psh_count
+            "psh_count": self.psh_count,
+            "ack_count": self.ack_count,
+            "rst_count": self.rst_count,
+            "packet_sizes": self.packet_sizes
         }
 
 
