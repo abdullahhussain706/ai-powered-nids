@@ -1,0 +1,10 @@
+              precision    recall  f1-score   support
+
+         DOS       0.98      0.99      0.98       298
+        DDOS       1.00      1.00      1.00       360
+    PORTSCAN       0.99      0.98      0.99       323
+  WEB_ATTACK       0.99      0.99      0.99       360
+
+    accuracy                           0.99      1341
+   macro avg       0.99      0.99      0.99      1341
+weighted avg       0.99      0.99      0.99      1341
