@@ -48,9 +48,26 @@ IDENTITY_FEATURES = [
     "protocol",
 ]
 
+PROTOCOL_NAMES = {
+    1: "ICMP",
+    6: "TCP",
+    17: "UDP",
+    58: "ICMPV6",
+    "1": "ICMP",
+    "6": "TCP",
+    "17": "UDP",
+    "58": "ICMPV6",
+}
+
 
 def safe_div(a, b):
     return a / b if b != 0 else 0.0
+
+
+def normalize_protocol(protocol):
+    if protocol in PROTOCOL_NAMES:
+        return PROTOCOL_NAMES[protocol]
+    return str(protocol or "").strip().upper()
 
 
 def _packet_sizes(flow, total_bytes, total_packets):
@@ -107,7 +124,7 @@ def extract_cicids_features(flow, include_identity=False):
         )
 
         burst_rate = flow_packets_per_sec * duration
-        protocol = str(flow.get("protocol", "")).upper()
+        protocol = normalize_protocol(flow.get("protocol", ""))
 
         features = {
             "duration": duration,
