@@ -21,9 +21,20 @@ def init_db(db_path=DB_PATH):
     with get_connection(db_path) as conn:
         schema = SCHEMA_PATH.read_text()
         conn.executescript(schema)
+        ensure_alert_columns(conn)
         conn.commit()
 
     return db_path
+
+
+def ensure_alert_columns(conn):
+    columns = {
+        row["name"]
+        for row in conn.execute("PRAGMA table_info(alerts)").fetchall()
+    }
+
+    if "source" not in columns:
+        conn.execute("ALTER TABLE alerts ADD COLUMN source TEXT")
 
 
 def execute(query, params=None, db_path=DB_PATH):

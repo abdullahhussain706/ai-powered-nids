@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS alerts (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     alert_key TEXT NOT NULL,
+    source TEXT,
     rule_id INTEGER,
     name TEXT,
     category TEXT,
