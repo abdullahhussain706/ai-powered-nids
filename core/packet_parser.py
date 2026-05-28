@@ -85,7 +85,12 @@ def parse_line(line):
 # =========================
 # MAIN PIPELINE
 # =========================
-def parse_pcap(pcap_file, run_flow_builder=True, run_feature_engine=True):
+def parse_pcap(
+    pcap_file,
+    run_flow_builder=True,
+    run_feature_engine=True,
+    run_ml_engine=True,
+):
 
     cmd = [
         "tshark",
@@ -141,10 +146,27 @@ def parse_pcap(pcap_file, run_flow_builder=True, run_feature_engine=True):
     # =========================
     # FEATURE ENGINE
     # =========================
-    features = []
+    feature_results = []
     if run_feature_engine and flows:
         from core.feature_engine import extract_features_batch
-        features = extract_features_batch(flows)
+        signature_results = extract_features_batch(flows)
+        features = signature_results
+        for result in signature_results:
+            result["source"] = "signature"
+        feature_results.extend(signature_results)
         logging.info(f"🧠 Features: {len(features)}")
 
-    return packets, flows, features
+    if run_ml_engine and flows:
+        try:
+            from ml.model_pipeline import run_stage_pipeline
+            ml_results = run_stage_pipeline(flows)
+            feature_results.extend(ml_results)
+            logging.info(f"ML feature results: {len(ml_results)}")
+        except Exception as e:
+            logging.error(f"ML engine unavailable: {e}")
+
+    if feature_results:
+        from core.fusion_engine import build_hybrid_results
+        feature_results = build_hybrid_results(feature_results)
+
+    return packets, flows, feature_results

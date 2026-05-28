@@ -67,6 +67,7 @@ class AlertManager:
             "dst_port": alert.get("dst_port"),
             "protocol": alert.get("protocol"),
             "flow_id": alert.get("flow_id"),
+            "details": alert.get("details"),
         }
 
         normalized["severity_score"] = SEVERITY_RANK.get(normalized["severity"], 2)
@@ -75,6 +76,7 @@ class AlertManager:
 
     def make_alert_key(self, alert):
         parts = [
+            str(alert.get("source")),
             str(alert.get("rule_id")),
             str(alert.get("src_ip")),
             str(alert.get("dst_ip")),
@@ -119,14 +121,15 @@ class AlertManager:
             conn.execute(
                 """
                 INSERT INTO alerts (
-                    alert_key, rule_id, name, category, severity, confidence,
+                    alert_key, source, rule_id, name, category, severity, confidence,
                     src_ip, dst_ip, src_port, dst_port, protocol, flow_id,
                     status, first_seen, last_seen, duplicate_count, details_json
                 )
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
                     alert["alert_key"],
+                    alert["source"],
                     alert["rule_id"],
                     alert["name"],
                     alert["category"],
