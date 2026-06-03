@@ -1,0 +1,17 @@
+# Machine Learning Model Configuration
+# Settings for classification engines and model matching
+
+# File search patterns for stage1 and stage2 models under ml/models/
+stage1_model_pattern: "stage1_*.pkl"
+stage2_model_pattern: "stage2_*.pkl"
+
+# Labels matching outputs from ML model classification
+stage1_labels:
+  0: "BENIGN"
+  1: "ATTACK"
+
+stage2_labels:
+  0: "DOS"
+  1: "DDOS"
+  2: "PORTSCAN"
+  3: "WEB_ATTACK"

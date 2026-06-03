@@ -1,0 +1,17 @@
+{
+    "logging_enabled": true,
+    "log_format": "JSON",
+    "log_file_path": "E:\\ai-powered-nids\\logs\\alerts.jsonl",
+    "max_log_size_mb": 100,
+    "auto_delete_logs": true,
+    "delete_after_days": 7,
+    "capture_interface": "All",
+    "capture_mode": "Live Capture",
+    "promiscuous_mode": false,
+    "bpf_filter": "",
+    "alerts_enabled": true,
+    "desktop_notifications": false,
+    "sound_alerts": false,
+    "severity_filter": "All",
+    "alert_retention_days": 30
+}

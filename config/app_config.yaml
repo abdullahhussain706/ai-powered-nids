@@ -1,0 +1,7 @@
+# Application Configuration Settings
+# Paths are relative to the project root directory
+
+db_path: "database/ids.db"
+alert_log_path: "logs/alerts.jsonl"
+dedup_window_sec: 300
+log_level: "INFO"

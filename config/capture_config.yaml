@@ -1,0 +1,30 @@
+# Network Traffic Capture Configuration
+# Configure options for Scapy & TShark packet capturing backend
+
+# Capture interface identifier (e.g. "1" or specific name)
+# If null, the system automatically detects an active interface
+interface: null
+
+# Limit of packets captured in a single loop cycle
+packet_limit: 500
+
+# Capture duration (seconds) per loop cycle
+capture_seconds: 5.0
+
+# Delay (seconds) between successive capture iterations
+delay: 1.0
+
+# Maximum number of rolling PCAP backup files to keep in data/raw_packets/
+max_files: 50
+
+# Maximum total PCAP storage size in MB. Oldest files are deleted first.
+max_total_mb: 1024
+
+# Delete PCAP files older than this many days. Set 0 to disable age cleanup.
+retention_days: 7
+
+# Keep empty PCAP files for troubleshooting.
+keep_empty_files: false
+
+# Timeout (seconds) for running tshark commands. If null, automatically computed.
+tshark_timeout: null
