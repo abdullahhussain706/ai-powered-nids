@@ -5,22 +5,23 @@ import joblib
 import pandas as pd
 
 from core.cicids_feature_engine import TRAINING_FEATURES, extract_cicids_features
+from utils.helpers import load_config
 
 
 BASE_DIR = Path(__file__).resolve().parents[1]
 MODEL_DIR = BASE_DIR / "ml" / "models"
 
-STAGE1_LABELS = {
-    0: "BENIGN",
-    1: "ATTACK",
-}
+# Load settings from model_config.yaml
+model_conf = load_config("model_config.yaml")
 
-STAGE2_LABELS = {
-    0: "DOS",
-    1: "DDOS",
-    2: "PORTSCAN",
-    3: "WEB_ATTACK",
-}
+STAGE1_MODEL_PATTERN = model_conf.get("stage1_model_pattern", "stage1_*.pkl")
+STAGE2_MODEL_PATTERN = model_conf.get("stage2_model_pattern", "stage2_*.pkl")
+
+raw_stage1_labels = model_conf.get("stage1_labels", {0: "BENIGN", 1: "ATTACK"})
+STAGE1_LABELS = {int(k): v for k, v in raw_stage1_labels.items()}
+
+raw_stage2_labels = model_conf.get("stage2_labels", {0: "DOS", 1: "DDOS", 2: "PORTSCAN", 3: "WEB_ATTACK"})
+STAGE2_LABELS = {int(k): v for k, v in raw_stage2_labels.items()}
 
 _STAGE1_MODEL = None
 _STAGE2_MODEL = None
@@ -49,14 +50,14 @@ def _load_model(pattern, stage_name):
 def get_stage1_model():
     global _STAGE1_MODEL
     if _STAGE1_MODEL is None:
-        _STAGE1_MODEL = _load_model("stage1_*.pkl", "Stage 1")
+        _STAGE1_MODEL = _load_model(STAGE1_MODEL_PATTERN, "Stage 1")
     return _STAGE1_MODEL
 
 
 def get_stage2_model():
     global _STAGE2_MODEL
     if _STAGE2_MODEL is None:
-        _STAGE2_MODEL = _load_model("stage2_*.pkl", "Stage 2")
+        _STAGE2_MODEL = _load_model(STAGE2_MODEL_PATTERN, "Stage 2")
     return _STAGE2_MODEL
 
 

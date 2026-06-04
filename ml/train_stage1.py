@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import pandas as pd
 from pathlib import Path
 import joblib
@@ -189,4 +191,4 @@ print("\nEVALUATION ARTIFACTS SAVED AT:", REPORT_DIR)
 MODEL_PATH = MODEL_DIR / f"stage1_{model_name}.pkl"
 joblib.dump(best_model, MODEL_PATH)
 
-print("\nMODEL SAVED AT:", MODEL_PATH)
+print("\nMODeL SAVE AT:", MODEL_PATH)
