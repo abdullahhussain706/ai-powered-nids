@@ -1,9 +1,18 @@
+#!/usr/bin/env python3
+
 import sqlite3
+import sys
 from pathlib import Path
 
-
 BASE_DIR = Path(__file__).resolve().parent.parent
-DB_PATH = BASE_DIR / "database" / "ids.db"
+sys.path.append(str(BASE_DIR))
+
+from utils.helpers import load_config
+
+app_conf = load_config("app_config.yaml")
+
+db_config_path = app_conf.get("db_path", "database/ids.db")
+DB_PATH = BASE_DIR / db_config_path if not Path(db_config_path).is_absolute() else Path(db_config_path)
 SCHEMA_PATH = BASE_DIR / "database" / "schema.sql"
 DB_PATH.parent.mkdir(parents=True, exist_ok=True)
 

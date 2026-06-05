@@ -24,7 +24,9 @@ LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
 DB_PATH.parent.mkdir(parents=True, exist_ok=True)
 
 SUMMARY_RE = re.compile(r"Packets:\s*(\d+)\s*\|\s*Flows:\s*(\d+)")
-CAPTURE_RE = re.compile(r"Capturing\s+\d+\s+packets")
+CAPTURE_RE = re.compile(r"Capturing\b")
+PARSED_RE = re.compile(r"Parsed packets:\s*(\d+)")
+FLOWS_RE = re.compile(r"Flows:\s*(\d+)")
 LOG_TIME_FORMAT = "%Y-%m-%d %H:%M:%S,%f"
 
 
@@ -41,6 +43,8 @@ def load_traffic_series(limit=30):
 
     records = []
     capture_started_at = None
+    pending_packets = None
+    pending_recorded = False
     with LOG_PATH.open("r", encoding="utf-8", errors="ignore") as f:
         for line in f:
             ts = _parse_log_time(line)
@@ -48,13 +52,32 @@ def load_traffic_series(limit=30):
                 continue
             if CAPTURE_RE.search(line):
                 capture_started_at = ts
+                pending_packets = None
+                pending_recorded = False
                 continue
             match = SUMMARY_RE.search(line)
-            if not match:
+            if match:
+                start_ts = capture_started_at or ts
+                record = (start_ts, ts, int(match.group(1)), int(match.group(2)))
+                if pending_recorded and records:
+                    records[-1] = record
+                else:
+                    records.append(record)
+                capture_started_at = None
+                pending_packets = None
+                pending_recorded = False
                 continue
-            start_ts = capture_started_at or ts
-            records.append((start_ts, ts, int(match.group(1)), int(match.group(2))))
-            capture_started_at = None
+
+            parsed_match = PARSED_RE.search(line)
+            if parsed_match:
+                pending_packets = int(parsed_match.group(1))
+                continue
+
+            flows_match = FLOWS_RE.search(line)
+            if pending_packets is not None and flows_match and "Packets:" not in line:
+                start_ts = capture_started_at or ts
+                records.append((start_ts, ts, pending_packets, int(flows_match.group(1))))
+                pending_recorded = True
 
     if not records:
         return [], [], []
@@ -561,6 +584,7 @@ class ProtocolPie(QFrame):
         self.refresh()
 
     def _refresh_table_legacy(self):
+        return
         data = get_protocol_distribution()
         self.chart.set_data(data)
         self.legend_table.setRowCount(len(data))

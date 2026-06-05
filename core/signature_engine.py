@@ -9,6 +9,7 @@ from pathlib import Path
 # =========================
 RULES = []
 RULES_LOADED = False
+RULES_MTIME = {}
 
 
 # =========================
@@ -18,13 +19,31 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 RULES_DIR = BASE_DIR / "rule"
 
 
+def _rule_file_state():
+    if not RULES_DIR.exists():
+        return {}
+    state = {}
+    for path in sorted(RULES_DIR.glob("*.json")):
+        stat = path.stat()
+        state[str(path)] = (stat.st_mtime_ns, stat.st_size)
+    return state
+
+
+def reset_rules_cache():
+    global RULES, RULES_LOADED, RULES_MTIME
+    RULES = []
+    RULES_LOADED = False
+    RULES_MTIME = {}
+
+
 # =========================
 # LOAD RULES SAFELY
 # =========================
 def load_rules():
-    global RULES, RULES_LOADED
+    global RULES, RULES_LOADED, RULES_MTIME
 
-    if RULES_LOADED:
+    current_state = _rule_file_state()
+    if RULES_LOADED and current_state == RULES_MTIME:
         return RULES
 
     RULES = []
@@ -34,7 +53,7 @@ def load_rules():
             logging.error(f"❌ Rules directory not found: {RULES_DIR}")
             return []
 
-        files = sorted(RULES_DIR.glob("*.json"))
+        files = [Path(path) for path in current_state]
 
         if not files:
             logging.warning("⚠️ No rule files found")
@@ -57,6 +76,7 @@ def load_rules():
                 logging.error(f"❌ Failed reading {path.name}: {e}")
 
         RULES_LOADED = True
+        RULES_MTIME = current_state
         logging.info(f"📜 Rules loaded successfully: {len(RULES)}")
 
         return RULES

@@ -5,44 +5,42 @@ import os
 import time
 import sys
 import logging
+import json
 from collections import defaultdict
 from datetime import datetime
 from pathlib import Path
 import tempfile
 
 # =========================
-# CONFIG
+# CONFIG & PATHS
 # =========================
 BASE_DIR = Path(__file__).resolve().parent.parent
-INTERFACE = os.getenv("IDS_INTERFACE")
-PACKET_LIMIT = int(os.getenv("IDS_PACKET_LIMIT", 500))
-CAPTURE_SECONDS = float(os.getenv("IDS_CAPTURE_SECONDS", 5))
-OUTPUT_DIR = BASE_DIR / "data" / "raw_packets"
-DELAY = float(os.getenv("IDS_DELAY", 1))
-MAX_FILES = int(os.getenv("IDS_MAX_FILES", 50))
-TSHARK_TIMEOUT = int(os.getenv("IDS_TSHARK_TIMEOUT", max(20, int(CAPTURE_SECONDS) + 10)))
+sys.path.append(str(BASE_DIR))
+
+from utils.helpers import load_config
+from services.pcap_storage_service import cleanup_pcap_storage, get_pcap_dir
+
+capture_conf = load_config("capture_config.yaml")
+
+INTERFACE = capture_conf.get("interface") or os.getenv("IDS_INTERFACE")
+SETTINGS_FILE = BASE_DIR / "config" / "settings.json"
+PACKET_LIMIT = int(capture_conf.get("packet_limit") or os.getenv("IDS_PACKET_LIMIT", 500))
+CAPTURE_SECONDS = float(capture_conf.get("capture_seconds") or os.getenv("IDS_CAPTURE_SECONDS", 5.0))
+OUTPUT_DIR = get_pcap_dir(capture_conf)
+DELAY = float(capture_conf.get("delay") or os.getenv("IDS_DELAY", 1.0))
+_timeout_conf = capture_conf.get("tshark_timeout")
+TSHARK_TIMEOUT = int(_timeout_conf or os.getenv("IDS_TSHARK_TIMEOUT", max(20, int(CAPTURE_SECONDS) + 10)))
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 # =========================
 # LOGGING SETUP
 # =========================
-LOG_DIR = BASE_DIR / "logs"
-LOG_DIR.mkdir(parents=True, exist_ok=True)
-
-logging.basicConfig(
-    filename=LOG_DIR / "capture.log",
-    level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(message)s"
-)
-
-console = logging.StreamHandler()
-console.setLevel(logging.INFO)
-logging.getLogger("").addHandler(console)
+from utils.logger import setup_logger
+setup_logger(default_file="logs/capture.log")
 
 # =========================
-# IMPORT PARSER
+# IMPORT PARSER & ALERTS
 # =========================
-sys.path.append(str(BASE_DIR))
 from core.packet_parser import parse_pcap
 from core.alert_manager import handle_alerts
 
@@ -75,6 +73,96 @@ def parse_interfaces():
         interfaces.append((number.strip(), description.strip()))
 
     return interfaces
+
+
+def load_runtime_settings():
+    if not SETTINGS_FILE.exists():
+        return {}
+
+    try:
+        with SETTINGS_FILE.open("r", encoding="utf-8") as f:
+            data = json.load(f)
+            return data if isinstance(data, dict) else {}
+    except Exception as e:
+        logging.warning(f"Failed to read runtime settings: {e}")
+        return {}
+
+
+def _interface_label(interface):
+    number, description = interface
+    return f"{number}. {description}"
+
+
+def _is_real_capture_interface(interface):
+    _, description = interface
+    desc = description.lower()
+    unsupported = (
+        "androiddump",
+        "ciscodump",
+        "randpkt",
+        "sshdump",
+        "udpdump",
+        "wifidump",
+        "etwdump",
+        "sdjournal",
+    )
+    return not any(name in desc for name in unsupported)
+
+
+def _match_configured_interface(selection, interfaces):
+    selected = str(selection or "").strip()
+    if not selected:
+        return None
+
+    if "." in selected:
+        number = selected.split(".", 1)[0].strip()
+        if number.isdigit():
+            return number
+
+    if selected.isdigit():
+        return selected
+
+    selected_lower = selected.lower()
+    for number, description in interfaces:
+        if selected_lower == description.lower():
+            return number
+        if selected_lower in description.lower():
+            return number
+
+    return selected
+
+
+def resolve_capture_targets():
+    settings = load_runtime_settings()
+    interfaces = parse_interfaces()
+    configured = INTERFACE or settings.get("capture_interface") or "All"
+    configured_text = str(configured).strip()
+
+    if configured_text.lower() == "all":
+        targets = [
+            number
+            for number, description in interfaces
+            if _is_real_capture_interface((number, description))
+        ]
+        if targets:
+            labels = [
+                _interface_label(item)
+                for item in interfaces
+                if item[0] in targets
+            ]
+            logging.info("Using all capture interfaces: " + ", ".join(labels))
+            return targets, settings
+
+        default_interface = get_default_interface()
+        return ([default_interface] if default_interface else []), settings
+
+    target = _match_configured_interface(configured_text, interfaces)
+    if target:
+        logging.info(f"Using configured capture interface: {configured_text} -> {target}")
+        return [target], settings
+
+    default_interface = get_default_interface()
+    return ([default_interface] if default_interface else []), settings
 
 
 def has_live_packets(interface, duration=2):
@@ -132,16 +220,8 @@ def get_default_interface():
 
 
 def rotate_files():
-    """Delete old pcaps if limit exceeded"""
-    files = sorted(OUTPUT_DIR.glob("*.pcap"), key=lambda path: path.stat().st_mtime)
-
-    if len(files) > MAX_FILES:
-        for f in files[:len(files) - MAX_FILES]:
-            try:
-                f.unlink()
-                logging.info(f"🗑️ Deleted old file: {f}")
-            except Exception as e:
-                logging.warning(f"Failed to delete {f}: {e}")
+    """Apply PCAP storage cleanup policy."""
+    return cleanup_pcap_storage(OUTPUT_DIR)
 
 
 def generate_filename():
@@ -152,21 +232,34 @@ def generate_filename():
 # =========================
 # CAPTURE FUNCTION
 # =========================
-def capture_packets(interface):
+def capture_packets(interfaces, settings=None):
+    settings = settings or {}
+    interfaces = interfaces if isinstance(interfaces, list) else [interfaces]
     pcap_file = generate_filename()
+    interface_label = ", ".join(str(interface) for interface in interfaces)
     logging.info(
-        f"Capturing up to {PACKET_LIMIT} packets for {CAPTURE_SECONDS}s -> {pcap_file}"
+        f"Capturing up to {PACKET_LIMIT} packets for {CAPTURE_SECONDS}s "
+        f"on interface(s) {interface_label} -> {pcap_file}"
     )
 
     logging.info(f"📥 Capturing {PACKET_LIMIT} packets → {pcap_file}")
 
-    cmd = [
-        "tshark",
-        "-i", interface,
+    cmd = ["tshark"]
+    for interface in interfaces:
+        cmd.extend(["-i", str(interface)])
+
+    if not settings.get("promiscuous_mode", False):
+        cmd.append("-p")
+
+    bpf_filter = str(settings.get("bpf_filter") or "").strip()
+    if bpf_filter:
+        cmd.extend(["-f", bpf_filter])
+
+    cmd.extend([
         "-c", str(PACKET_LIMIT),
         "-a", f"duration:{CAPTURE_SECONDS}",
-        "-w", str(pcap_file)
-    ]
+        "-w", str(pcap_file),
+    ])
 
     try:
         result = subprocess.run(
@@ -200,12 +293,13 @@ def main_loop():
 
     check_tshark()
 
-    interface = INTERFACE or get_default_interface()
-    if not interface:
+    capture_targets, settings = resolve_capture_targets()
+    last_target_key = tuple(capture_targets)
+    if not capture_targets:
         logging.error("❌ No capture interface found. Set IDS_INTERFACE manually.")
         sys.exit(1)
 
-    logging.info(f"🔌 Using interface: {interface}")
+    logging.info(f"🔌 Using interface(s): {', '.join(capture_targets)}")
 
     iteration = 0
 
@@ -213,8 +307,19 @@ def main_loop():
         start_time = time.time()
 
         try:
+            capture_targets, settings = resolve_capture_targets()
+            target_key = tuple(capture_targets)
+            if target_key != last_target_key:
+                logging.info(f"Capture interface selection changed: {', '.join(capture_targets)}")
+                last_target_key = target_key
+
+            if not capture_targets:
+                logging.error("No capture interface available for current settings.")
+                time.sleep(DELAY)
+                continue
+
             # STEP 1: Capture
-            pcap_file = capture_packets(interface)
+            pcap_file = capture_packets(capture_targets, settings=settings)
             if not pcap_file:
                 logging.info(
                     "Packets: 0 | Flows: 0 | Feature Records: 0 | Alerts: 0 | New Alerts: 0"

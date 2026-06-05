@@ -1,4 +1,4 @@
-# alerts_view.py - Full version with working CSV export
+# alerts_view.py - Fixed for new database schema
 
 import csv
 import sqlite3
@@ -51,6 +51,17 @@ def normalize_severity(sev):
         return "Medium"
     else:
         return "Low"
+
+
+def normalize_protocol(proto):
+    protocol_map = {
+        "1": "ICMP",
+        "6": "TCP",
+        "17": "UDP",
+        "58": "ICMPV6",
+    }
+    proto_text = str(proto or "").strip().upper()
+    return protocol_map.get(proto_text, proto_text or "-")
 
 
 class AlertStatCard(QFrame):
@@ -229,7 +240,6 @@ class FiltersBar(QFrame):
 class AlertsTable(QFrame):
     def __init__(self):
         super().__init__()
-        self.setFixedHeight(360)
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         self.setStyleSheet("""
             QFrame {
@@ -264,7 +274,7 @@ class AlertsTable(QFrame):
         self.table.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.table.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.table.verticalHeader().setDefaultSectionSize(27)
-        self.table.setFixedHeight(360)
+        self.table.setFixedHeight(380)  # Increased from 360
 
         header = self.table.horizontalHeader()
         header.setSectionResizeMode(0, QHeaderView.Fixed)
@@ -291,6 +301,7 @@ class AlertsTable(QFrame):
             try:
                 conn = sqlite3.connect(DB_PATH)
                 cursor = conn.cursor()
+                # Updated query to match new schema
                 cursor.execute("""
                     SELECT first_seen, severity, category, src_ip, dst_ip, protocol, name
                     FROM alerts
@@ -298,12 +309,26 @@ class AlertsTable(QFrame):
                 """)
                 rows = cursor.fetchall()
                 conn.close()
-                self.all_alerts = []
-                for row in rows:
-                    ts_raw = row[0]
-                    ts_display = format_timestamp(ts_raw)
-                    sev_normalized = normalize_severity(row[1])
-                    self.all_alerts.append((ts_display, sev_normalized, row[2], row[3], row[4], row[5], row[6]))
+                
+                if not rows:
+                    QMessageBox.information(self, "No Data", "No alerts found in database.")
+                    self.all_alerts = []
+                else:
+                    self.all_alerts = []
+                    for row in rows:
+                        ts_raw = row[0]
+                        ts_display = format_timestamp(ts_raw)
+                        sev_normalized = normalize_severity(row[1])
+                        proto_normalized = normalize_protocol(row[5])
+                        # Handle NULL values
+                        category = row[2] if row[2] else "Unknown"
+                        src_ip = row[3] if row[3] else "-"
+                        dst_ip = row[4] if row[4] else "-"
+                        name = row[6] if row[6] else "Alert"
+                        self.all_alerts.append((ts_display, sev_normalized, category, src_ip, dst_ip, proto_normalized, name))
+                    
+                    print(f"Loaded {len(self.all_alerts)} alerts from database")  # Debug
+                    
             except Exception as e:
                 QMessageBox.critical(self, "DB Error", f"Failed to read alerts:\n{str(e)}")
                 self.all_alerts = []
@@ -600,7 +625,6 @@ class AlertsView(QWidget):
         self.update_pagination_info()
 
     def export_csv(self):
-        """Export the current filtered alerts to a CSV file."""
         if not self.alerts_table.filtered_alerts:
             QMessageBox.warning(self, "No Data", "No alerts to export.")
             return
@@ -614,9 +638,9 @@ class AlertsView(QWidget):
         try:
             with Path(file_path).open("w", newline="", encoding="utf-8") as csvfile:
                 writer = csv.writer(csvfile)
-                writer.writerow(["Time", "Severity", "Alert Type", "Source IP", "Destination IP", "Details"])
+                writer.writerow(["Time", "Severity", "Alert Type", "Source IP", "Destination IP", "Protocol", "Details"])
                 for alert in self.alerts_table.filtered_alerts:
-                    writer.writerow([alert[0], alert[1], alert[2], alert[3], alert[4], alert[5]])
+                    writer.writerow([alert[0], alert[1], alert[2], alert[3], alert[4], alert[5], alert[6]])
             QMessageBox.information(self, "Export Successful", f"Alerts exported to:\n{file_path}")
         except Exception as e:
             QMessageBox.critical(self, "Export Error", f"Failed to export CSV:\n{str(e)}")

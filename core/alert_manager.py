@@ -1,15 +1,24 @@
 import hashlib
 import json
 import logging
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
 from database.db_manager import DB_PATH, get_connection, init_db
 
-
 BASE_DIR = Path(__file__).resolve().parent.parent
-ALERT_LOG = BASE_DIR / "logs" / "alerts.jsonl"
+sys.path.append(str(BASE_DIR))
+
+from utils.helpers import load_config
+
+app_conf = load_config("app_config.yaml")
+
+alert_log_config_path = app_conf.get("alert_log_path", "logs/alerts.jsonl")
+ALERT_LOG = BASE_DIR / alert_log_config_path if not Path(alert_log_config_path).is_absolute() else Path(alert_log_config_path)
 ALERT_LOG.parent.mkdir(parents=True, exist_ok=True)
+
+DEDUP_WINDOW_SEC = int(app_conf.get("dedup_window_sec", 300))
 
 SEVERITY_RANK = {
     "low": 1,
@@ -24,7 +33,7 @@ def utc_now():
 
 
 class AlertManager:
-    def __init__(self, db_path=DB_PATH, alert_log=ALERT_LOG, dedup_window_sec=300):
+    def __init__(self, db_path=DB_PATH, alert_log=ALERT_LOG, dedup_window_sec=DEDUP_WINDOW_SEC):
         self.db_path = db_path
         self.alert_log = Path(alert_log)
         self.dedup_window_sec = dedup_window_sec

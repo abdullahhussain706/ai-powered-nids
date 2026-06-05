@@ -379,3 +379,467 @@ KeyError: 'total_packets'
 2026-05-16 19:18:10,405 [INFO] \U0001f680 Starting IDS Capture Pipeline
 2026-05-16 19:18:12,794 [INFO] \U0001f50c Using interface: 1
 2026-05-16 19:18:12,794 [INFO] \U0001f4e5 Capturing 500 packets \u2192 E:\ai-powered-nids\data\raw_packets\capture_20260516_191812_794768.pcap
+2026-05-23 22:30:47,390 [INFO] \U0001f680 Starting IDS Capture Pipeline
+2026-05-23 22:30:54,565 [INFO] \U0001f50c Using interface: 1
+2026-05-23 22:30:54,570 [INFO] \U0001f4e5 Capturing 500 packets \u2192 E:\ai-powered-nids\data\raw_packets\capture_20260523_223054_570245.pcap
+2026-05-23 22:49:59,778 [INFO] \U0001f680 Starting IDS Capture Pipeline
+2026-05-23 22:50:03,261 [INFO] \U0001f50c Using interface: 1
+2026-05-23 22:50:03,262 [INFO] Capturing up to 500 packets for 5.0s -> E:\ai-powered-nids\data\raw_packets\capture_20260523_225003_261824.pcap
+2026-05-23 22:50:03,262 [INFO] \U0001f4e5 Capturing 500 packets \u2192 E:\ai-powered-nids\data\raw_packets\capture_20260523_225003_261824.pcap
+2026-05-23 22:50:10,949 [INFO] \u2705 Capture complete: E:\ai-powered-nids\data\raw_packets\capture_20260523_225003_261824.pcap (464 bytes)
+2026-05-23 22:50:12,513 [INFO] \U0001f4ca Parsed packets: 0
+2026-05-23 22:50:12,514 [INFO] \U0001f4ca Packets: 0 | Flows: 0 | Feature Records: 0 | Alerts: 0 | New Alerts: 0
+2026-05-23 22:50:12,521 [INFO] Capturing up to 500 packets for 5.0s -> E:\ai-powered-nids\data\raw_packets\capture_20260523_225012_520875.pcap
+2026-05-23 22:50:12,531 [INFO] \U0001f4e5 Capturing 500 packets \u2192 E:\ai-powered-nids\data\raw_packets\capture_20260523_225012_520875.pcap
+2026-05-23 22:50:22,727 [ERROR] \u23f3 tshark timeout � killing process
+2026-05-23 22:50:22,734 [INFO] Packets: 0 | Flows: 0 | Feature Records: 0 | Alerts: 0 | New Alerts: 0
+2026-05-23 22:50:22,747 [INFO] Capturing up to 500 packets for 5.0s -> E:\ai-powered-nids\data\raw_packets\capture_20260523_225022_745496.pcap
+2026-05-23 22:50:22,748 [INFO] \U0001f4e5 Capturing 500 packets \u2192 E:\ai-powered-nids\data\raw_packets\capture_20260523_225022_745496.pcap
+2026-05-23 22:50:31,909 [INFO] \u2705 Capture complete: E:\ai-powered-nids\data\raw_packets\capture_20260523_225022_745496.pcap (464 bytes)
+2026-05-23 22:50:33,291 [INFO] \U0001f4ca Parsed packets: 0
+2026-05-23 22:50:33,292 [INFO] \U0001f4ca Packets: 0 | Flows: 0 | Feature Records: 0 | Alerts: 0 | New Alerts: 0
+2026-05-23 22:50:33,297 [INFO] Capturing up to 500 packets for 5.0s -> E:\ai-powered-nids\data\raw_packets\capture_20260523_225033_297354.pcap
+2026-05-23 22:50:33,298 [INFO] \U0001f4e5 Capturing 500 packets \u2192 E:\ai-powered-nids\data\raw_packets\capture_20260523_225033_297354.pcap
+2026-05-23 22:50:44,086 [ERROR] \u23f3 tshark timeout � killing process
+2026-05-23 22:50:44,274 [INFO] Packets: 0 | Flows: 0 | Feature Records: 0 | Alerts: 0 | New Alerts: 0
+2026-05-23 22:50:44,405 [INFO] Capturing up to 500 packets for 5.0s -> E:\ai-powered-nids\data\raw_packets\capture_20260523_225044_404983.pcap
+2026-05-23 22:50:44,574 [INFO] \U0001f4e5 Capturing 500 packets \u2192 E:\ai-powered-nids\data\raw_packets\capture_20260523_225044_404983.pcap
+2026-05-23 22:50:56,334 [ERROR] \u23f3 tshark timeout � killing process
+2026-05-23 22:50:56,336 [INFO] Packets: 0 | Flows: 0 | Feature Records: 0 | Alerts: 0 | New Alerts: 0
+2026-05-23 22:50:56,337 [INFO] Capturing up to 500 packets for 5.0s -> E:\ai-powered-nids\data\raw_packets\capture_20260523_225056_336855.pcap
+2026-05-23 22:50:56,337 [INFO] \U0001f4e5 Capturing 500 packets \u2192 E:\ai-powered-nids\data\raw_packets\capture_20260523_225056_336855.pcap
+2026-05-23 22:51:08,217 [ERROR] \u23f3 tshark timeout � killing process
+2026-05-23 22:51:08,233 [INFO] Packets: 0 | Flows: 0 | Feature Records: 0 | Alerts: 0 | New Alerts: 0
+2026-05-23 22:51:08,245 [INFO] Capturing up to 500 packets for 5.0s -> E:\ai-powered-nids\data\raw_packets\capture_20260523_225108_243984.pcap
+2026-05-23 22:51:08,263 [INFO] \U0001f4e5 Capturing 500 packets \u2192 E:\ai-powered-nids\data\raw_packets\capture_20260523_225108_243984.pcap
+2026-05-23 22:51:18,257 [INFO] \u2705 Capture complete: E:\ai-powered-nids\data\raw_packets\capture_20260523_225108_243984.pcap (464 bytes)
+2026-05-23 22:51:19,444 [INFO] \U0001f4ca Parsed packets: 0
+2026-05-23 22:51:19,446 [INFO] \U0001f4ca Packets: 0 | Flows: 0 | Feature Records: 0 | Alerts: 0 | New Alerts: 0
+2026-05-23 22:51:19,451 [INFO] Capturing up to 500 packets for 5.0s -> E:\ai-powered-nids\data\raw_packets\capture_20260523_225119_451500.pcap
+2026-05-23 22:51:19,452 [INFO] \U0001f4e5 Capturing 500 packets \u2192 E:\ai-powered-nids\data\raw_packets\capture_20260523_225119_451500.pcap
+2026-05-23 22:51:28,867 [INFO] \u2705 Capture complete: E:\ai-powered-nids\data\raw_packets\capture_20260523_225119_451500.pcap (464 bytes)
+2026-05-23 22:51:34,886 [INFO] \U0001f4ca Parsed packets: 0
+2026-05-23 22:51:34,909 [INFO] \U0001f4ca Packets: 0 | Flows: 0 | Feature Records: 0 | Alerts: 0 | New Alerts: 0
+2026-05-23 22:51:35,095 [INFO] Capturing up to 500 packets for 5.0s -> E:\ai-powered-nids\data\raw_packets\capture_20260523_225135_095135.pcap
+2026-05-23 22:51:35,178 [INFO] \U0001f4e5 Capturing 500 packets \u2192 E:\ai-powered-nids\data\raw_packets\capture_20260523_225135_095135.pcap
+2026-05-23 22:51:47,259 [ERROR] \u23f3 tshark timeout � killing process
+2026-05-23 22:51:47,282 [INFO] Packets: 0 | Flows: 0 | Feature Records: 0 | Alerts: 0 | New Alerts: 0
+2026-05-23 22:51:47,509 [INFO] Capturing up to 500 packets for 5.0s -> E:\ai-powered-nids\data\raw_packets\capture_20260523_225147_491413.pcap
+2026-05-23 22:51:47,644 [INFO] \U0001f4e5 Capturing 500 packets \u2192 E:\ai-powered-nids\data\raw_packets\capture_20260523_225147_491413.pcap
+2026-05-23 22:51:58,122 [ERROR] \u23f3 tshark timeout � killing process
+2026-05-23 22:51:58,123 [INFO] Packets: 0 | Flows: 0 | Feature Records: 0 | Alerts: 0 | New Alerts: 0
+2026-05-23 22:51:58,124 [INFO] Capturing up to 500 packets for 5.0s -> E:\ai-powered-nids\data\raw_packets\capture_20260523_225158_123787.pcap
+2026-05-23 22:51:58,124 [INFO] \U0001f4e5 Capturing 500 packets \u2192 E:\ai-powered-nids\data\raw_packets\capture_20260523_225158_123787.pcap
+2026-05-23 22:52:07,264 [INFO] \u2705 Capture complete: E:\ai-powered-nids\data\raw_packets\capture_20260523_225158_123787.pcap (464 bytes)
+2026-05-23 22:52:08,480 [INFO] \U0001f4ca Parsed packets: 0
+2026-05-23 22:52:08,482 [INFO] \U0001f4ca Packets: 0 | Flows: 0 | Feature Records: 0 | Alerts: 0 | New Alerts: 0
+2026-05-23 22:52:08,488 [INFO] Capturing up to 500 packets for 5.0s -> E:\ai-powered-nids\data\raw_packets\capture_20260523_225208_487825.pcap
+2026-05-23 22:52:08,489 [INFO] \U0001f4e5 Capturing 500 packets \u2192 E:\ai-powered-nids\data\raw_packets\capture_20260523_225208_487825.pcap
+2026-05-23 22:52:18,589 [ERROR] \u23f3 tshark timeout � killing process
+2026-05-23 22:52:18,591 [INFO] Packets: 0 | Flows: 0 | Feature Records: 0 | Alerts: 0 | New Alerts: 0
+2026-05-23 22:52:18,592 [INFO] Capturing up to 500 packets for 5.0s -> E:\ai-powered-nids\data\raw_packets\capture_20260523_225218_591601.pcap
+2026-05-23 22:52:18,592 [INFO] \U0001f4e5 Capturing 500 packets \u2192 E:\ai-powered-nids\data\raw_packets\capture_20260523_225218_591601.pcap
+2026-05-23 22:56:06,360 [INFO] Probing interface 4: \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2)
+2026-05-23 22:56:10,918 [INFO] Probing interface 5: \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi)
+2026-05-23 22:56:14,653 [INFO] Selected active interface 5: \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi)
+2026-05-23 22:57:00,559 [INFO] \U0001f680 Starting IDS Capture Pipeline
+2026-05-23 22:57:05,999 [INFO] Probing interface 4: \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2)
+2026-05-23 22:57:11,361 [INFO] Probing interface 5: \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi)
+2026-05-23 22:57:16,677 [INFO] Selected active interface 5: \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi)
+2026-05-23 22:57:16,680 [INFO] \U0001f50c Using interface: 5
+2026-05-23 22:57:16,689 [INFO] Capturing up to 500 packets for 5.0s -> E:\ai-powered-nids\data\raw_packets\capture_20260523_225716_689031.pcap
+2026-05-23 22:57:16,694 [INFO] \U0001f4e5 Capturing 500 packets \u2192 E:\ai-powered-nids\data\raw_packets\capture_20260523_225716_689031.pcap
+2026-05-23 22:57:28,541 [ERROR] \u23f3 tshark timeout � killing process
+2026-05-23 22:57:28,542 [INFO] Packets: 0 | Flows: 0 | Feature Records: 0 | Alerts: 0 | New Alerts: 0
+2026-05-23 22:57:28,542 [INFO] Capturing up to 500 packets for 5.0s -> E:\ai-powered-nids\data\raw_packets\capture_20260523_225728_542492.pcap
+2026-05-23 22:57:28,543 [INFO] \U0001f4e5 Capturing 500 packets \u2192 E:\ai-powered-nids\data\raw_packets\capture_20260523_225728_542492.pcap
+2026-05-23 22:57:39,220 [INFO] \u2705 Capture complete: E:\ai-powered-nids\data\raw_packets\capture_20260523_225728_542492.pcap (323800 bytes)
+2026-05-23 22:57:43,826 [INFO] \U0001f4ca Parsed packets: 500
+2026-05-23 22:57:43,937 [INFO] \U0001f4ca Flows built: 31
+2026-05-23 22:57:43,942 [INFO] \U0001f4ca Flows: 31
+2026-05-23 22:57:44,061 [INFO] \U0001f4dc Rules loaded successfully: 22
+2026-05-23 22:57:44,089 [INFO] \U0001f9e0 Processed flows: 31
+2026-05-23 22:57:44,090 [INFO] \U0001f9e0 Features: 31
+2026-05-23 23:00:36,227 [INFO] \U0001f680 Starting IDS Capture Pipeline
+2026-05-23 23:00:38,960 [INFO] Probing interface 4: \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2)
+2026-05-23 23:00:43,707 [INFO] Probing interface 5: \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi)
+2026-05-23 23:00:48,127 [INFO] Selected active interface 5: \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi)
+2026-05-23 23:00:48,129 [INFO] \U0001f50c Using interface: 5
+2026-05-23 23:00:48,130 [INFO] Capturing up to 500 packets for 5.0s -> E:\ai-powered-nids\data\raw_packets\capture_20260523_230048_129915.pcap
+2026-05-23 23:00:48,130 [INFO] \U0001f4e5 Capturing 500 packets \u2192 E:\ai-powered-nids\data\raw_packets\capture_20260523_230048_129915.pcap
+2026-05-23 23:00:53,895 [INFO] \u2705 Capture complete: E:\ai-powered-nids\data\raw_packets\capture_20260523_230048_129915.pcap (701596 bytes)
+2026-05-23 23:00:55,967 [INFO] \U0001f4ca Parsed packets: 500
+2026-05-23 23:00:55,975 [INFO] \U0001f4ca Flows built: 18
+2026-05-23 23:00:55,976 [INFO] \U0001f4ca Flows: 18
+2026-05-23 23:00:55,993 [INFO] \U0001f4dc Rules loaded successfully: 22
+2026-05-23 23:00:56,000 [INFO] \U0001f9e0 Processed flows: 18
+2026-05-23 23:00:56,009 [INFO] \U0001f9e0 Features: 18
+2026-05-23 23:07:12,517 [INFO] \U0001f680 Starting IDS Capture Pipeline
+2026-05-23 23:07:15,251 [INFO] Probing interface 4: \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2)
+2026-05-23 23:07:19,764 [INFO] Probing interface 5: \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi)
+2026-05-23 23:07:24,984 [INFO] Selected active interface 5: \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi)
+2026-05-23 23:07:24,988 [INFO] \U0001f50c Using interface: 5
+2026-05-23 23:07:24,989 [INFO] Capturing up to 500 packets for 5.0s -> E:\ai-powered-nids\data\raw_packets\capture_20260523_230724_988652.pcap
+2026-05-23 23:07:24,989 [INFO] \U0001f4e5 Capturing 500 packets \u2192 E:\ai-powered-nids\data\raw_packets\capture_20260523_230724_988652.pcap
+2026-05-23 23:07:33,387 [INFO] \u2705 Capture complete: E:\ai-powered-nids\data\raw_packets\capture_20260523_230724_988652.pcap (4024 bytes)
+2026-05-23 23:07:34,394 [INFO] \U0001f4ca Parsed packets: 29
+2026-05-23 23:07:34,397 [INFO] \U0001f4ca Flows built: 6
+2026-05-23 23:07:34,398 [INFO] \U0001f4ca Flows: 6
+2026-05-23 23:07:34,415 [INFO] \U0001f4dc Rules loaded successfully: 22
+2026-05-23 23:07:34,417 [INFO] \U0001f9e0 Processed flows: 6
+2026-05-23 23:07:34,420 [INFO] \U0001f9e0 Features: 6
+2026-05-23 23:07:41,022 [INFO] Stage 1 model loaded: stage1_XGBOOST.pkl
+2026-05-23 23:07:41,107 [INFO] Stage 2 model loaded: stage2_xgboost.pkl
+2026-05-23 23:07:41,274 [INFO] ML stage results generated: 6
+2026-05-23 23:07:41,275 [INFO] ML feature results: 6
+2026-05-23 23:07:41,279 [INFO] \U0001f4ca Packets: 29 | Flows: 6 | Feature Records: 12 | Alerts: 0 | New Alerts: 0
+2026-05-23 23:07:41,284 [INFO] Capturing up to 500 packets for 5.0s -> E:\ai-powered-nids\data\raw_packets\capture_20260523_230741_283706.pcap
+2026-05-23 23:07:41,285 [INFO] \U0001f4e5 Capturing 500 packets \u2192 E:\ai-powered-nids\data\raw_packets\capture_20260523_230741_283706.pcap
+2026-05-23 23:07:49,378 [INFO] \u2705 Capture complete: E:\ai-powered-nids\data\raw_packets\capture_20260523_230741_283706.pcap (27468 bytes)
+2026-05-23 23:07:50,430 [INFO] \U0001f4ca Parsed packets: 76
+2026-05-23 23:07:50,431 [INFO] \U0001f4ca Flows built: 14
+2026-05-23 23:07:50,432 [INFO] \U0001f4ca Flows: 14
+2026-05-23 23:07:50,438 [INFO] \U0001f9e0 Processed flows: 14
+2026-05-23 23:07:50,439 [INFO] \U0001f9e0 Features: 14
+2026-05-23 23:07:50,865 [INFO] ML stage results generated: 14
+2026-05-23 23:07:50,866 [INFO] ML feature results: 14
+2026-05-23 23:07:50,867 [INFO] \U0001f4ca Packets: 76 | Flows: 14 | Feature Records: 28 | Alerts: 0 | New Alerts: 0
+2026-05-23 23:07:50,870 [INFO] Capturing up to 500 packets for 5.0s -> E:\ai-powered-nids\data\raw_packets\capture_20260523_230750_870154.pcap
+2026-05-23 23:07:50,871 [INFO] \U0001f4e5 Capturing 500 packets \u2192 E:\ai-powered-nids\data\raw_packets\capture_20260523_230750_870154.pcap
+2026-05-23 23:07:58,976 [INFO] \u2705 Capture complete: E:\ai-powered-nids\data\raw_packets\capture_20260523_230750_870154.pcap (85916 bytes)
+2026-05-23 23:07:59,896 [INFO] \U0001f4ca Parsed packets: 186
+2026-05-23 23:07:59,901 [INFO] \U0001f4ca Flows built: 21
+2026-05-23 23:07:59,902 [INFO] \U0001f4ca Flows: 21
+2026-05-23 23:07:59,907 [INFO] \U0001f9e0 Processed flows: 21
+2026-05-23 23:07:59,908 [INFO] \U0001f9e0 Features: 21
+2026-05-23 23:08:00,479 [INFO] ML stage results generated: 21
+2026-05-23 23:08:00,479 [INFO] ML feature results: 21
+2026-05-23 23:08:00,481 [INFO] \U0001f4ca Packets: 186 | Flows: 21 | Feature Records: 42 | Alerts: 0 | New Alerts: 0
+2026-05-23 23:08:00,484 [INFO] Capturing up to 500 packets for 5.0s -> E:\ai-powered-nids\data\raw_packets\capture_20260523_230800_484224.pcap
+2026-05-23 23:08:00,485 [INFO] \U0001f4e5 Capturing 500 packets \u2192 E:\ai-powered-nids\data\raw_packets\capture_20260523_230800_484224.pcap
+2026-05-28 21:41:49,793 [INFO] \U0001f680 Starting IDS Capture Pipeline
+2026-05-28 21:42:00,549 [INFO] Probing interface 4: \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2)
+2026-05-28 21:42:04,348 [INFO] Probing interface 5: \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi)
+2026-05-28 21:42:06,355 [INFO] Selected active interface 5: \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi)
+2026-05-28 21:42:06,356 [INFO] \U0001f50c Using interface: 5
+2026-05-28 21:42:06,360 [INFO] Capturing up to 500 packets for 5.0s -> E:\ai-powered-nids\data\raw_packets\capture_20260528_214206_360284.pcap
+2026-05-28 21:42:06,371 [INFO] \U0001f4e5 Capturing 500 packets \u2192 E:\ai-powered-nids\data\raw_packets\capture_20260528_214206_360284.pcap
+2026-05-28 21:42:11,025 [INFO] \u2705 Capture complete: E:\ai-powered-nids\data\raw_packets\capture_20260528_214206_360284.pcap (541620 bytes)
+2026-05-28 21:42:12,665 [INFO] \U0001f4ca Parsed packets: 500
+2026-05-28 21:42:12,690 [INFO] \U0001f4ca Flows built: 3
+2026-05-28 21:42:12,691 [INFO] \U0001f4ca Flows: 3
+2026-05-28 21:42:12,702 [INFO] \U0001f4dc Rules loaded successfully: 22
+2026-05-28 21:42:12,706 [INFO] \U0001f9e0 Processed flows: 3
+2026-05-28 21:42:12,709 [INFO] \U0001f9e0 Features: 3
+2026-05-28 21:42:40,176 [INFO] Stage 1 model loaded: stage1_XGBOOST.pkl
+2026-05-28 21:42:40,343 [INFO] Stage 2 model loaded: stage2_xgboost.pkl
+2026-05-28 21:42:40,691 [INFO] ML stage results generated: 3
+2026-05-28 21:42:40,692 [INFO] ML feature results: 3
+2026-05-28 21:42:41,134 [WARNING] \U0001f6a8 New alerts saved: 2
+2026-05-28 21:42:41,135 [INFO] \U0001f4ca Packets: 500 | Flows: 3 | Feature Records: 6 | Alerts: 2 | New Alerts: 2
+2026-05-28 21:42:41,137 [INFO] Capturing up to 500 packets for 5.0s -> E:\ai-powered-nids\data\raw_packets\capture_20260528_214241_137651.pcap
+2026-05-28 21:42:41,138 [INFO] \U0001f4e5 Capturing 500 packets \u2192 E:\ai-powered-nids\data\raw_packets\capture_20260528_214241_137651.pcap
+2026-05-28 21:42:47,208 [INFO] \u2705 Capture complete: E:\ai-powered-nids\data\raw_packets\capture_20260528_214241_137651.pcap (494292 bytes)
+2026-05-28 21:42:47,872 [INFO] \U0001f4ca Parsed packets: 500
+2026-05-28 21:42:47,873 [INFO] \U0001f4ca Flows built: 11
+2026-05-28 21:42:47,874 [INFO] \U0001f4ca Flows: 11
+2026-05-28 21:42:47,875 [INFO] \U0001f9e0 Processed flows: 11
+2026-05-28 21:42:47,875 [INFO] \U0001f9e0 Features: 11
+2026-05-28 21:42:48,054 [INFO] ML stage results generated: 11
+2026-05-28 21:42:48,054 [INFO] ML feature results: 11
+2026-05-28 21:42:48,055 [INFO] \U0001f4ca Packets: 500 | Flows: 11 | Feature Records: 22 | Alerts: 0 | New Alerts: 0
+2026-05-28 21:42:48,056 [INFO] Capturing up to 500 packets for 5.0s -> E:\ai-powered-nids\data\raw_packets\capture_20260528_214248_056422.pcap
+2026-05-28 21:42:48,056 [INFO] \U0001f4e5 Capturing 500 packets \u2192 E:\ai-powered-nids\data\raw_packets\capture_20260528_214248_056422.pcap
+2026-05-28 21:42:54,184 [INFO] \u2705 Capture complete: E:\ai-powered-nids\data\raw_packets\capture_20260528_214248_056422.pcap (459276 bytes)
+2026-05-28 21:42:54,852 [INFO] \U0001f4ca Parsed packets: 500
+2026-05-28 21:42:54,854 [INFO] \U0001f4ca Flows built: 4
+2026-05-28 21:42:54,854 [INFO] \U0001f4ca Flows: 4
+2026-05-28 21:42:54,855 [INFO] \U0001f9e0 Processed flows: 4
+2026-05-28 21:42:54,856 [INFO] \U0001f9e0 Features: 4
+2026-05-28 21:42:54,941 [INFO] ML stage results generated: 4
+2026-05-28 21:42:54,941 [INFO] ML feature results: 4
+2026-05-28 21:42:54,943 [INFO] \U0001f4ca Packets: 500 | Flows: 4 | Feature Records: 8 | Alerts: 0 | New Alerts: 0
+2026-05-28 21:42:54,945 [INFO] Capturing up to 500 packets for 5.0s -> E:\ai-powered-nids\data\raw_packets\capture_20260528_214254_945231.pcap
+2026-05-28 21:42:54,945 [INFO] \U0001f4e5 Capturing 500 packets \u2192 E:\ai-powered-nids\data\raw_packets\capture_20260528_214254_945231.pcap
+2026-05-28 21:42:58,963 [INFO] \u2705 Capture complete: E:\ai-powered-nids\data\raw_packets\capture_20260528_214254_945231.pcap (511332 bytes)
+2026-05-28 21:42:59,558 [INFO] \U0001f4ca Parsed packets: 500
+2026-05-28 21:42:59,564 [INFO] \U0001f4ca Flows built: 7
+2026-05-28 21:42:59,566 [INFO] \U0001f4ca Flows: 7
+2026-05-28 21:42:59,572 [INFO] \U0001f9e0 Processed flows: 7
+2026-05-28 21:42:59,582 [INFO] \U0001f9e0 Features: 7
+2026-05-28 21:42:59,789 [INFO] ML stage results generated: 7
+2026-05-28 21:42:59,790 [INFO] ML feature results: 7
+2026-05-28 21:42:59,791 [INFO] \U0001f4ca Packets: 500 | Flows: 7 | Feature Records: 14 | Alerts: 0 | New Alerts: 0
+2026-05-28 21:42:59,792 [INFO] Capturing up to 500 packets for 5.0s -> E:\ai-powered-nids\data\raw_packets\capture_20260528_214259_792219.pcap
+2026-05-28 21:42:59,792 [INFO] \U0001f4e5 Capturing 500 packets \u2192 E:\ai-powered-nids\data\raw_packets\capture_20260528_214259_792219.pcap
+2026-05-28 21:46:13 [INFO] (logger.py:105) - 📝 Logging initialized (Level: INFO, File: logs/capture.log)
+2026-05-28 22:08:46 [INFO] (logger.py:105) - 📝 Logging initialized (Level: INFO, File: logs/capture.log)
+2026-05-28 22:08:46 [INFO] (packet_capture.py:195) - 🚀 Starting IDS Capture Pipeline
+2026-05-28 22:08:50 [INFO] (packet_capture.py:118) - Probing interface 4: \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2)
+2026-05-28 22:08:54 [INFO] (packet_capture.py:118) - Probing interface 5: \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi)
+2026-05-28 22:08:56 [INFO] (packet_capture.py:120) - Selected active interface 5: \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi)
+2026-05-28 22:08:56 [INFO] (packet_capture.py:204) - 🔌 Using interface: 5
+2026-05-28 22:08:56 [INFO] (packet_capture.py:153) - Capturing up to 500 packets for 5.0s -> E:\ai-powered-nids\data\raw_packets\capture_20260528_220856_953863.pcap
+2026-05-28 22:08:57 [INFO] (packet_capture.py:157) - 📥 Capturing 500 packets → E:\ai-powered-nids\data\raw_packets\capture_20260528_220856_953863.pcap
+2026-05-28 22:09:02 [INFO] (packet_capture.py:187) - ✅ Capture complete: E:\ai-powered-nids\data\raw_packets\capture_20260528_220856_953863.pcap (446588 bytes)
+2026-05-28 22:09:03 [INFO] (packet_parser.py:135) - 📊 Parsed packets: 500
+2026-05-28 22:09:03 [INFO] (flow_builder.py:191) - 📊 Flows built: 8
+2026-05-28 22:09:03 [INFO] (packet_parser.py:144) - 📊 Flows: 8
+2026-05-28 22:09:03 [INFO] (signature_engine.py:60) - 📜 Rules loaded successfully: 22
+2026-05-28 22:09:03 [INFO] (feature_engine.py:116) - 🧠 Processed flows: 8
+2026-05-28 22:09:03 [INFO] (packet_parser.py:157) - 🧠 Features: 8
+2026-05-28 22:09:15 [INFO] (model_pipeline.py:43) - Stage 1 model loaded: stage1_XGBOOST.pkl
+2026-05-28 22:09:16 [INFO] (model_pipeline.py:43) - Stage 2 model loaded: stage2_xgboost.pkl
+2026-05-28 22:09:16 [INFO] (model_pipeline.py:192) - ML stage results generated: 8
+2026-05-28 22:09:16 [INFO] (packet_parser.py:164) - ML feature results: 8
+2026-05-28 22:09:16 [INFO] (packet_capture.py:235) - 📊 Packets: 500 | Flows: 8 | Feature Records: 16 | Alerts: 0 | New Alerts: 0
+2026-05-28 22:09:16 [INFO] (packet_capture.py:153) - Capturing up to 500 packets for 5.0s -> E:\ai-powered-nids\data\raw_packets\capture_20260528_220916_418002.pcap
+2026-05-28 22:09:16 [INFO] (packet_capture.py:157) - 📥 Capturing 500 packets → E:\ai-powered-nids\data\raw_packets\capture_20260528_220916_418002.pcap
+2026-05-28 22:09:19 [INFO] (packet_capture.py:187) - ✅ Capture complete: E:\ai-powered-nids\data\raw_packets\capture_20260528_220916_418002.pcap (484472 bytes)
+2026-05-28 22:09:20 [INFO] (packet_parser.py:135) - 📊 Parsed packets: 500
+2026-05-28 22:09:20 [INFO] (flow_builder.py:191) - 📊 Flows built: 7
+2026-05-28 22:09:20 [INFO] (packet_parser.py:144) - 📊 Flows: 7
+2026-05-28 22:09:20 [INFO] (feature_engine.py:116) - 🧠 Processed flows: 7
+2026-05-28 22:09:20 [INFO] (packet_parser.py:157) - 🧠 Features: 7
+2026-05-28 22:09:20 [INFO] (model_pipeline.py:192) - ML stage results generated: 7
+2026-05-28 22:09:20 [INFO] (packet_parser.py:164) - ML feature results: 7
+2026-05-28 22:09:20 [WARNING] (alert_manager.py:60) - 🚨 New alerts saved: 1
+2026-05-28 22:09:20 [INFO] (packet_capture.py:235) - 📊 Packets: 500 | Flows: 7 | Feature Records: 14 | Alerts: 1 | New Alerts: 1
+2026-05-28 22:09:20 [INFO] (packet_capture.py:153) - Capturing up to 500 packets for 5.0s -> E:\ai-powered-nids\data\raw_packets\capture_20260528_220920_859986.pcap
+2026-05-28 22:09:20 [INFO] (packet_capture.py:157) - 📥 Capturing 500 packets → E:\ai-powered-nids\data\raw_packets\capture_20260528_220920_859986.pcap
+2026-05-28 22:09:25 [INFO] (packet_capture.py:187) - ✅ Capture complete: E:\ai-powered-nids\data\raw_packets\capture_20260528_220920_859986.pcap (472072 bytes)
+2026-05-28 22:09:26 [INFO] (packet_parser.py:135) - 📊 Parsed packets: 500
+2026-05-28 22:09:26 [INFO] (flow_builder.py:191) - 📊 Flows built: 2
+2026-05-28 22:09:26 [INFO] (packet_parser.py:144) - 📊 Flows: 2
+2026-05-28 22:09:26 [INFO] (feature_engine.py:116) - 🧠 Processed flows: 2
+2026-05-28 22:09:26 [INFO] (packet_parser.py:157) - 🧠 Features: 2
+2026-05-28 22:09:26 [INFO] (model_pipeline.py:192) - ML stage results generated: 2
+2026-05-28 22:09:26 [INFO] (packet_parser.py:164) - ML feature results: 2
+2026-05-28 22:09:26 [INFO] (packet_capture.py:235) - 📊 Packets: 500 | Flows: 2 | Feature Records: 4 | Alerts: 0 | New Alerts: 0
+2026-05-28 22:09:26 [INFO] (packet_capture.py:153) - Capturing up to 500 packets for 5.0s -> E:\ai-powered-nids\data\raw_packets\capture_20260528_220926_465704.pcap
+2026-05-28 22:09:26 [INFO] (packet_capture.py:157) - 📥 Capturing 500 packets → E:\ai-powered-nids\data\raw_packets\capture_20260528_220926_465704.pcap
+2026-05-28 22:11:22 [INFO] (logger.py:105) - 📝 Logging initialized (Level: INFO, File: logs/capture.log)
+2026-05-28 22:11:22 [INFO] (packet_capture.py:195) - 🚀 Starting IDS Capture Pipeline
+2026-05-28 22:11:25 [INFO] (packet_capture.py:118) - Probing interface 4: \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2)
+2026-05-28 22:11:29 [INFO] (packet_capture.py:118) - Probing interface 5: \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi)
+2026-05-28 22:11:30 [INFO] (packet_capture.py:120) - Selected active interface 5: \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi)
+2026-05-28 22:11:30 [INFO] (packet_capture.py:204) - 🔌 Using interface: 5
+2026-05-28 22:11:30 [INFO] (packet_capture.py:153) - Capturing up to 500 packets for 5.0s -> E:\ai-powered-nids\data\raw_packets\capture_20260528_221130_775183.pcap
+2026-05-28 22:11:30 [INFO] (packet_capture.py:157) - 📥 Capturing 500 packets → E:\ai-powered-nids\data\raw_packets\capture_20260528_221130_775183.pcap
+2026-05-28 22:11:34 [INFO] (packet_capture.py:187) - ✅ Capture complete: E:\ai-powered-nids\data\raw_packets\capture_20260528_221130_775183.pcap (478628 bytes)
+2026-05-28 22:11:35 [INFO] (packet_parser.py:135) - 📊 Parsed packets: 500
+2026-05-28 22:11:35 [INFO] (flow_builder.py:191) - 📊 Flows built: 7
+2026-05-28 22:11:35 [INFO] (packet_parser.py:144) - 📊 Flows: 7
+2026-05-28 22:11:35 [INFO] (signature_engine.py:60) - 📜 Rules loaded successfully: 22
+2026-05-28 22:11:35 [INFO] (feature_engine.py:116) - 🧠 Processed flows: 7
+2026-05-28 22:11:35 [INFO] (packet_parser.py:157) - 🧠 Features: 7
+2026-05-28 22:11:40 [INFO] (model_pipeline.py:43) - Stage 1 model loaded: stage1_XGBOOST.pkl
+2026-05-28 22:11:40 [INFO] (model_pipeline.py:43) - Stage 2 model loaded: stage2_xgboost.pkl
+2026-05-28 22:11:40 [INFO] (model_pipeline.py:192) - ML stage results generated: 7
+2026-05-28 22:11:40 [INFO] (packet_parser.py:164) - ML feature results: 7
+2026-05-28 22:11:40 [INFO] (packet_capture.py:235) - 📊 Packets: 500 | Flows: 7 | Feature Records: 14 | Alerts: 0 | New Alerts: 0
+2026-05-28 22:11:40 [INFO] (packet_capture.py:153) - Capturing up to 500 packets for 5.0s -> E:\ai-powered-nids\data\raw_packets\capture_20260528_221140_414153.pcap
+2026-05-28 22:11:40 [INFO] (packet_capture.py:157) - 📥 Capturing 500 packets → E:\ai-powered-nids\data\raw_packets\capture_20260528_221140_414153.pcap
+2026-05-28 22:13:43 [INFO] (logger.py:105) - 📝 Logging initialized (Level: INFO, File: logs/capture.log)
+2026-05-28 22:13:44 [INFO] (packet_capture.py:195) - 🚀 Starting IDS Capture Pipeline
+2026-05-28 22:13:46 [INFO] (packet_capture.py:118) - Probing interface 4: \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2)
+2026-05-28 22:13:50 [INFO] (packet_capture.py:118) - Probing interface 5: \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi)
+2026-05-28 22:13:52 [INFO] (packet_capture.py:120) - Selected active interface 5: \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi)
+2026-05-28 22:13:52 [INFO] (packet_capture.py:204) - 🔌 Using interface: 5
+2026-05-28 22:13:52 [INFO] (packet_capture.py:153) - Capturing up to 500 packets for 5.0s -> E:\ai-powered-nids\data\raw_packets\capture_20260528_221352_262011.pcap
+2026-05-28 22:13:52 [INFO] (packet_capture.py:157) - 📥 Capturing 500 packets → E:\ai-powered-nids\data\raw_packets\capture_20260528_221352_262011.pcap
+2026-05-28 22:45:51 [INFO] (logger.py:105) - 📝 Logging initialized (Level: INFO, File: logs/capture.log)
+2026-05-28 22:45:51 [INFO] (packet_capture.py:195) - 🚀 Starting IDS Capture Pipeline
+2026-05-28 22:45:55 [INFO] (packet_capture.py:118) - Probing interface 4: \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2)
+2026-05-28 22:46:02 [INFO] (packet_capture.py:118) - Probing interface 5: \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi)
+2026-05-28 22:46:07 [INFO] (packet_capture.py:118) - Probing interface 8: \Device\NPF_{7F874DB3-84E5-4A6A-A70B-AF18BD063AA5} (Ethernet 2)
+2026-05-28 22:46:12 [INFO] (packet_capture.py:118) - Probing interface 10: \Device\NPF_{D5CBE07C-0092-4352-A245-D745F5767F7F} (Ethernet)
+2026-05-28 22:46:18 [INFO] (packet_capture.py:118) - Probing interface 1: \Device\NPF_{1E70B5F6-758F-4FEF-8CDE-2218D57EE7A2} (Local Area Connection* 10)
+2026-05-28 22:46:23 [INFO] (packet_capture.py:118) - Probing interface 2: \Device\NPF_{266C9694-9D98-4E73-9C07-6FBF66C4CE8B} (Local Area Connection* 9)
+2026-05-28 22:46:27 [INFO] (packet_capture.py:118) - Probing interface 3: \Device\NPF_{B511B518-B485-45A5-9A07-A95EB2D7DA1A} (Local Area Connection* 8)
+2026-05-28 22:46:32 [INFO] (packet_capture.py:118) - Probing interface 6: \Device\NPF_{2754D11B-EC61-4BC0-BBD1-ACBCDEF677DC} (Local Area Connection* 12)
+2026-05-28 22:46:37 [INFO] (packet_capture.py:118) - Probing interface 7: \Device\NPF_{37AFD563-EADF-4453-B745-E29E15C8BE8A} (Local Area Connection* 11)
+2026-05-28 22:48:27 [INFO] (logger.py:105) - 📝 Logging initialized (Level: INFO, File: logs/capture.log)
+2026-05-28 22:48:27 [INFO] (packet_capture.py:195) - 🚀 Starting IDS Capture Pipeline
+2026-05-28 22:48:30 [INFO] (packet_capture.py:118) - Probing interface 4: \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2)
+2026-05-28 22:48:35 [INFO] (packet_capture.py:118) - Probing interface 5: \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi)
+2026-05-28 22:48:39 [INFO] (packet_capture.py:120) - Selected active interface 5: \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi)
+2026-05-28 22:48:39 [INFO] (packet_capture.py:204) - 🔌 Using interface: 5
+2026-05-28 22:48:39 [INFO] (packet_capture.py:153) - Capturing up to 500 packets for 5.0s -> E:\ai-powered-nids\data\raw_packets\capture_20260528_224839_166385.pcap
+2026-05-28 22:48:39 [INFO] (packet_capture.py:157) - 📥 Capturing 500 packets → E:\ai-powered-nids\data\raw_packets\capture_20260528_224839_166385.pcap
+2026-05-28 22:49:33 [INFO] (logger.py:105) - 📝 Logging initialized (Level: INFO, File: logs/capture.log)
+2026-05-28 22:49:33 [INFO] (packet_capture.py:195) - 🚀 Starting IDS Capture Pipeline
+2026-05-28 22:49:36 [INFO] (packet_capture.py:118) - Probing interface 4: \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2)
+2026-05-28 22:49:42 [INFO] (packet_capture.py:118) - Probing interface 5: \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi)
+2026-05-28 22:55:37 [INFO] (logger.py:105) - 📝 Logging initialized (Level: INFO, File: logs/capture.log)
+2026-05-28 22:55:37 [INFO] (packet_capture.py:195) - 🚀 Starting IDS Capture Pipeline
+2026-05-28 22:55:40 [INFO] (packet_capture.py:118) - Probing interface 4: \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2)
+2026-05-28 22:55:47 [INFO] (packet_capture.py:118) - Probing interface 5: \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi)
+2026-05-28 22:55:52 [INFO] (packet_capture.py:120) - Selected active interface 5: \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi)
+2026-05-28 22:55:52 [INFO] (packet_capture.py:204) - 🔌 Using interface: 5
+2026-05-28 22:55:52 [INFO] (packet_capture.py:153) - Capturing up to 500 packets for 5.0s -> E:\ai-powered-nids\data\raw_packets\capture_20260528_225552_424419.pcap
+2026-05-28 22:55:52 [INFO] (packet_capture.py:157) - 📥 Capturing 500 packets → E:\ai-powered-nids\data\raw_packets\capture_20260528_225552_424419.pcap
+2026-05-28 22:56:00 [INFO] (packet_capture.py:187) - ✅ Capture complete: E:\ai-powered-nids\data\raw_packets\capture_20260528_225552_424419.pcap (16692 bytes)
+2026-05-28 22:56:01 [INFO] (packet_parser.py:135) - 📊 Parsed packets: 38
+2026-05-28 22:56:01 [INFO] (flow_builder.py:191) - 📊 Flows built: 5
+2026-05-28 22:56:01 [INFO] (packet_parser.py:144) - 📊 Flows: 5
+2026-05-28 22:56:01 [INFO] (signature_engine.py:60) - 📜 Rules loaded successfully: 22
+2026-05-28 22:56:01 [INFO] (feature_engine.py:116) - 🧠 Processed flows: 5
+2026-05-28 22:56:01 [INFO] (packet_parser.py:157) - 🧠 Features: 5
+2026-05-28 22:57:44 [INFO] (logger.py:105) - 📝 Logging initialized (Level: INFO, File: logs/capture.log)
+2026-05-28 22:57:44 [INFO] (packet_capture.py:195) - 🚀 Starting IDS Capture Pipeline
+2026-05-28 22:57:47 [INFO] (packet_capture.py:118) - Probing interface 4: \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2)
+2026-05-28 22:57:52 [INFO] (packet_capture.py:118) - Probing interface 5: \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi)
+2026-05-28 22:57:56 [INFO] (packet_capture.py:120) - Selected active interface 5: \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi)
+2026-05-28 22:57:56 [INFO] (packet_capture.py:204) - 🔌 Using interface: 5
+2026-05-28 22:57:56 [INFO] (packet_capture.py:153) - Capturing up to 500 packets for 5.0s -> E:\ai-powered-nids\data\raw_packets\capture_20260528_225756_443102.pcap
+2026-05-28 22:57:56 [INFO] (packet_capture.py:157) - 📥 Capturing 500 packets → E:\ai-powered-nids\data\raw_packets\capture_20260528_225756_443102.pcap
+2026-05-28 22:58:05 [INFO] (packet_capture.py:187) - ✅ Capture complete: E:\ai-powered-nids\data\raw_packets\capture_20260528_225756_443102.pcap (3876 bytes)
+2026-05-28 22:58:06 [INFO] (packet_parser.py:135) - 📊 Parsed packets: 28
+2026-05-28 22:58:06 [INFO] (flow_builder.py:191) - 📊 Flows built: 7
+2026-05-28 22:58:06 [INFO] (packet_parser.py:144) - 📊 Flows: 7
+2026-05-28 22:58:06 [INFO] (signature_engine.py:60) - 📜 Rules loaded successfully: 22
+2026-05-28 22:58:06 [INFO] (feature_engine.py:116) - 🧠 Processed flows: 7
+2026-05-28 22:58:06 [INFO] (packet_parser.py:157) - 🧠 Features: 7
+2026-06-04 11:09:40 [INFO] (logger.py:105) - 📝 Logging initialized (Level: INFO, File: logs/capture.log)
+2026-06-04 11:09:41 [INFO] (packet_capture.py:292) - 🚀 Starting IDS Capture Pipeline
+2026-06-04 11:09:46 [INFO] (packet_capture.py:153) - Using all capture interfaces: 1. \Device\NPF_{1E70B5F6-758F-4FEF-8CDE-2218D57EE7A2} (Local Area Connection* 10), 2. \Device\NPF_{266C9694-9D98-4E73-9C07-6FBF66C4CE8B} (Local Area Connection* 9), 3. \Device\NPF_{B511B518-B485-45A5-9A07-A95EB2D7DA1A} (Local Area Connection* 8), 4. \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2), 5. \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi), 6. \Device\NPF_{2754D11B-EC61-4BC0-BBD1-ACBCDEF677DC} (Local Area Connection* 12), 7. \Device\NPF_{37AFD563-EADF-4453-B745-E29E15C8BE8A} (Local Area Connection* 11), 8. \Device\NPF_{7F874DB3-84E5-4A6A-A70B-AF18BD063AA5} (Ethernet 2), 9. \Device\NPF_Loopback (Adapter for loopback traffic capture), 10. \Device\NPF_{D5CBE07C-0092-4352-A245-D745F5767F7F} (Ethernet)
+2026-06-04 11:09:46 [INFO] (packet_capture.py:302) - 🔌 Using interface(s): 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+2026-06-04 11:09:49 [INFO] (packet_capture.py:153) - Using all capture interfaces: 1. \Device\NPF_{1E70B5F6-758F-4FEF-8CDE-2218D57EE7A2} (Local Area Connection* 10), 2. \Device\NPF_{266C9694-9D98-4E73-9C07-6FBF66C4CE8B} (Local Area Connection* 9), 3. \Device\NPF_{B511B518-B485-45A5-9A07-A95EB2D7DA1A} (Local Area Connection* 8), 4. \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2), 5. \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi), 6. \Device\NPF_{2754D11B-EC61-4BC0-BBD1-ACBCDEF677DC} (Local Area Connection* 12), 7. \Device\NPF_{37AFD563-EADF-4453-B745-E29E15C8BE8A} (Local Area Connection* 11), 8. \Device\NPF_{7F874DB3-84E5-4A6A-A70B-AF18BD063AA5} (Ethernet 2), 9. \Device\NPF_Loopback (Adapter for loopback traffic capture), 10. \Device\NPF_{D5CBE07C-0092-4352-A245-D745F5767F7F} (Ethernet)
+2026-06-04 11:09:49 [INFO] (packet_capture.py:240) - Capturing up to 500 packets for 5.0s on interface(s) 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 -> E:\ai-powered-nids\data\raw_packets\capture_20260604_110949_334472.pcap
+2026-06-04 11:09:49 [INFO] (packet_capture.py:245) - 📥 Capturing 500 packets → E:\ai-powered-nids\data\raw_packets\capture_20260604_110949_334472.pcap
+2026-06-04 11:09:54 [INFO] (packet_capture.py:284) - ✅ Capture complete: E:\ai-powered-nids\data\raw_packets\capture_20260604_110949_334472.pcap (1049040 bytes)
+2026-06-04 11:09:55 [INFO] (packet_parser.py:136) - 📊 Parsed packets: 498
+2026-06-04 11:09:55 [INFO] (flow_builder.py:191) - 📊 Flows built: 3
+2026-06-04 11:09:55 [INFO] (packet_parser.py:145) - 📊 Flows: 3
+2026-06-04 11:09:55 [INFO] (signature_engine.py:80) - 📜 Rules loaded successfully: 22
+2026-06-04 11:09:55 [INFO] (feature_engine.py:116) - 🧠 Processed flows: 3
+2026-06-04 11:09:55 [INFO] (packet_parser.py:158) - 🧠 Features: 3
+2026-06-04 11:10:45 [INFO] (model_pipeline.py:43) - Stage 1 model loaded: stage1_XGBOOST.pkl
+2026-06-04 11:10:46 [INFO] (model_pipeline.py:43) - Stage 2 model loaded: stage2_xgboost.pkl
+2026-06-04 11:10:46 [INFO] (model_pipeline.py:192) - ML stage results generated: 3
+2026-06-04 11:10:46 [INFO] (packet_parser.py:165) - ML feature results: 3
+2026-06-04 11:10:46 [INFO] (anomaly_engine.py:192) - Anomaly results generated: 3 | Alerts: 0
+2026-06-04 11:10:46 [INFO] (packet_parser.py:174) - Anomaly feature results: 3
+2026-06-04 11:10:46 [WARNING] (alert_manager.py:60) - 🚨 New alerts saved: 2
+2026-06-04 11:10:46 [INFO] (packet_capture.py:344) - 📊 Packets: 498 | Flows: 3 | Feature Records: 9 | Alerts: 2 | New Alerts: 2
+2026-06-04 11:10:48 [INFO] (packet_capture.py:153) - Using all capture interfaces: 1. \Device\NPF_{1E70B5F6-758F-4FEF-8CDE-2218D57EE7A2} (Local Area Connection* 10), 2. \Device\NPF_{266C9694-9D98-4E73-9C07-6FBF66C4CE8B} (Local Area Connection* 9), 3. \Device\NPF_{B511B518-B485-45A5-9A07-A95EB2D7DA1A} (Local Area Connection* 8), 4. \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2), 5. \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi), 6. \Device\NPF_{2754D11B-EC61-4BC0-BBD1-ACBCDEF677DC} (Local Area Connection* 12), 7. \Device\NPF_{37AFD563-EADF-4453-B745-E29E15C8BE8A} (Local Area Connection* 11), 8. \Device\NPF_{7F874DB3-84E5-4A6A-A70B-AF18BD063AA5} (Ethernet 2), 9. \Device\NPF_Loopback (Adapter for loopback traffic capture), 10. \Device\NPF_{D5CBE07C-0092-4352-A245-D745F5767F7F} (Ethernet)
+2026-06-04 11:10:48 [INFO] (packet_capture.py:240) - Capturing up to 500 packets for 5.0s on interface(s) 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 -> E:\ai-powered-nids\data\raw_packets\capture_20260604_111048_858225.pcap
+2026-06-04 11:10:48 [INFO] (packet_capture.py:245) - 📥 Capturing 500 packets → E:\ai-powered-nids\data\raw_packets\capture_20260604_111048_858225.pcap
+2026-06-04 11:10:56 [INFO] (packet_capture.py:284) - ✅ Capture complete: E:\ai-powered-nids\data\raw_packets\capture_20260604_111048_858225.pcap (19336 bytes)
+2026-06-04 11:10:57 [INFO] (packet_parser.py:136) - 📊 Parsed packets: 44
+2026-06-04 11:10:57 [INFO] (flow_builder.py:191) - 📊 Flows built: 9
+2026-06-04 11:10:57 [INFO] (packet_parser.py:145) - 📊 Flows: 9
+2026-06-04 11:10:57 [INFO] (feature_engine.py:116) - 🧠 Processed flows: 9
+2026-06-04 11:10:57 [INFO] (packet_parser.py:158) - 🧠 Features: 9
+2026-06-04 11:10:57 [INFO] (model_pipeline.py:192) - ML stage results generated: 9
+2026-06-04 11:10:57 [INFO] (packet_parser.py:165) - ML feature results: 9
+2026-06-04 11:10:57 [INFO] (anomaly_engine.py:192) - Anomaly results generated: 9 | Alerts: 5
+2026-06-04 11:10:57 [INFO] (packet_parser.py:174) - Anomaly feature results: 9
+2026-06-04 11:10:58 [WARNING] (alert_manager.py:60) - 🚨 New alerts saved: 4
+2026-06-04 11:10:58 [INFO] (packet_capture.py:344) - 📊 Packets: 44 | Flows: 9 | Feature Records: 27 | Alerts: 5 | New Alerts: 4
+2026-06-04 11:11:01 [INFO] (packet_capture.py:153) - Using all capture interfaces: 1. \Device\NPF_{1E70B5F6-758F-4FEF-8CDE-2218D57EE7A2} (Local Area Connection* 10), 2. \Device\NPF_{266C9694-9D98-4E73-9C07-6FBF66C4CE8B} (Local Area Connection* 9), 3. \Device\NPF_{B511B518-B485-45A5-9A07-A95EB2D7DA1A} (Local Area Connection* 8), 4. \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2), 5. \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi), 6. \Device\NPF_{2754D11B-EC61-4BC0-BBD1-ACBCDEF677DC} (Local Area Connection* 12), 7. \Device\NPF_{37AFD563-EADF-4453-B745-E29E15C8BE8A} (Local Area Connection* 11), 8. \Device\NPF_{7F874DB3-84E5-4A6A-A70B-AF18BD063AA5} (Ethernet 2), 9. \Device\NPF_Loopback (Adapter for loopback traffic capture), 10. \Device\NPF_{D5CBE07C-0092-4352-A245-D745F5767F7F} (Ethernet)
+2026-06-04 11:11:01 [INFO] (packet_capture.py:240) - Capturing up to 500 packets for 5.0s on interface(s) 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 -> E:\ai-powered-nids\data\raw_packets\capture_20260604_111101_331539.pcap
+2026-06-04 11:11:01 [INFO] (packet_capture.py:245) - 📥 Capturing 500 packets → E:\ai-powered-nids\data\raw_packets\capture_20260604_111101_331539.pcap
+2026-06-04 11:11:09 [INFO] (packet_capture.py:284) - ✅ Capture complete: E:\ai-powered-nids\data\raw_packets\capture_20260604_111101_331539.pcap (5148 bytes)
+2026-06-04 11:11:10 [INFO] (packet_parser.py:136) - 📊 Parsed packets: 19
+2026-06-04 11:11:10 [INFO] (flow_builder.py:191) - 📊 Flows built: 6
+2026-06-04 11:11:10 [INFO] (packet_parser.py:145) - 📊 Flows: 6
+2026-06-04 11:11:10 [INFO] (feature_engine.py:116) - 🧠 Processed flows: 6
+2026-06-04 11:11:10 [INFO] (packet_parser.py:158) - 🧠 Features: 6
+2026-06-04 11:11:11 [INFO] (model_pipeline.py:192) - ML stage results generated: 6
+2026-06-04 11:11:11 [INFO] (packet_parser.py:165) - ML feature results: 6
+2026-06-04 11:11:11 [INFO] (anomaly_engine.py:192) - Anomaly results generated: 6 | Alerts: 2
+2026-06-04 11:11:11 [INFO] (packet_parser.py:174) - Anomaly feature results: 6
+2026-06-04 11:11:11 [WARNING] (alert_manager.py:60) - 🚨 New alerts saved: 1
+2026-06-04 11:11:11 [INFO] (packet_capture.py:344) - 📊 Packets: 19 | Flows: 6 | Feature Records: 18 | Alerts: 2 | New Alerts: 1
+2026-06-04 11:11:14 [INFO] (packet_capture.py:153) - Using all capture interfaces: 1. \Device\NPF_{1E70B5F6-758F-4FEF-8CDE-2218D57EE7A2} (Local Area Connection* 10), 2. \Device\NPF_{266C9694-9D98-4E73-9C07-6FBF66C4CE8B} (Local Area Connection* 9), 3. \Device\NPF_{B511B518-B485-45A5-9A07-A95EB2D7DA1A} (Local Area Connection* 8), 4. \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2), 5. \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi), 6. \Device\NPF_{2754D11B-EC61-4BC0-BBD1-ACBCDEF677DC} (Local Area Connection* 12), 7. \Device\NPF_{37AFD563-EADF-4453-B745-E29E15C8BE8A} (Local Area Connection* 11), 8. \Device\NPF_{7F874DB3-84E5-4A6A-A70B-AF18BD063AA5} (Ethernet 2), 9. \Device\NPF_Loopback (Adapter for loopback traffic capture), 10. \Device\NPF_{D5CBE07C-0092-4352-A245-D745F5767F7F} (Ethernet)
+2026-06-04 11:11:14 [INFO] (packet_capture.py:240) - Capturing up to 500 packets for 5.0s on interface(s) 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 -> E:\ai-powered-nids\data\raw_packets\capture_20260604_111114_565109.pcap
+2026-06-04 11:11:14 [INFO] (packet_capture.py:245) - 📥 Capturing 500 packets → E:\ai-powered-nids\data\raw_packets\capture_20260604_111114_565109.pcap
+2026-06-04 11:11:24 [INFO] (packet_capture.py:284) - ✅ Capture complete: E:\ai-powered-nids\data\raw_packets\capture_20260604_111114_565109.pcap (3388 bytes)
+2026-06-04 11:11:26 [INFO] (packet_parser.py:136) - 📊 Parsed packets: 6
+2026-06-04 11:11:26 [INFO] (flow_builder.py:191) - 📊 Flows built: 4
+2026-06-04 11:11:26 [INFO] (packet_parser.py:145) - 📊 Flows: 4
+2026-06-04 11:11:26 [INFO] (feature_engine.py:116) - 🧠 Processed flows: 4
+2026-06-04 11:11:26 [INFO] (packet_parser.py:158) - 🧠 Features: 4
+2026-06-04 11:11:26 [INFO] (model_pipeline.py:192) - ML stage results generated: 4
+2026-06-04 11:11:26 [INFO] (packet_parser.py:165) - ML feature results: 4
+2026-06-04 11:11:26 [INFO] (anomaly_engine.py:192) - Anomaly results generated: 4 | Alerts: 0
+2026-06-04 11:11:26 [INFO] (packet_parser.py:174) - Anomaly feature results: 4
+2026-06-04 11:11:26 [INFO] (packet_capture.py:344) - 📊 Packets: 6 | Flows: 4 | Feature Records: 12 | Alerts: 0 | New Alerts: 0
+2026-06-04 11:11:29 [INFO] (packet_capture.py:153) - Using all capture interfaces: 1. \Device\NPF_{1E70B5F6-758F-4FEF-8CDE-2218D57EE7A2} (Local Area Connection* 10), 2. \Device\NPF_{266C9694-9D98-4E73-9C07-6FBF66C4CE8B} (Local Area Connection* 9), 3. \Device\NPF_{B511B518-B485-45A5-9A07-A95EB2D7DA1A} (Local Area Connection* 8), 4. \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2), 5. \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi), 6. \Device\NPF_{2754D11B-EC61-4BC0-BBD1-ACBCDEF677DC} (Local Area Connection* 12), 7. \Device\NPF_{37AFD563-EADF-4453-B745-E29E15C8BE8A} (Local Area Connection* 11), 8. \Device\NPF_{7F874DB3-84E5-4A6A-A70B-AF18BD063AA5} (Ethernet 2), 9. \Device\NPF_Loopback (Adapter for loopback traffic capture), 10. \Device\NPF_{D5CBE07C-0092-4352-A245-D745F5767F7F} (Ethernet)
+2026-06-04 11:11:29 [INFO] (packet_capture.py:240) - Capturing up to 500 packets for 5.0s on interface(s) 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 -> E:\ai-powered-nids\data\raw_packets\capture_20260604_111129_782497.pcap
+2026-06-04 11:11:29 [INFO] (packet_capture.py:245) - 📥 Capturing 500 packets → E:\ai-powered-nids\data\raw_packets\capture_20260604_111129_782497.pcap
+2026-06-04 11:11:39 [INFO] (packet_capture.py:284) - ✅ Capture complete: E:\ai-powered-nids\data\raw_packets\capture_20260604_111129_782497.pcap (4132 bytes)
+2026-06-04 11:11:40 [INFO] (packet_parser.py:136) - 📊 Parsed packets: 13
+2026-06-04 11:11:40 [INFO] (flow_builder.py:191) - 📊 Flows built: 6
+2026-06-04 11:11:40 [INFO] (packet_parser.py:145) - 📊 Flows: 6
+2026-06-04 11:11:40 [INFO] (feature_engine.py:116) - 🧠 Processed flows: 6
+2026-06-04 11:11:40 [INFO] (packet_parser.py:158) - 🧠 Features: 6
+2026-06-04 11:11:40 [INFO] (model_pipeline.py:192) - ML stage results generated: 6
+2026-06-04 11:11:40 [INFO] (packet_parser.py:165) - ML feature results: 6
+2026-06-04 11:11:40 [INFO] (anomaly_engine.py:192) - Anomaly results generated: 6 | Alerts: 5
+2026-06-04 11:11:40 [INFO] (packet_parser.py:174) - Anomaly feature results: 6
+2026-06-04 11:11:41 [WARNING] (alert_manager.py:60) - 🚨 New alerts saved: 5
+2026-06-04 11:11:41 [INFO] (packet_capture.py:344) - 📊 Packets: 13 | Flows: 6 | Feature Records: 18 | Alerts: 5 | New Alerts: 5
+2026-06-04 11:11:45 [INFO] (packet_capture.py:153) - Using all capture interfaces: 1. \Device\NPF_{1E70B5F6-758F-4FEF-8CDE-2218D57EE7A2} (Local Area Connection* 10), 2. \Device\NPF_{266C9694-9D98-4E73-9C07-6FBF66C4CE8B} (Local Area Connection* 9), 3. \Device\NPF_{B511B518-B485-45A5-9A07-A95EB2D7DA1A} (Local Area Connection* 8), 4. \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2), 5. \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi), 6. \Device\NPF_{2754D11B-EC61-4BC0-BBD1-ACBCDEF677DC} (Local Area Connection* 12), 7. \Device\NPF_{37AFD563-EADF-4453-B745-E29E15C8BE8A} (Local Area Connection* 11), 8. \Device\NPF_{7F874DB3-84E5-4A6A-A70B-AF18BD063AA5} (Ethernet 2), 9. \Device\NPF_Loopback (Adapter for loopback traffic capture), 10. \Device\NPF_{D5CBE07C-0092-4352-A245-D745F5767F7F} (Ethernet)
+2026-06-04 11:11:45 [INFO] (packet_capture.py:240) - Capturing up to 500 packets for 5.0s on interface(s) 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 -> E:\ai-powered-nids\data\raw_packets\capture_20260604_111145_050859.pcap
+2026-06-04 11:11:45 [INFO] (packet_capture.py:245) - 📥 Capturing 500 packets → E:\ai-powered-nids\data\raw_packets\capture_20260604_111145_050859.pcap
+2026-06-04 11:11:54 [INFO] (packet_capture.py:284) - ✅ Capture complete: E:\ai-powered-nids\data\raw_packets\capture_20260604_111145_050859.pcap (5224 bytes)
+2026-06-04 11:11:55 [INFO] (packet_parser.py:136) - 📊 Parsed packets: 19
+2026-06-04 11:11:55 [INFO] (flow_builder.py:191) - 📊 Flows built: 4
+2026-06-04 11:11:55 [INFO] (packet_parser.py:145) - 📊 Flows: 4
+2026-06-04 11:11:55 [INFO] (feature_engine.py:116) - 🧠 Processed flows: 4
+2026-06-04 11:11:55 [INFO] (packet_parser.py:158) - 🧠 Features: 4
+2026-06-04 11:11:56 [INFO] (model_pipeline.py:192) - ML stage results generated: 4
+2026-06-04 11:11:56 [INFO] (packet_parser.py:165) - ML feature results: 4
+2026-06-04 11:11:56 [INFO] (anomaly_engine.py:192) - Anomaly results generated: 4 | Alerts: 0
+2026-06-04 11:11:56 [INFO] (packet_parser.py:174) - Anomaly feature results: 4
+2026-06-04 11:11:56 [INFO] (packet_capture.py:344) - 📊 Packets: 19 | Flows: 4 | Feature Records: 12 | Alerts: 0 | New Alerts: 0
+2026-06-04 11:12:04 [INFO] (packet_capture.py:153) - Using all capture interfaces: 1. \Device\NPF_{1E70B5F6-758F-4FEF-8CDE-2218D57EE7A2} (Local Area Connection* 10), 2. \Device\NPF_{266C9694-9D98-4E73-9C07-6FBF66C4CE8B} (Local Area Connection* 9), 3. \Device\NPF_{B511B518-B485-45A5-9A07-A95EB2D7DA1A} (Local Area Connection* 8), 4. \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2), 5. \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi), 6. \Device\NPF_{2754D11B-EC61-4BC0-BBD1-ACBCDEF677DC} (Local Area Connection* 12), 7. \Device\NPF_{37AFD563-EADF-4453-B745-E29E15C8BE8A} (Local Area Connection* 11), 8. \Device\NPF_{7F874DB3-84E5-4A6A-A70B-AF18BD063AA5} (Ethernet 2), 9. \Device\NPF_Loopback (Adapter for loopback traffic capture), 10. \Device\NPF_{D5CBE07C-0092-4352-A245-D745F5767F7F} (Ethernet)
+2026-06-04 11:12:04 [INFO] (packet_capture.py:240) - Capturing up to 500 packets for 5.0s on interface(s) 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 -> E:\ai-powered-nids\data\raw_packets\capture_20260604_111204_614711.pcap
+2026-06-04 11:12:04 [INFO] (packet_capture.py:245) - 📥 Capturing 500 packets → E:\ai-powered-nids\data\raw_packets\capture_20260604_111204_614711.pcap
+2026-06-04 11:12:13 [INFO] (packet_capture.py:284) - ✅ Capture complete: E:\ai-powered-nids\data\raw_packets\capture_20260604_111204_614711.pcap (156048 bytes)
+2026-06-04 11:12:15 [INFO] (packet_parser.py:136) - 📊 Parsed packets: 241
+2026-06-04 11:12:15 [INFO] (flow_builder.py:191) - 📊 Flows built: 26
+2026-06-04 11:12:15 [INFO] (packet_parser.py:145) - 📊 Flows: 26
+2026-06-04 11:12:15 [INFO] (feature_engine.py:116) - 🧠 Processed flows: 26
+2026-06-04 11:12:15 [INFO] (packet_parser.py:158) - 🧠 Features: 26
+2026-06-04 11:12:17 [INFO] (model_pipeline.py:192) - ML stage results generated: 26
+2026-06-04 11:12:17 [INFO] (packet_parser.py:165) - ML feature results: 26
+2026-06-04 11:12:17 [INFO] (anomaly_engine.py:192) - Anomaly results generated: 26 | Alerts: 9
+2026-06-04 11:12:17 [INFO] (packet_parser.py:174) - Anomaly feature results: 26
+2026-06-04 11:12:17 [WARNING] (fusion_engine.py:95) - Hybrid alerts generated: 1
+2026-06-04 11:12:17 [WARNING] (alert_manager.py:60) - 🚨 New alerts saved: 1
+2026-06-04 11:12:18 [WARNING] (alert_manager.py:60) - 🚨 New alerts saved: 8
+2026-06-04 11:12:18 [WARNING] (alert_manager.py:60) - 🚨 New alerts saved: 1
+2026-06-04 11:12:18 [INFO] (packet_capture.py:344) - 📊 Packets: 241 | Flows: 26 | Feature Records: 79 | Alerts: 11 | New Alerts: 10
+2026-06-04 11:12:23 [INFO] (packet_capture.py:153) - Using all capture interfaces: 1. \Device\NPF_{1E70B5F6-758F-4FEF-8CDE-2218D57EE7A2} (Local Area Connection* 10), 2. \Device\NPF_{266C9694-9D98-4E73-9C07-6FBF66C4CE8B} (Local Area Connection* 9), 3. \Device\NPF_{B511B518-B485-45A5-9A07-A95EB2D7DA1A} (Local Area Connection* 8), 4. \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2), 5. \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi), 6. \Device\NPF_{2754D11B-EC61-4BC0-BBD1-ACBCDEF677DC} (Local Area Connection* 12), 7. \Device\NPF_{37AFD563-EADF-4453-B745-E29E15C8BE8A} (Local Area Connection* 11), 8. \Device\NPF_{7F874DB3-84E5-4A6A-A70B-AF18BD063AA5} (Ethernet 2), 9. \Device\NPF_Loopback (Adapter for loopback traffic capture), 10. \Device\NPF_{D5CBE07C-0092-4352-A245-D745F5767F7F} (Ethernet)
+2026-06-04 11:12:23 [INFO] (packet_capture.py:240) - Capturing up to 500 packets for 5.0s on interface(s) 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 -> E:\ai-powered-nids\data\raw_packets\capture_20260604_111223_262993.pcap
+2026-06-04 11:12:23 [INFO] (packet_capture.py:245) - 📥 Capturing 500 packets → E:\ai-powered-nids\data\raw_packets\capture_20260604_111223_262993.pcap
+2026-06-04 11:12:34 [INFO] (packet_capture.py:284) - ✅ Capture complete: E:\ai-powered-nids\data\raw_packets\capture_20260604_111223_262993.pcap (3992 bytes)
+2026-06-04 11:12:35 [INFO] (packet_parser.py:136) - 📊 Parsed packets: 10
+2026-06-04 11:12:35 [INFO] (flow_builder.py:191) - 📊 Flows built: 6
+2026-06-04 11:12:35 [INFO] (packet_parser.py:145) - 📊 Flows: 6
+2026-06-04 11:12:35 [INFO] (feature_engine.py:116) - 🧠 Processed flows: 6
+2026-06-04 11:12:35 [INFO] (packet_parser.py:158) - 🧠 Features: 6
+2026-06-04 11:12:35 [INFO] (model_pipeline.py:192) - ML stage results generated: 6
+2026-06-04 11:12:35 [INFO] (packet_parser.py:165) - ML feature results: 6
+2026-06-04 11:12:35 [INFO] (anomaly_engine.py:192) - Anomaly results generated: 6 | Alerts: 2
+2026-06-04 11:12:35 [INFO] (packet_parser.py:174) - Anomaly feature results: 6
+2026-06-04 11:12:35 [INFO] (packet_capture.py:344) - 📊 Packets: 10 | Flows: 6 | Feature Records: 18 | Alerts: 2 | New Alerts: 0
+2026-06-04 11:12:40 [INFO] (packet_capture.py:153) - Using all capture interfaces: 1. \Device\NPF_{1E70B5F6-758F-4FEF-8CDE-2218D57EE7A2} (Local Area Connection* 10), 2. \Device\NPF_{266C9694-9D98-4E73-9C07-6FBF66C4CE8B} (Local Area Connection* 9), 3. \Device\NPF_{B511B518-B485-45A5-9A07-A95EB2D7DA1A} (Local Area Connection* 8), 4. \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2), 5. \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi), 6. \Device\NPF_{2754D11B-EC61-4BC0-BBD1-ACBCDEF677DC} (Local Area Connection* 12), 7. \Device\NPF_{37AFD563-EADF-4453-B745-E29E15C8BE8A} (Local Area Connection* 11), 8. \Device\NPF_{7F874DB3-84E5-4A6A-A70B-AF18BD063AA5} (Ethernet 2), 9. \Device\NPF_Loopback (Adapter for loopback traffic capture), 10. \Device\NPF_{D5CBE07C-0092-4352-A245-D745F5767F7F} (Ethernet)
+2026-06-04 11:12:40 [INFO] (packet_capture.py:240) - Capturing up to 500 packets for 5.0s on interface(s) 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 -> E:\ai-powered-nids\data\raw_packets\capture_20260604_111240_249291.pcap
+2026-06-04 11:12:40 [INFO] (packet_capture.py:245) - 📥 Capturing 500 packets → E:\ai-powered-nids\data\raw_packets\capture_20260604_111240_249291.pcap
+2026-06-04 11:12:54 [INFO] (packet_capture.py:284) - ✅ Capture complete: E:\ai-powered-nids\data\raw_packets\capture_20260604_111240_249291.pcap (8208 bytes)
+2026-06-04 11:12:55 [INFO] (packet_parser.py:136) - 📊 Parsed packets: 37
+2026-06-04 11:12:55 [INFO] (flow_builder.py:191) - 📊 Flows built: 7
+2026-06-04 11:12:55 [INFO] (packet_parser.py:145) - 📊 Flows: 7
+2026-06-04 11:12:55 [INFO] (feature_engine.py:116) - 🧠 Processed flows: 7
+2026-06-04 11:12:55 [INFO] (packet_parser.py:158) - 🧠 Features: 7
+2026-06-04 11:12:57 [INFO] (model_pipeline.py:192) - ML stage results generated: 7
+2026-06-04 11:12:57 [INFO] (packet_parser.py:165) - ML feature results: 7
+2026-06-04 11:12:57 [INFO] (anomaly_engine.py:192) - Anomaly results generated: 7 | Alerts: 3
+2026-06-04 11:12:57 [INFO] (packet_parser.py:174) - Anomaly feature results: 7
+2026-06-04 11:12:58 [WARNING] (alert_manager.py:60) - 🚨 New alerts saved: 2
+2026-06-04 11:12:58 [INFO] (packet_capture.py:344) - 📊 Packets: 37 | Flows: 7 | Feature Records: 21 | Alerts: 3 | New Alerts: 2

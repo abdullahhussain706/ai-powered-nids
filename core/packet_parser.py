@@ -90,6 +90,7 @@ def parse_pcap(
     run_flow_builder=True,
     run_feature_engine=True,
     run_ml_engine=True,
+    run_anomaly_detection=True,
 ):
 
     cmd = [
@@ -164,6 +165,15 @@ def parse_pcap(
             logging.info(f"ML feature results: {len(ml_results)}")
         except Exception as e:
             logging.error(f"ML engine unavailable: {e}")
+
+    if run_anomaly_detection and flows:
+        try:
+            from core.anomaly_engine import run_anomaly_engine
+            anomaly_results = run_anomaly_engine(flows)
+            feature_results.extend(anomaly_results)
+            logging.info(f"Anomaly feature results: {len(anomaly_results)}")
+        except Exception as e:
+            logging.error(f"Anomaly engine unavailable: {e}")
 
     if feature_results:
         from core.fusion_engine import build_hybrid_results

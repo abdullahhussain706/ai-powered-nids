@@ -6,20 +6,18 @@ import time
 import platform
 from pathlib import Path
 
+from services.dependency_service import ensure_capture_dependencies, print_manual_install_help
+from services.monitor_service import BackendMonitorService
+from services.scheduler import build_default_scheduler
+
 
 BASE_DIR = Path(__file__).resolve().parent
-BACKEND_SCRIPT = BASE_DIR / "core" / "packet_capture.py"
 VENV_PYTHON = (
     BASE_DIR / "venv" / "Scripts" / "python.exe"
     if platform.system() == "Windows"
     else BASE_DIR / "venv" / "bin" / "python"
 )
 PYTHON = VENV_PYTHON if VENV_PYTHON.exists() else Path(sys.executable)
-
-
-def start_process(name, script):
-    print(f"Starting {name}: {script.relative_to(BASE_DIR)}")
-    return subprocess.Popen([str(PYTHON), str(script)], cwd=BASE_DIR)
 
 
 def start_frontend():
@@ -43,7 +41,17 @@ def stop_process(name, proc):
 def main():
     print("==== AI Powered NIDS ====")
 
-    backend = start_process("backend", BACKEND_SCRIPT)
+    ok, detail = ensure_capture_dependencies(auto_install=True)
+    if not ok:
+        print(detail)
+        print_manual_install_help()
+        return 1
+    print(detail)
+
+    backend = BackendMonitorService(python_executable=PYTHON)
+    scheduler = build_default_scheduler()
+    backend.start()
+    scheduler.start()
     time.sleep(1)
     frontend = start_frontend()
 
@@ -53,9 +61,7 @@ def main():
                 print("Frontend closed.")
                 break
 
-            if backend.poll() is not None:
-                print("Backend stopped. Restarting...")
-                backend = start_process("backend", BACKEND_SCRIPT)
+            backend.ensure_running()
 
             time.sleep(2)
 
@@ -63,9 +69,10 @@ def main():
         print("\nShutdown requested.")
     finally:
         stop_process("frontend", frontend)
-        stop_process("backend", backend)
+        scheduler.stop()
+        backend.stop()
         print("IDS stopped.")
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main() or 0)
