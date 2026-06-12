@@ -30,17 +30,13 @@ MODEL_DIR.mkdir(parents=True, exist_ok=True)
 REPORT_DIR = BASE_DIR / "ml" / "reports" / "stage2"
 REPORT_DIR.mkdir(parents=True, exist_ok=True)
 
-# =========================
-# LOAD DATA
-# =========================
+
 df = pd.read_csv(DATA_PATH)
 
 print("\nDataset shape:", df.shape)
 print("\nClass distribution:\n", df["label"].value_counts())
 
-# =========================
-# FEATURES / LABEL
-# =========================
+
 X = df.drop("label", axis=1)
 y = df["label"]
 
@@ -56,9 +52,7 @@ labels = [0, 1, 2, 3]
 
 y = y.map(label_map)
 
-# =========================
-# TRAIN TEST SPLIT
-# =========================
+
 X_train, X_test, y_train, y_test = train_test_split(
     X,
     y,

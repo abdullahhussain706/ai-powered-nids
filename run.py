@@ -1,28 +1,26 @@
 #!/usr/bin/env python3
 
 import subprocess
-import sys
 import time
-import platform
 from pathlib import Path
 
-from services.dependency_service import ensure_capture_dependencies, print_manual_install_help
+from services.dependency_service import (
+    ensure_capture_dependencies,
+    ensure_python_dependencies,
+    get_project_python,
+    print_manual_install_help,
+    print_python_install_help,
+)
 from services.monitor_service import BackendMonitorService
 from services.scheduler import build_default_scheduler
 
 
 BASE_DIR = Path(__file__).resolve().parent
-VENV_PYTHON = (
-    BASE_DIR / "venv" / "Scripts" / "python.exe"
-    if platform.system() == "Windows"
-    else BASE_DIR / "venv" / "bin" / "python"
-)
-PYTHON = VENV_PYTHON if VENV_PYTHON.exists() else Path(sys.executable)
 
 
-def start_frontend():
+def start_frontend(python_executable):
     print("Starting frontend: ui.main_window")
-    return subprocess.Popen([str(PYTHON), "-m", "ui.main_window"], cwd=BASE_DIR)
+    return subprocess.Popen([str(python_executable), "-m", "ui.main_window"], cwd=BASE_DIR)
 
 
 def stop_process(name, proc):
@@ -41,6 +39,13 @@ def stop_process(name, proc):
 def main():
     print("==== AI Powered NIDS ====")
 
+    py_ok, py_detail = ensure_python_dependencies(auto_install=True)
+    if not py_ok:
+        print(py_detail)
+        print_python_install_help()
+        return 1
+    print(py_detail)
+
     ok, detail = ensure_capture_dependencies(auto_install=True)
     if not ok:
         print(detail)
@@ -48,12 +53,13 @@ def main():
         return 1
     print(detail)
 
-    backend = BackendMonitorService(python_executable=PYTHON)
+    python_executable = get_project_python()
+    backend = BackendMonitorService(python_executable=python_executable)
     scheduler = build_default_scheduler()
     backend.start()
     scheduler.start()
     time.sleep(1)
-    frontend = start_frontend()
+    frontend = start_frontend(python_executable)
 
     try:
         while True:

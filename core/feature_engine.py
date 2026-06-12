@@ -4,9 +4,7 @@ import logging
 from core.signature_engine import run_signature_engine   # 👈 only call
 
 
-# =========================
-# SAFE DIVISION
-# =========================
+
 def safe_div(a, b):
     return a / b if b != 0 else 0
 
@@ -32,15 +30,11 @@ def extract_features(flow):
 
         unique_ports = flow.get("unique_dst_ports", 0)
 
-        # =========================
-        # BASIC FEATURES
-        # =========================
+       
         packet_rate = safe_div(total_packets, duration)
         byte_rate = safe_div(total_bytes, duration)
 
-        # =========================
-        # RATIOS
-        # =========================
+        
         syn_ratio = safe_div(syn, total_packets)
         fin_ratio = safe_div(fin, total_packets)
         psh_ratio = safe_div(psh, total_packets)
@@ -48,9 +42,7 @@ def extract_features(flow):
         fwd_bwd_packet_ratio = safe_div(fwd_packets, bwd_packets)
         fwd_bwd_byte_ratio = safe_div(fwd_bytes, bwd_bytes)
 
-        # =========================
-        # FEATURE OBJECT
-        # =========================
+        
         features = {
             "flow_id": flow.get("flow_id"),
             "src_ip": flow.get("src_ip"),
@@ -75,7 +67,7 @@ def extract_features(flow):
 
             "unique_dst_ports": unique_ports,
 
-            # FLAGS
+            
             "is_short_flow": duration < 5,
             "is_long_flow": duration > 60,
             "is_high_packet": total_packets > 100,
@@ -88,7 +80,7 @@ def extract_features(flow):
         }
 
         # =========================
-        # 🔥 SIGNATURE ENGINE CALL
+        # SIGNATURE ENGINE CALL
         # =========================
         alerts = run_signature_engine(features)
 
@@ -102,9 +94,7 @@ def extract_features(flow):
         return None
 
 
-# =========================
-# BULK FEATURE EXTRACTION
-# =========================
+
 def extract_features_batch(flows):
     results = []
 
@@ -113,5 +103,5 @@ def extract_features_batch(flows):
         if output:
             results.append(output)
 
-    logging.info(f"🧠 Processed flows: {len(results)}")
+    logging.info(f"Processed flows: {len(results)}")
     return results

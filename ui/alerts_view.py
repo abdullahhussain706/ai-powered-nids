@@ -1,4 +1,4 @@
-# alerts_view.py - Fixed for new database schema
+
 
 import csv
 import sqlite3

@@ -1,5 +1,3 @@
-# settings_view.py - With Real System Uptime
-
 import sys
 import json
 import subprocess
@@ -11,7 +9,8 @@ from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QFrame,
     QGroupBox, QFormLayout, QCheckBox, QComboBox, QLineEdit,
     QSpinBox, QTableWidget, QTableWidgetItem, QHeaderView,
-    QPushButton, QScrollArea, QMessageBox, QFileDialog
+    QPushButton, QScrollArea, QMessageBox, QFileDialog,
+    QSizePolicy
 )
 from PySide6.QtCore import Qt, QTimer, QDateTime
 
@@ -29,7 +28,6 @@ SETTINGS_FILE.parent.mkdir(parents=True, exist_ok=True)
 def get_system_uptime():
     """Get system uptime in seconds."""
     if sys.platform == "win32":
-        # Windows
         try:
             result = subprocess.run(['wmic', 'os', 'get', 'LastBootUpTime'], 
                                    capture_output=True, text=True, shell=True)
@@ -42,7 +40,6 @@ def get_system_uptime():
         except:
             pass
     else:
-        # Linux
         try:
             with open('/proc/uptime', 'r') as f:
                 uptime_seconds = float(f.readline().split()[0])
@@ -50,7 +47,6 @@ def get_system_uptime():
         except:
             pass
     
-    # Fallback: return 0 if unable to get system uptime
     return 0
 
 
@@ -270,25 +266,33 @@ class SettingsView(QWidget):
         subtitle.setStyleSheet("color: #a0a0b0; font-size: 13px; background: transparent; margin-bottom: 8px;")
         content_layout.addWidget(subtitle)
 
-        # ----- Two Column Layout: Left (Network + Alerts) | Right (Logging) -----
-        two_column_layout = QHBoxLayout()
+        # Responsive: Wrap two columns in a container that can adjust
+        two_column_container = QWidget()
+        two_column_container.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
+        two_column_layout = QHBoxLayout(two_column_container)
         two_column_layout.setSpacing(16)
+        two_column_layout.setContentsMargins(0, 0, 0, 0)
 
         # ==================== LEFT COLUMN ====================
-        left_column = QVBoxLayout()
-        left_column.setSpacing(16)
+        left_column = QWidget()
+        left_column.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
+        left_layout = QVBoxLayout(left_column)
+        left_layout.setSpacing(16)
+        left_layout.setContentsMargins(0, 0, 0, 0)
 
         # Network Interface Group
         net_group = self._create_group("Network Interface")
         net_layout = QFormLayout(net_group)
         net_layout.setSpacing(8)
         net_layout.setLabelAlignment(Qt.AlignRight)
+        net_layout.setFieldGrowthPolicy(QFormLayout.ExpandingFieldsGrow)
 
         self.capture_interface = QComboBox()
         interfaces = get_available_interfaces()
         self.capture_interface.addItems(interfaces)
         current_iface = self.settings_mgr.get("capture_interface", "All")
         self.capture_interface.setCurrentText(choose_interface_value(current_iface, interfaces))
+        self.capture_interface.setMinimumWidth(150)
         net_layout.addRow("Capture Interface:", self.capture_interface)
 
         self.capture_mode = QComboBox()
@@ -305,7 +309,7 @@ class SettingsView(QWidget):
         self.bpf_filter.setPlaceholderText("e.g., port 80 or host 192.168.1.1")
         net_layout.addRow("BPF Filter (optional):", self.bpf_filter)
 
-        left_column.addWidget(net_group)
+        left_layout.addWidget(net_group)
 
         # Alert Settings Group
         alert_group = self._create_group("Alert Settings")
@@ -339,17 +343,21 @@ class SettingsView(QWidget):
         severity_retention.addWidget(self.retention_days)
         alert_layout.addLayout(severity_retention)
 
-        left_column.addWidget(alert_group)
+        left_layout.addWidget(alert_group)
 
         # ==================== RIGHT COLUMN ====================
-        right_column = QVBoxLayout()
-        right_column.setSpacing(16)
+        right_column = QWidget()
+        right_column.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
+        right_layout = QVBoxLayout(right_column)
+        right_layout.setSpacing(16)
+        right_layout.setContentsMargins(0, 0, 0, 0)
 
-        # Logging Settings Group (full height)
+        # Logging Settings Group
         log_group = self._create_group("Logging Settings")
         log_layout = QFormLayout(log_group)
         log_layout.setSpacing(8)
         log_layout.setLabelAlignment(Qt.AlignRight)
+        log_layout.setFieldGrowthPolicy(QFormLayout.ExpandingFieldsGrow)
 
         self.logging_enabled = QCheckBox("Enable Logging")
         self.logging_enabled.setChecked(self.settings_mgr.get("logging_enabled", True))
@@ -409,12 +417,14 @@ class SettingsView(QWidget):
         self.delete_after_days.setValue(self.settings_mgr.get("delete_after_days", 7))
         log_layout.addRow("Delete Logs After (days):", self.delete_after_days)
 
-        right_column.addWidget(log_group)
+        right_layout.addWidget(log_group)
 
+        # PCAP Storage Group
         pcap_group = self._create_group("PCAP Storage")
         pcap_layout = QFormLayout(pcap_group)
         pcap_layout.setSpacing(8)
         pcap_layout.setLabelAlignment(Qt.AlignRight)
+        pcap_layout.setFieldGrowthPolicy(QFormLayout.ExpandingFieldsGrow)
 
         pcap_stats_frame = QFrame()
         pcap_stats_frame.setStyleSheet("background-color: #2d2d3a; border-radius: 4px; padding: 8px;")
@@ -434,12 +444,12 @@ class SettingsView(QWidget):
         pcap_btn_layout.addStretch()
         pcap_layout.addRow("", pcap_btn_layout)
 
-        right_column.addWidget(pcap_group)
+        right_layout.addWidget(pcap_group)
 
         # Add both columns to the two-column layout
-        two_column_layout.addLayout(left_column, 1)
-        two_column_layout.addLayout(right_column, 1)
-        content_layout.addLayout(two_column_layout)
+        two_column_layout.addWidget(left_column, 1)
+        two_column_layout.addWidget(right_column, 1)
+        content_layout.addWidget(two_column_container)
 
         # ----- Rule Management Table (Full Width Below) -----
         rule_group = self._create_group("Rule Management")
@@ -452,6 +462,7 @@ class SettingsView(QWidget):
         self.rule_table.setAlternatingRowColors(True)
         self.rule_table.setEditTriggers(QTableWidget.NoEditTriggers)
         self.rule_table.setSelectionBehavior(QTableWidget.SelectRows)
+        self.rule_table.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.rule_table.setStyleSheet("""
             QTableWidget {
                 background-color: rgba(11, 18, 28, 0.35);
@@ -493,10 +504,11 @@ class SettingsView(QWidget):
         self.rule_table.horizontalHeader().setSectionResizeMode(2, QHeaderView.Stretch)
         self.rule_table.horizontalHeader().setSectionResizeMode(3, QHeaderView.ResizeToContents)
         self.rule_table.horizontalHeader().setSectionResizeMode(4, QHeaderView.ResizeToContents)
-        self.rule_table.setFixedHeight(200)
-        rule_layout.addWidget(self.rule_table)
+        self.rule_table.setMinimumHeight(200)
+        self.rule_table.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        rule_layout.addWidget(self.rule_table, 1)
 
-        content_layout.addWidget(rule_group)
+        content_layout.addWidget(rule_group, 1)
 
         # ----- Save & Reset Buttons -----
         btn_layout = QHBoxLayout()
@@ -516,6 +528,7 @@ class SettingsView(QWidget):
                 background-color: #45a049;
             }
         """)
+        self.save_btn.setMinimumWidth(120)
         self.save_btn.clicked.connect(self.save_settings)
         btn_layout.addWidget(self.save_btn)
         
@@ -533,6 +546,7 @@ class SettingsView(QWidget):
                 background-color: #d32f2f;
             }
         """)
+        self.reset_btn.setMinimumWidth(120)
         self.reset_btn.clicked.connect(self.reset_to_default)
         btn_layout.addWidget(self.reset_btn)
         
@@ -565,16 +579,14 @@ class SettingsView(QWidget):
 
         content_layout.addWidget(status_frame)
 
-        # Update log stats and start timers
+        # Update stats and start timers
         self.update_log_stats()
         self.update_pcap_stats()
         
-        # Timer for uptime (updates every second)
         self.uptime_timer = QTimer()
         self.uptime_timer.timeout.connect(self.update_uptime)
         self.uptime_timer.start(1000)
         
-        # Timer for log stats (updates every 5 seconds)
         self.stats_timer = QTimer()
         self.stats_timer.timeout.connect(self.update_log_stats)
         self.stats_timer.start(5000)
@@ -583,13 +595,13 @@ class SettingsView(QWidget):
         self.pcap_stats_timer.timeout.connect(self.update_pcap_stats)
         self.pcap_stats_timer.start(5000)
         
-        # Timer for time display (updates every second)
         self.time_timer = QTimer()
         self.time_timer.timeout.connect(self.update_time)
         self.time_timer.start(1000)
 
     def _create_group(self, title):
         group = QGroupBox(title)
+        group.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
         group.setStyleSheet("""
             QGroupBox {
                 background-color: #1e1e2f;
@@ -688,20 +700,17 @@ class SettingsView(QWidget):
             self.update_pcap_stats()
 
     def save_settings(self):
-        # Network settings
         self.settings_mgr.set("capture_interface", self.capture_interface.currentText())
         self.settings_mgr.set("capture_mode", self.capture_mode.currentText())
         self.settings_mgr.set("promiscuous_mode", self.promiscuous.isChecked())
         self.settings_mgr.set("bpf_filter", self.bpf_filter.text())
         
-        # Alert settings
         self.settings_mgr.set("alerts_enabled", self.alerts_enabled.isChecked())
         self.settings_mgr.set("desktop_notifications", self.desktop_notify.isChecked())
         self.settings_mgr.set("sound_alerts", self.sound_alert.isChecked())
         self.settings_mgr.set("severity_filter", self.severity_filter.currentText())
         self.settings_mgr.set("alert_retention_days", self.retention_days.value())
         
-        # Logging settings
         self.settings_mgr.set("logging_enabled", self.logging_enabled.isChecked())
         self.settings_mgr.set("log_format", self.log_format.currentText())
         self.settings_mgr.set("log_file_path", self.log_file_path.text())
@@ -746,7 +755,6 @@ class SettingsView(QWidget):
             QMessageBox.Yes | QMessageBox.No, QMessageBox.No
         )
         if reply == QMessageBox.Yes:
-            # Reset network settings
             interfaces = get_available_interfaces()
             self.capture_interface.clear()
             self.capture_interface.addItems(interfaces)
@@ -755,14 +763,12 @@ class SettingsView(QWidget):
             self.promiscuous.setChecked(False)
             self.bpf_filter.clear()
             
-            # Reset alert settings
             self.alerts_enabled.setChecked(True)
             self.desktop_notify.setChecked(False)
             self.sound_alert.setChecked(False)
             self.severity_filter.setCurrentText("All")
             self.retention_days.setValue(30)
             
-            # Reset logging settings
             self.logging_enabled.setChecked(True)
             self.log_format.setCurrentText("JSON")
             self.log_file_path.setText(str(ALERTS_LOG))
@@ -770,7 +776,6 @@ class SettingsView(QWidget):
             self.auto_delete.setChecked(True)
             self.delete_after_days.setValue(7)
             
-            # Reset rules
             for row, rule in enumerate(self.rule_defaults):
                 if row >= self.rule_table.rowCount():
                     break
@@ -785,10 +790,8 @@ class SettingsView(QWidget):
             QMessageBox.information(self, "Reset Complete", "All settings have been reset to default values.")
 
     def update_uptime(self):
-        """Update the uptime display with real system uptime."""
         self.uptime_seconds += 1
         self.uptime_label.setText(f"Uptime: {format_uptime(self.uptime_seconds)}")
 
     def update_time(self):
-        """Update the current time display."""
         self.time_label.setText(datetime.now().strftime("%I:%M:%S %p  %b %d, %Y"))

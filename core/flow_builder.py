@@ -188,6 +188,6 @@ def build_flows(packets):
         key = (flow["src_ip"], flow["dst_ip"], flow["protocol"])
         flow["unique_dst_ports"] = len(ports_by_peer[key])
 
-    logging.info(f"📊 Flows built: {len(completed)}")
+    logging.info(f"Flows built: {len(completed)}")
     
     return completed

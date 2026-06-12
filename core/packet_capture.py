@@ -32,15 +32,10 @@ _timeout_conf = capture_conf.get("tshark_timeout")
 TSHARK_TIMEOUT = int(_timeout_conf or os.getenv("IDS_TSHARK_TIMEOUT", max(20, int(CAPTURE_SECONDS) + 10)))
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-# =========================
-# LOGGING SETUP
-# =========================
+
 from utils.logger import setup_logger
 setup_logger(default_file="logs/capture.log")
 
-# =========================
-# IMPORT PARSER & ALERTS
-# =========================
 from core.packet_parser import parse_pcap
 from core.alert_manager import handle_alerts
 
@@ -242,7 +237,7 @@ def capture_packets(interfaces, settings=None):
         f"on interface(s) {interface_label} -> {pcap_file}"
     )
 
-    logging.info(f"📥 Capturing {PACKET_LIMIT} packets → {pcap_file}")
+    logging.info(f"Capturing {PACKET_LIMIT} packets → {pcap_file}")
 
     cmd = ["tshark"]
     for interface in interfaces:
@@ -342,7 +337,7 @@ def main_loop():
                 saved_alerts.extend(handle_alerts(source_alerts, source=source))
 
             logging.info(
-                f"📊 Packets: {len(packets)} | Flows: {len(flows)} | "
+                f"Packets: {len(packets)} | Flows: {len(flows)} | "
                 f"Feature Records: {len(feature_results)} | "
                 f"Alerts: {alert_count} | New Alerts: {len(saved_alerts)}"
             )
@@ -361,8 +356,5 @@ def main_loop():
         iteration += 1
 
 
-# =========================
-# ENTRY POINT
-# =========================
 if __name__ == "__main__":
     main_loop()

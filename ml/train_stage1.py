@@ -31,17 +31,13 @@ MODEL_DIR.mkdir(parents=True, exist_ok=True)
 REPORT_DIR = BASE_DIR / "ml" / "reports" / "stage1"
 REPORT_DIR.mkdir(parents=True, exist_ok=True)
 
-# =========================
-# LOAD DATA
-# =========================
+
 df = pd.read_csv(DATA_PATH)
 
 print("\nDataset shape:", df.shape)
 print("\nClass distribution:\n", df["label"].value_counts())
 
-# =========================
-# FEATURES / LABEL
-# =========================
+
 X = df.drop("label", axis=1)
 y = df["label"].map({"BENIGN": 0, "ATTACK": 1})
 
@@ -59,9 +55,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 print("\nTrain shape:", X_train.shape)
 print("Test shape:", X_test.shape)
 
-# =========================
-# IMBALANCE WEIGHT
-# =========================
+
 benign = (y_train == 0).sum()
 attack = (y_train == 1).sum()
 scale_pos_weight = benign / attack
@@ -143,9 +137,7 @@ else:
 
 print("\nBEST MODEL:", model_name)
 
-# =========================
-# SAVE EVALUATION ARTIFACTS
-# =========================
+
 target_names = ["BENIGN", "ATTACK"]
 labels = [0, 1]
 

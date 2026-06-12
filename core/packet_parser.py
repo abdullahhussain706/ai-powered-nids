@@ -82,9 +82,7 @@ def parse_line(line):
         return None
 
 
-# =========================
-# MAIN PIPELINE
-# =========================
+
 def parse_pcap(
     pcap_file,
     run_flow_builder=True,
@@ -115,9 +113,7 @@ def parse_pcap(
             text=True
         )
 
-        # =========================
-        # STREAM PARSING
-        # =========================
+
         for line in process.stdout:
             pkt = parse_line(line)
             if pkt:
@@ -144,9 +140,7 @@ def parse_pcap(
         flows = build_flows(packets)
         logging.info(f"📊 Flows: {len(flows)}")
 
-    # =========================
-    # FEATURE ENGINE
-    # =========================
+    
     feature_results = []
     if run_feature_engine and flows:
         from core.feature_engine import extract_features_batch
@@ -155,7 +149,7 @@ def parse_pcap(
         for result in signature_results:
             result["source"] = "signature"
         feature_results.extend(signature_results)
-        logging.info(f"🧠 Features: {len(features)}")
+        logging.info(f"Features: {len(features)}")
 
     if run_ml_engine and flows:
         try:

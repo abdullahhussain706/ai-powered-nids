@@ -1,12 +1,38 @@
+#!/usr/bin/env python3
+
 import os
 import platform
 import shutil
 import subprocess
+import sys
 from dataclasses import dataclass
 from pathlib import Path
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+REQUIREMENTS_FILE = BASE_DIR / "requirements.txt"
+VENV_DIR = BASE_DIR / "venv"
+VENV_PYTHON = (
+    VENV_DIR / "Scripts" / "python.exe"
+    if platform.system() == "Windows"
+    else VENV_DIR / "bin" / "python"
+)
+
+REQUIRED_PYTHON_MODULES = {
+    "colorama": "colorama",
+    "joblib": "joblib",
+    "matplotlib": "matplotlib",
+    "numpy": "numpy",
+    "pandas": "pandas",
+    "PIL": "pillow",
+    "pyqtgraph": "pyqtgraph",
+    "PySide6": "PySide6",
+    "scipy": "scipy",
+    "seaborn": "seaborn",
+    "sklearn": "scikit-learn",
+    "xgboost": "xgboost",
+    "yaml": "PyYAML",
+}
 
 
 @dataclass
@@ -24,6 +50,113 @@ def _run(command, timeout=120, env=None):
         timeout=timeout,
         env=env,
     )
+
+
+def get_project_python():
+    return VENV_PYTHON if VENV_PYTHON.exists() else Path(sys.executable)
+
+
+def _python_can_import(python_executable, module_name):
+    result = _run(
+        [str(python_executable), "-c", f"import {module_name}"],
+        timeout=30,
+    )
+    return result.returncode == 0, (result.stderr or result.stdout).strip()
+
+
+def python_dependency_status(python_executable=None):
+    python_executable = Path(python_executable or get_project_python())
+    statuses = []
+
+    if not python_executable.exists():
+        return [
+            DependencyStatus(
+                "python",
+                False,
+                f"Python executable not found: {python_executable}",
+            )
+        ]
+
+    for module_name, package_name in REQUIRED_PYTHON_MODULES.items():
+        ok, detail = _python_can_import(python_executable, module_name)
+        statuses.append(
+            DependencyStatus(
+                package_name,
+                ok,
+                "available" if ok else detail,
+            )
+        )
+
+    return statuses
+
+
+def missing_python_dependencies(python_executable=None):
+    return [
+        status
+        for status in python_dependency_status(python_executable)
+        if not status.installed
+    ]
+
+
+def create_virtualenv():
+    if VENV_PYTHON.exists():
+        return True, f"Virtual environment exists: {VENV_DIR}"
+
+    result = _run([sys.executable, "-m", "venv", str(VENV_DIR)], timeout=600)
+    if result.returncode == 0 and VENV_PYTHON.exists():
+        return True, f"Virtual environment created: {VENV_DIR}"
+
+    return False, (result.stderr or result.stdout or "venv creation failed").strip()
+
+
+def install_python_dependencies():
+    if not REQUIREMENTS_FILE.exists():
+        return False, f"requirements.txt not found: {REQUIREMENTS_FILE}"
+
+    ok, detail = create_virtualenv()
+    if not ok:
+        return False, detail
+
+    python_executable = get_project_python()
+    commands = [
+        [str(python_executable), "-m", "pip", "install", "--upgrade", "pip"],
+        [str(python_executable), "-m", "pip", "install", "-r", str(REQUIREMENTS_FILE)],
+    ]
+
+    output = []
+    for command in commands:
+        result = _run(command, timeout=1800)
+        output.append((command, result.returncode, result.stdout, result.stderr))
+        if result.returncode != 0:
+            break
+
+    missing = missing_python_dependencies(python_executable)
+    if not missing:
+        return True, "Python dependencies installed"
+
+    details = "\n".join(
+        f"{' '.join(cmd)} -> {code}\n{stdout}\n{stderr}"
+        for cmd, code, stdout, stderr in output
+    )
+    missing_text = ", ".join(status.name for status in missing)
+    return False, f"Missing Python dependencies after install: {missing_text}\n{details}"
+
+
+def ensure_python_dependencies(auto_install=False):
+    python_executable = get_project_python()
+    missing = missing_python_dependencies(python_executable)
+    if not missing:
+        return True, f"Python dependencies available ({python_executable})"
+
+    missing_text = ", ".join(status.name for status in missing)
+    if not auto_install:
+        return False, f"Missing Python dependencies: {missing_text}"
+
+    installed, detail = install_python_dependencies()
+    if installed:
+        return True, detail
+
+    return False, f"Missing Python dependencies: {missing_text}\n{detail}"
 
 
 def _is_admin_windows():
@@ -209,8 +342,22 @@ def print_manual_install_help():
         print(f"Install tshark/Wireshark manually for {system}.")
 
 
+def print_python_install_help():
+    print("Python dependency setup:")
+    print(f"  {sys.executable} -m venv {VENV_DIR}")
+    print(f"  {VENV_PYTHON} -m pip install -r {REQUIREMENTS_FILE}")
+
+
 def main():
-    ok, detail = ensure_capture_dependencies(auto_install="--install" in os.sys.argv)
+    auto_install = "--install" in sys.argv
+
+    py_ok, py_detail = ensure_python_dependencies(auto_install=auto_install)
+    print(py_detail)
+    if not py_ok:
+        print_python_install_help()
+        raise SystemExit(1)
+
+    ok, detail = ensure_capture_dependencies(auto_install=auto_install)
     print(detail)
     if not ok:
         print_manual_install_help()

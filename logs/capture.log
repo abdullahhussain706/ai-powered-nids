@@ -843,3 +843,260 @@ KeyError: 'total_packets'
 2026-06-04 11:12:57 [INFO] (packet_parser.py:174) - Anomaly feature results: 7
 2026-06-04 11:12:58 [WARNING] (alert_manager.py:60) - 🚨 New alerts saved: 2
 2026-06-04 11:12:58 [INFO] (packet_capture.py:344) - 📊 Packets: 37 | Flows: 7 | Feature Records: 21 | Alerts: 3 | New Alerts: 2
+2026-06-12 09:43:05 [INFO] (logger.py:105) - 📝 Logging initialized (Level: INFO, File: logs/capture.log)
+2026-06-12 09:43:06 [INFO] (packet_capture.py:287) - 🚀 Starting IDS Capture Pipeline
+2026-06-12 09:43:10 [INFO] (packet_capture.py:148) - Using all capture interfaces: 1. \Device\NPF_{1E70B5F6-758F-4FEF-8CDE-2218D57EE7A2} (Local Area Connection* 10), 2. \Device\NPF_{266C9694-9D98-4E73-9C07-6FBF66C4CE8B} (Local Area Connection* 9), 3. \Device\NPF_{B511B518-B485-45A5-9A07-A95EB2D7DA1A} (Local Area Connection* 8), 4. \Device\NPF_{4781F233-8E57-4699-AC6E-DDD44EF35A51} (Bluetooth Network Connection), 5. \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2), 6. \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi), 7. \Device\NPF_{2754D11B-EC61-4BC0-BBD1-ACBCDEF677DC} (Local Area Connection* 12), 8. \Device\NPF_{37AFD563-EADF-4453-B745-E29E15C8BE8A} (Local Area Connection* 11), 9. \Device\NPF_{7F874DB3-84E5-4A6A-A70B-AF18BD063AA5} (Ethernet 2), 10. \Device\NPF_Loopback (Adapter for loopback traffic capture), 11. \Device\NPF_{D5CBE07C-0092-4352-A245-D745F5767F7F} (Ethernet)
+2026-06-12 09:43:10 [INFO] (packet_capture.py:297) - 🔌 Using interface(s): 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
+2026-06-12 09:43:12 [INFO] (packet_capture.py:148) - Using all capture interfaces: 1. \Device\NPF_{1E70B5F6-758F-4FEF-8CDE-2218D57EE7A2} (Local Area Connection* 10), 2. \Device\NPF_{266C9694-9D98-4E73-9C07-6FBF66C4CE8B} (Local Area Connection* 9), 3. \Device\NPF_{B511B518-B485-45A5-9A07-A95EB2D7DA1A} (Local Area Connection* 8), 4. \Device\NPF_{4781F233-8E57-4699-AC6E-DDD44EF35A51} (Bluetooth Network Connection), 5. \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2), 6. \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi), 7. \Device\NPF_{2754D11B-EC61-4BC0-BBD1-ACBCDEF677DC} (Local Area Connection* 12), 8. \Device\NPF_{37AFD563-EADF-4453-B745-E29E15C8BE8A} (Local Area Connection* 11), 9. \Device\NPF_{7F874DB3-84E5-4A6A-A70B-AF18BD063AA5} (Ethernet 2), 10. \Device\NPF_Loopback (Adapter for loopback traffic capture), 11. \Device\NPF_{D5CBE07C-0092-4352-A245-D745F5767F7F} (Ethernet)
+2026-06-12 09:43:12 [INFO] (packet_capture.py:235) - Capturing up to 500 packets for 5.0s on interface(s) 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 -> E:\ai-powered-nids\data\raw_packets\capture_20260612_094312_357501.pcap
+2026-06-12 09:43:12 [INFO] (packet_capture.py:240) - Capturing 500 packets → E:\ai-powered-nids\data\raw_packets\capture_20260612_094312_357501.pcap
+2026-06-12 09:43:20 [INFO] (packet_capture.py:279) - ✅ Capture complete: E:\ai-powered-nids\data\raw_packets\capture_20260612_094312_357501.pcap (5220 bytes)
+2026-06-12 09:43:21 [INFO] (packet_parser.py:132) - 📊 Parsed packets: 15
+2026-06-12 09:43:21 [INFO] (flow_builder.py:191) - Flows built: 4
+2026-06-12 09:43:21 [INFO] (packet_parser.py:141) - 📊 Flows: 4
+2026-06-12 09:43:21 [INFO] (signature_engine.py:80) - 📜 Rules loaded successfully: 22
+2026-06-12 09:43:22 [INFO] (feature_engine.py:106) - Processed flows: 4
+2026-06-12 09:43:22 [INFO] (packet_parser.py:152) - Features: 4
+2026-06-12 09:44:17 [INFO] (model_pipeline.py:45) - Stage 1 model loaded: stage1_XGBOOST.pkl
+2026-06-12 09:44:19 [INFO] (model_pipeline.py:45) - Stage 2 model loaded: stage2_xgboost.pkl
+2026-06-12 09:44:20 [INFO] (model_pipeline.py:194) - ML stage results generated: 4
+2026-06-12 09:44:20 [INFO] (packet_parser.py:159) - ML feature results: 4
+2026-06-12 09:44:21 [INFO] (anomaly_engine.py:194) - Anomaly results generated: 4 | Alerts: 0
+2026-06-12 09:44:21 [INFO] (packet_parser.py:168) - Anomaly feature results: 4
+2026-06-12 09:44:21 [INFO] (packet_capture.py:339) - Packets: 15 | Flows: 4 | Feature Records: 12 | Alerts: 0 | New Alerts: 0
+2026-06-12 09:44:26 [INFO] (packet_capture.py:148) - Using all capture interfaces: 1. \Device\NPF_{1E70B5F6-758F-4FEF-8CDE-2218D57EE7A2} (Local Area Connection* 10), 2. \Device\NPF_{266C9694-9D98-4E73-9C07-6FBF66C4CE8B} (Local Area Connection* 9), 3. \Device\NPF_{B511B518-B485-45A5-9A07-A95EB2D7DA1A} (Local Area Connection* 8), 4. \Device\NPF_{4781F233-8E57-4699-AC6E-DDD44EF35A51} (Bluetooth Network Connection), 5. \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2), 6. \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi), 7. \Device\NPF_{2754D11B-EC61-4BC0-BBD1-ACBCDEF677DC} (Local Area Connection* 12), 8. \Device\NPF_{37AFD563-EADF-4453-B745-E29E15C8BE8A} (Local Area Connection* 11), 9. \Device\NPF_{7F874DB3-84E5-4A6A-A70B-AF18BD063AA5} (Ethernet 2), 10. \Device\NPF_Loopback (Adapter for loopback traffic capture), 11. \Device\NPF_{D5CBE07C-0092-4352-A245-D745F5767F7F} (Ethernet)
+2026-06-12 09:44:26 [INFO] (packet_capture.py:235) - Capturing up to 500 packets for 5.0s on interface(s) 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 -> E:\ai-powered-nids\data\raw_packets\capture_20260612_094426_603347.pcap
+2026-06-12 09:44:26 [INFO] (packet_capture.py:240) - Capturing 500 packets → E:\ai-powered-nids\data\raw_packets\capture_20260612_094426_603347.pcap
+2026-06-12 09:44:44 [INFO] (packet_capture.py:279) - ✅ Capture complete: E:\ai-powered-nids\data\raw_packets\capture_20260612_094426_603347.pcap (527940 bytes)
+2026-06-12 09:44:47 [INFO] (packet_parser.py:132) - 📊 Parsed packets: 500
+2026-06-12 09:44:47 [INFO] (flow_builder.py:191) - Flows built: 14
+2026-06-12 09:44:47 [INFO] (packet_parser.py:141) - 📊 Flows: 14
+2026-06-12 09:44:48 [INFO] (feature_engine.py:106) - Processed flows: 14
+2026-06-12 09:44:48 [INFO] (packet_parser.py:152) - Features: 14
+2026-06-12 09:44:48 [INFO] (model_pipeline.py:194) - ML stage results generated: 14
+2026-06-12 09:44:48 [INFO] (packet_parser.py:159) - ML feature results: 14
+2026-06-12 09:44:48 [INFO] (anomaly_engine.py:194) - Anomaly results generated: 14 | Alerts: 7
+2026-06-12 09:44:48 [INFO] (packet_parser.py:168) - Anomaly feature results: 14
+2026-06-12 09:44:48 [WARNING] (fusion_engine.py:95) - Hybrid alerts generated: 1
+2026-06-12 09:44:49 [WARNING] (alert_manager.py:60) - 🚨 New alerts saved: 2
+2026-06-12 09:44:50 [WARNING] (alert_manager.py:60) - 🚨 New alerts saved: 6
+2026-06-12 09:44:50 [WARNING] (alert_manager.py:60) - 🚨 New alerts saved: 1
+2026-06-12 09:44:50 [INFO] (packet_capture.py:339) - Packets: 500 | Flows: 14 | Feature Records: 43 | Alerts: 10 | New Alerts: 9
+2026-06-12 09:44:54 [INFO] (packet_capture.py:148) - Using all capture interfaces: 1. \Device\NPF_{1E70B5F6-758F-4FEF-8CDE-2218D57EE7A2} (Local Area Connection* 10), 2. \Device\NPF_{266C9694-9D98-4E73-9C07-6FBF66C4CE8B} (Local Area Connection* 9), 3. \Device\NPF_{B511B518-B485-45A5-9A07-A95EB2D7DA1A} (Local Area Connection* 8), 4. \Device\NPF_{4781F233-8E57-4699-AC6E-DDD44EF35A51} (Bluetooth Network Connection), 5. \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2), 6. \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi), 7. \Device\NPF_{2754D11B-EC61-4BC0-BBD1-ACBCDEF677DC} (Local Area Connection* 12), 8. \Device\NPF_{37AFD563-EADF-4453-B745-E29E15C8BE8A} (Local Area Connection* 11), 9. \Device\NPF_{7F874DB3-84E5-4A6A-A70B-AF18BD063AA5} (Ethernet 2), 10. \Device\NPF_Loopback (Adapter for loopback traffic capture), 11. \Device\NPF_{D5CBE07C-0092-4352-A245-D745F5767F7F} (Ethernet)
+2026-06-12 09:44:54 [INFO] (packet_capture.py:235) - Capturing up to 500 packets for 5.0s on interface(s) 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 -> E:\ai-powered-nids\data\raw_packets\capture_20260612_094454_762642.pcap
+2026-06-12 09:44:54 [INFO] (packet_capture.py:240) - Capturing 500 packets → E:\ai-powered-nids\data\raw_packets\capture_20260612_094454_762642.pcap
+2026-06-12 09:45:00 [INFO] (packet_capture.py:279) - ✅ Capture complete: E:\ai-powered-nids\data\raw_packets\capture_20260612_094454_762642.pcap (570300 bytes)
+2026-06-12 09:45:02 [INFO] (packet_parser.py:132) - 📊 Parsed packets: 500
+2026-06-12 09:45:02 [INFO] (flow_builder.py:191) - Flows built: 16
+2026-06-12 09:45:02 [INFO] (packet_parser.py:141) - 📊 Flows: 16
+2026-06-12 09:45:02 [INFO] (feature_engine.py:106) - Processed flows: 16
+2026-06-12 09:45:02 [INFO] (packet_parser.py:152) - Features: 16
+2026-06-12 09:45:03 [INFO] (model_pipeline.py:194) - ML stage results generated: 16
+2026-06-12 09:45:03 [INFO] (packet_parser.py:159) - ML feature results: 16
+2026-06-12 09:45:03 [INFO] (anomaly_engine.py:194) - Anomaly results generated: 16 | Alerts: 7
+2026-06-12 09:45:03 [INFO] (packet_parser.py:168) - Anomaly feature results: 16
+2026-06-12 09:45:03 [WARNING] (fusion_engine.py:95) - Hybrid alerts generated: 1
+2026-06-12 09:45:03 [WARNING] (alert_manager.py:60) - 🚨 New alerts saved: 2
+2026-06-12 09:45:04 [WARNING] (alert_manager.py:60) - 🚨 New alerts saved: 3
+2026-06-12 09:45:05 [WARNING] (alert_manager.py:60) - 🚨 New alerts saved: 1
+2026-06-12 09:45:05 [INFO] (packet_capture.py:339) - Packets: 500 | Flows: 16 | Feature Records: 49 | Alerts: 10 | New Alerts: 6
+2026-06-12 09:45:08 [INFO] (packet_capture.py:148) - Using all capture interfaces: 1. \Device\NPF_{1E70B5F6-758F-4FEF-8CDE-2218D57EE7A2} (Local Area Connection* 10), 2. \Device\NPF_{266C9694-9D98-4E73-9C07-6FBF66C4CE8B} (Local Area Connection* 9), 3. \Device\NPF_{B511B518-B485-45A5-9A07-A95EB2D7DA1A} (Local Area Connection* 8), 4. \Device\NPF_{4781F233-8E57-4699-AC6E-DDD44EF35A51} (Bluetooth Network Connection), 5. \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2), 6. \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi), 7. \Device\NPF_{2754D11B-EC61-4BC0-BBD1-ACBCDEF677DC} (Local Area Connection* 12), 8. \Device\NPF_{37AFD563-EADF-4453-B745-E29E15C8BE8A} (Local Area Connection* 11), 9. \Device\NPF_{7F874DB3-84E5-4A6A-A70B-AF18BD063AA5} (Ethernet 2), 10. \Device\NPF_Loopback (Adapter for loopback traffic capture), 11. \Device\NPF_{D5CBE07C-0092-4352-A245-D745F5767F7F} (Ethernet)
+2026-06-12 09:45:08 [INFO] (packet_capture.py:235) - Capturing up to 500 packets for 5.0s on interface(s) 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 -> E:\ai-powered-nids\data\raw_packets\capture_20260612_094508_914488.pcap
+2026-06-12 09:45:08 [INFO] (packet_capture.py:240) - Capturing 500 packets → E:\ai-powered-nids\data\raw_packets\capture_20260612_094508_914488.pcap
+2026-06-12 09:45:20 [INFO] (packet_capture.py:279) - ✅ Capture complete: E:\ai-powered-nids\data\raw_packets\capture_20260612_094508_914488.pcap (208756 bytes)
+2026-06-12 09:45:22 [INFO] (packet_parser.py:132) - 📊 Parsed packets: 237
+2026-06-12 09:45:22 [INFO] (flow_builder.py:191) - Flows built: 5
+2026-06-12 09:45:22 [INFO] (packet_parser.py:141) - 📊 Flows: 5
+2026-06-12 09:45:22 [INFO] (feature_engine.py:106) - Processed flows: 5
+2026-06-12 09:45:22 [INFO] (packet_parser.py:152) - Features: 5
+2026-06-12 09:45:22 [INFO] (model_pipeline.py:194) - ML stage results generated: 5
+2026-06-12 09:45:22 [INFO] (packet_parser.py:159) - ML feature results: 5
+2026-06-12 09:45:22 [INFO] (anomaly_engine.py:194) - Anomaly results generated: 5 | Alerts: 3
+2026-06-12 09:45:22 [INFO] (packet_parser.py:168) - Anomaly feature results: 5
+2026-06-12 09:45:23 [WARNING] (alert_manager.py:60) - 🚨 New alerts saved: 2
+2026-06-12 09:45:23 [INFO] (packet_capture.py:339) - Packets: 237 | Flows: 5 | Feature Records: 15 | Alerts: 3 | New Alerts: 2
+2026-06-12 09:45:26 [INFO] (packet_capture.py:148) - Using all capture interfaces: 1. \Device\NPF_{1E70B5F6-758F-4FEF-8CDE-2218D57EE7A2} (Local Area Connection* 10), 2. \Device\NPF_{266C9694-9D98-4E73-9C07-6FBF66C4CE8B} (Local Area Connection* 9), 3. \Device\NPF_{B511B518-B485-45A5-9A07-A95EB2D7DA1A} (Local Area Connection* 8), 4. \Device\NPF_{4781F233-8E57-4699-AC6E-DDD44EF35A51} (Bluetooth Network Connection), 5. \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2), 6. \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi), 7. \Device\NPF_{2754D11B-EC61-4BC0-BBD1-ACBCDEF677DC} (Local Area Connection* 12), 8. \Device\NPF_{37AFD563-EADF-4453-B745-E29E15C8BE8A} (Local Area Connection* 11), 9. \Device\NPF_{7F874DB3-84E5-4A6A-A70B-AF18BD063AA5} (Ethernet 2), 10. \Device\NPF_Loopback (Adapter for loopback traffic capture), 11. \Device\NPF_{D5CBE07C-0092-4352-A245-D745F5767F7F} (Ethernet)
+2026-06-12 09:45:26 [INFO] (packet_capture.py:235) - Capturing up to 500 packets for 5.0s on interface(s) 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 -> E:\ai-powered-nids\data\raw_packets\capture_20260612_094526_780672.pcap
+2026-06-12 09:45:26 [INFO] (packet_capture.py:240) - Capturing 500 packets → E:\ai-powered-nids\data\raw_packets\capture_20260612_094526_780672.pcap
+2026-06-12 09:45:36 [INFO] (packet_capture.py:279) - ✅ Capture complete: E:\ai-powered-nids\data\raw_packets\capture_20260612_094526_780672.pcap (95656 bytes)
+2026-06-12 09:45:37 [INFO] (packet_parser.py:132) - 📊 Parsed packets: 128
+2026-06-12 09:45:37 [INFO] (flow_builder.py:191) - Flows built: 7
+2026-06-12 09:45:37 [INFO] (packet_parser.py:141) - 📊 Flows: 7
+2026-06-12 09:45:37 [INFO] (feature_engine.py:106) - Processed flows: 7
+2026-06-12 09:45:37 [INFO] (packet_parser.py:152) - Features: 7
+2026-06-12 09:45:37 [INFO] (model_pipeline.py:194) - ML stage results generated: 7
+2026-06-12 09:45:37 [INFO] (packet_parser.py:159) - ML feature results: 7
+2026-06-12 09:45:37 [INFO] (anomaly_engine.py:194) - Anomaly results generated: 7 | Alerts: 3
+2026-06-12 09:45:37 [INFO] (packet_parser.py:168) - Anomaly feature results: 7
+2026-06-12 09:45:38 [INFO] (packet_capture.py:339) - Packets: 128 | Flows: 7 | Feature Records: 21 | Alerts: 3 | New Alerts: 0
+2026-06-12 09:45:40 [INFO] (packet_capture.py:148) - Using all capture interfaces: 1. \Device\NPF_{1E70B5F6-758F-4FEF-8CDE-2218D57EE7A2} (Local Area Connection* 10), 2. \Device\NPF_{266C9694-9D98-4E73-9C07-6FBF66C4CE8B} (Local Area Connection* 9), 3. \Device\NPF_{B511B518-B485-45A5-9A07-A95EB2D7DA1A} (Local Area Connection* 8), 4. \Device\NPF_{4781F233-8E57-4699-AC6E-DDD44EF35A51} (Bluetooth Network Connection), 5. \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2), 6. \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi), 7. \Device\NPF_{2754D11B-EC61-4BC0-BBD1-ACBCDEF677DC} (Local Area Connection* 12), 8. \Device\NPF_{37AFD563-EADF-4453-B745-E29E15C8BE8A} (Local Area Connection* 11), 9. \Device\NPF_{7F874DB3-84E5-4A6A-A70B-AF18BD063AA5} (Ethernet 2), 10. \Device\NPF_Loopback (Adapter for loopback traffic capture), 11. \Device\NPF_{D5CBE07C-0092-4352-A245-D745F5767F7F} (Ethernet)
+2026-06-12 09:45:40 [INFO] (packet_capture.py:235) - Capturing up to 500 packets for 5.0s on interface(s) 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 -> E:\ai-powered-nids\data\raw_packets\capture_20260612_094540_389498.pcap
+2026-06-12 09:45:40 [INFO] (packet_capture.py:240) - Capturing 500 packets → E:\ai-powered-nids\data\raw_packets\capture_20260612_094540_389498.pcap
+2026-06-12 09:45:48 [INFO] (packet_capture.py:279) - ✅ Capture complete: E:\ai-powered-nids\data\raw_packets\capture_20260612_094540_389498.pcap (5840 bytes)
+2026-06-12 09:45:49 [INFO] (packet_parser.py:132) - 📊 Parsed packets: 20
+2026-06-12 09:45:49 [INFO] (flow_builder.py:191) - Flows built: 8
+2026-06-12 09:45:49 [INFO] (packet_parser.py:141) - 📊 Flows: 8
+2026-06-12 09:45:49 [INFO] (feature_engine.py:106) - Processed flows: 8
+2026-06-12 09:45:49 [INFO] (packet_parser.py:152) - Features: 8
+2026-06-12 09:45:49 [INFO] (model_pipeline.py:194) - ML stage results generated: 8
+2026-06-12 09:45:49 [INFO] (packet_parser.py:159) - ML feature results: 8
+2026-06-12 09:45:49 [INFO] (anomaly_engine.py:194) - Anomaly results generated: 8 | Alerts: 1
+2026-06-12 09:45:49 [INFO] (packet_parser.py:168) - Anomaly feature results: 8
+2026-06-12 09:45:49 [WARNING] (alert_manager.py:60) - 🚨 New alerts saved: 1
+2026-06-12 09:45:49 [INFO] (packet_capture.py:339) - Packets: 20 | Flows: 8 | Feature Records: 24 | Alerts: 1 | New Alerts: 1
+2026-06-12 09:45:51 [INFO] (packet_capture.py:148) - Using all capture interfaces: 1. \Device\NPF_{1E70B5F6-758F-4FEF-8CDE-2218D57EE7A2} (Local Area Connection* 10), 2. \Device\NPF_{266C9694-9D98-4E73-9C07-6FBF66C4CE8B} (Local Area Connection* 9), 3. \Device\NPF_{B511B518-B485-45A5-9A07-A95EB2D7DA1A} (Local Area Connection* 8), 4. \Device\NPF_{4781F233-8E57-4699-AC6E-DDD44EF35A51} (Bluetooth Network Connection), 5. \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2), 6. \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi), 7. \Device\NPF_{2754D11B-EC61-4BC0-BBD1-ACBCDEF677DC} (Local Area Connection* 12), 8. \Device\NPF_{37AFD563-EADF-4453-B745-E29E15C8BE8A} (Local Area Connection* 11), 9. \Device\NPF_{7F874DB3-84E5-4A6A-A70B-AF18BD063AA5} (Ethernet 2), 10. \Device\NPF_Loopback (Adapter for loopback traffic capture), 11. \Device\NPF_{D5CBE07C-0092-4352-A245-D745F5767F7F} (Ethernet)
+2026-06-12 09:45:51 [INFO] (packet_capture.py:235) - Capturing up to 500 packets for 5.0s on interface(s) 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 -> E:\ai-powered-nids\data\raw_packets\capture_20260612_094551_780768.pcap
+2026-06-12 09:45:51 [INFO] (packet_capture.py:240) - Capturing 500 packets → E:\ai-powered-nids\data\raw_packets\capture_20260612_094551_780768.pcap
+2026-06-12 09:46:00 [INFO] (packet_capture.py:279) - ✅ Capture complete: E:\ai-powered-nids\data\raw_packets\capture_20260612_094551_780768.pcap (3788 bytes)
+2026-06-12 09:46:01 [INFO] (packet_parser.py:132) - 📊 Parsed packets: 7
+2026-06-12 09:46:01 [INFO] (flow_builder.py:191) - Flows built: 2
+2026-06-12 09:46:01 [INFO] (packet_parser.py:141) - 📊 Flows: 2
+2026-06-12 09:46:01 [INFO] (feature_engine.py:106) - Processed flows: 2
+2026-06-12 09:46:01 [INFO] (packet_parser.py:152) - Features: 2
+2026-06-12 09:46:01 [INFO] (model_pipeline.py:194) - ML stage results generated: 2
+2026-06-12 09:46:01 [INFO] (packet_parser.py:159) - ML feature results: 2
+2026-06-12 09:46:01 [INFO] (anomaly_engine.py:194) - Anomaly results generated: 2 | Alerts: 0
+2026-06-12 09:46:01 [INFO] (packet_parser.py:168) - Anomaly feature results: 2
+2026-06-12 09:46:01 [INFO] (packet_capture.py:339) - Packets: 7 | Flows: 2 | Feature Records: 6 | Alerts: 0 | New Alerts: 0
+2026-06-12 09:46:03 [INFO] (packet_capture.py:148) - Using all capture interfaces: 1. \Device\NPF_{1E70B5F6-758F-4FEF-8CDE-2218D57EE7A2} (Local Area Connection* 10), 2. \Device\NPF_{266C9694-9D98-4E73-9C07-6FBF66C4CE8B} (Local Area Connection* 9), 3. \Device\NPF_{B511B518-B485-45A5-9A07-A95EB2D7DA1A} (Local Area Connection* 8), 4. \Device\NPF_{4781F233-8E57-4699-AC6E-DDD44EF35A51} (Bluetooth Network Connection), 5. \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2), 6. \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi), 7. \Device\NPF_{2754D11B-EC61-4BC0-BBD1-ACBCDEF677DC} (Local Area Connection* 12), 8. \Device\NPF_{37AFD563-EADF-4453-B745-E29E15C8BE8A} (Local Area Connection* 11), 9. \Device\NPF_{7F874DB3-84E5-4A6A-A70B-AF18BD063AA5} (Ethernet 2), 10. \Device\NPF_Loopback (Adapter for loopback traffic capture), 11. \Device\NPF_{D5CBE07C-0092-4352-A245-D745F5767F7F} (Ethernet)
+2026-06-12 09:46:03 [INFO] (packet_capture.py:235) - Capturing up to 500 packets for 5.0s on interface(s) 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 -> E:\ai-powered-nids\data\raw_packets\capture_20260612_094603_870581.pcap
+2026-06-12 09:46:03 [INFO] (packet_capture.py:240) - Capturing 500 packets → E:\ai-powered-nids\data\raw_packets\capture_20260612_094603_870581.pcap
+2026-06-12 09:46:11 [INFO] (packet_capture.py:279) - ✅ Capture complete: E:\ai-powered-nids\data\raw_packets\capture_20260612_094603_870581.pcap (3732 bytes)
+2026-06-12 09:46:12 [INFO] (packet_parser.py:132) - 📊 Parsed packets: 5
+2026-06-12 09:46:12 [INFO] (flow_builder.py:191) - Flows built: 2
+2026-06-12 09:46:12 [INFO] (packet_parser.py:141) - 📊 Flows: 2
+2026-06-12 09:46:12 [INFO] (feature_engine.py:106) - Processed flows: 2
+2026-06-12 09:46:12 [INFO] (packet_parser.py:152) - Features: 2
+2026-06-12 09:46:12 [INFO] (model_pipeline.py:194) - ML stage results generated: 2
+2026-06-12 09:46:12 [INFO] (packet_parser.py:159) - ML feature results: 2
+2026-06-12 09:46:12 [INFO] (anomaly_engine.py:194) - Anomaly results generated: 2 | Alerts: 0
+2026-06-12 09:46:12 [INFO] (packet_parser.py:168) - Anomaly feature results: 2
+2026-06-12 09:46:12 [INFO] (packet_capture.py:339) - Packets: 5 | Flows: 2 | Feature Records: 6 | Alerts: 0 | New Alerts: 0
+2026-06-12 09:46:14 [INFO] (packet_capture.py:148) - Using all capture interfaces: 1. \Device\NPF_{1E70B5F6-758F-4FEF-8CDE-2218D57EE7A2} (Local Area Connection* 10), 2. \Device\NPF_{266C9694-9D98-4E73-9C07-6FBF66C4CE8B} (Local Area Connection* 9), 3. \Device\NPF_{B511B518-B485-45A5-9A07-A95EB2D7DA1A} (Local Area Connection* 8), 4. \Device\NPF_{4781F233-8E57-4699-AC6E-DDD44EF35A51} (Bluetooth Network Connection), 5. \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2), 6. \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi), 7. \Device\NPF_{2754D11B-EC61-4BC0-BBD1-ACBCDEF677DC} (Local Area Connection* 12), 8. \Device\NPF_{37AFD563-EADF-4453-B745-E29E15C8BE8A} (Local Area Connection* 11), 9. \Device\NPF_{7F874DB3-84E5-4A6A-A70B-AF18BD063AA5} (Ethernet 2), 10. \Device\NPF_Loopback (Adapter for loopback traffic capture), 11. \Device\NPF_{D5CBE07C-0092-4352-A245-D745F5767F7F} (Ethernet)
+2026-06-12 09:46:14 [INFO] (packet_capture.py:235) - Capturing up to 500 packets for 5.0s on interface(s) 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 -> E:\ai-powered-nids\data\raw_packets\capture_20260612_094614_545995.pcap
+2026-06-12 09:46:14 [INFO] (packet_capture.py:240) - Capturing 500 packets → E:\ai-powered-nids\data\raw_packets\capture_20260612_094614_545995.pcap
+2026-06-12 09:46:27 [INFO] (logger.py:105) - 📝 Logging initialized (Level: INFO, File: logs/capture.log)
+2026-06-12 09:46:27 [INFO] (packet_capture.py:287) - 🚀 Starting IDS Capture Pipeline
+2026-06-12 09:46:30 [INFO] (packet_capture.py:148) - Using all capture interfaces: 1. \Device\NPF_{1E70B5F6-758F-4FEF-8CDE-2218D57EE7A2} (Local Area Connection* 10), 2. \Device\NPF_{266C9694-9D98-4E73-9C07-6FBF66C4CE8B} (Local Area Connection* 9), 3. \Device\NPF_{B511B518-B485-45A5-9A07-A95EB2D7DA1A} (Local Area Connection* 8), 4. \Device\NPF_{4781F233-8E57-4699-AC6E-DDD44EF35A51} (Bluetooth Network Connection), 5. \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2), 6. \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi), 7. \Device\NPF_{2754D11B-EC61-4BC0-BBD1-ACBCDEF677DC} (Local Area Connection* 12), 8. \Device\NPF_{37AFD563-EADF-4453-B745-E29E15C8BE8A} (Local Area Connection* 11), 9. \Device\NPF_{7F874DB3-84E5-4A6A-A70B-AF18BD063AA5} (Ethernet 2), 10. \Device\NPF_Loopback (Adapter for loopback traffic capture), 11. \Device\NPF_{D5CBE07C-0092-4352-A245-D745F5767F7F} (Ethernet)
+2026-06-12 09:46:30 [INFO] (packet_capture.py:297) - 🔌 Using interface(s): 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
+2026-06-12 09:46:32 [INFO] (packet_capture.py:148) - Using all capture interfaces: 1. \Device\NPF_{1E70B5F6-758F-4FEF-8CDE-2218D57EE7A2} (Local Area Connection* 10), 2. \Device\NPF_{266C9694-9D98-4E73-9C07-6FBF66C4CE8B} (Local Area Connection* 9), 3. \Device\NPF_{B511B518-B485-45A5-9A07-A95EB2D7DA1A} (Local Area Connection* 8), 4. \Device\NPF_{4781F233-8E57-4699-AC6E-DDD44EF35A51} (Bluetooth Network Connection), 5. \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2), 6. \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi), 7. \Device\NPF_{2754D11B-EC61-4BC0-BBD1-ACBCDEF677DC} (Local Area Connection* 12), 8. \Device\NPF_{37AFD563-EADF-4453-B745-E29E15C8BE8A} (Local Area Connection* 11), 9. \Device\NPF_{7F874DB3-84E5-4A6A-A70B-AF18BD063AA5} (Ethernet 2), 10. \Device\NPF_Loopback (Adapter for loopback traffic capture), 11. \Device\NPF_{D5CBE07C-0092-4352-A245-D745F5767F7F} (Ethernet)
+2026-06-12 09:46:32 [INFO] (packet_capture.py:235) - Capturing up to 500 packets for 5.0s on interface(s) 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 -> E:\ai-powered-nids\data\raw_packets\capture_20260612_094632_492456.pcap
+2026-06-12 09:46:32 [INFO] (packet_capture.py:240) - Capturing 500 packets → E:\ai-powered-nids\data\raw_packets\capture_20260612_094632_492456.pcap
+2026-06-12 09:50:24 [INFO] (logger.py:105) - 📝 Logging initialized (Level: INFO, File: logs/capture.log)
+2026-06-12 09:50:24 [INFO] (packet_capture.py:287) - 🚀 Starting IDS Capture Pipeline
+2026-06-12 09:50:28 [INFO] (packet_capture.py:148) - Using all capture interfaces: 1. \Device\NPF_{1E70B5F6-758F-4FEF-8CDE-2218D57EE7A2} (Local Area Connection* 10), 2. \Device\NPF_{266C9694-9D98-4E73-9C07-6FBF66C4CE8B} (Local Area Connection* 9), 3. \Device\NPF_{B511B518-B485-45A5-9A07-A95EB2D7DA1A} (Local Area Connection* 8), 4. \Device\NPF_{4781F233-8E57-4699-AC6E-DDD44EF35A51} (Bluetooth Network Connection), 5. \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2), 6. \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi), 7. \Device\NPF_{2754D11B-EC61-4BC0-BBD1-ACBCDEF677DC} (Local Area Connection* 12), 8. \Device\NPF_{37AFD563-EADF-4453-B745-E29E15C8BE8A} (Local Area Connection* 11), 9. \Device\NPF_{7F874DB3-84E5-4A6A-A70B-AF18BD063AA5} (Ethernet 2), 10. \Device\NPF_Loopback (Adapter for loopback traffic capture), 11. \Device\NPF_{D5CBE07C-0092-4352-A245-D745F5767F7F} (Ethernet)
+2026-06-12 09:50:28 [INFO] (packet_capture.py:297) - 🔌 Using interface(s): 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
+2026-06-12 09:50:31 [INFO] (packet_capture.py:148) - Using all capture interfaces: 1. \Device\NPF_{1E70B5F6-758F-4FEF-8CDE-2218D57EE7A2} (Local Area Connection* 10), 2. \Device\NPF_{266C9694-9D98-4E73-9C07-6FBF66C4CE8B} (Local Area Connection* 9), 3. \Device\NPF_{B511B518-B485-45A5-9A07-A95EB2D7DA1A} (Local Area Connection* 8), 4. \Device\NPF_{4781F233-8E57-4699-AC6E-DDD44EF35A51} (Bluetooth Network Connection), 5. \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2), 6. \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi), 7. \Device\NPF_{2754D11B-EC61-4BC0-BBD1-ACBCDEF677DC} (Local Area Connection* 12), 8. \Device\NPF_{37AFD563-EADF-4453-B745-E29E15C8BE8A} (Local Area Connection* 11), 9. \Device\NPF_{7F874DB3-84E5-4A6A-A70B-AF18BD063AA5} (Ethernet 2), 10. \Device\NPF_Loopback (Adapter for loopback traffic capture), 11. \Device\NPF_{D5CBE07C-0092-4352-A245-D745F5767F7F} (Ethernet)
+2026-06-12 09:50:31 [INFO] (packet_capture.py:235) - Capturing up to 500 packets for 5.0s on interface(s) 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 -> E:\ai-powered-nids\data\raw_packets\capture_20260612_095031_580313.pcap
+2026-06-12 09:50:31 [INFO] (packet_capture.py:240) - Capturing 500 packets → E:\ai-powered-nids\data\raw_packets\capture_20260612_095031_580313.pcap
+2026-06-12 09:50:39 [INFO] (packet_capture.py:279) - ✅ Capture complete: E:\ai-powered-nids\data\raw_packets\capture_20260612_095031_580313.pcap (54900 bytes)
+2026-06-12 09:50:40 [INFO] (packet_parser.py:132) - 📊 Parsed packets: 79
+2026-06-12 09:50:40 [INFO] (flow_builder.py:191) - Flows built: 6
+2026-06-12 09:50:40 [INFO] (packet_parser.py:141) - 📊 Flows: 6
+2026-06-12 09:50:40 [INFO] (signature_engine.py:80) - 📜 Rules loaded successfully: 22
+2026-06-12 09:50:40 [INFO] (feature_engine.py:106) - Processed flows: 6
+2026-06-12 09:50:40 [INFO] (packet_parser.py:152) - Features: 6
+2026-06-12 09:50:53 [INFO] (model_pipeline.py:45) - Stage 1 model loaded: stage1_XGBOOST.pkl
+2026-06-12 09:50:53 [INFO] (model_pipeline.py:45) - Stage 2 model loaded: stage2_xgboost.pkl
+2026-06-12 09:50:53 [INFO] (model_pipeline.py:194) - ML stage results generated: 6
+2026-06-12 09:50:53 [INFO] (packet_parser.py:159) - ML feature results: 6
+2026-06-12 09:50:53 [INFO] (anomaly_engine.py:194) - Anomaly results generated: 6 | Alerts: 4
+2026-06-12 09:50:53 [INFO] (packet_parser.py:168) - Anomaly feature results: 6
+2026-06-12 09:50:54 [WARNING] (alert_manager.py:60) - 🚨 New alerts saved: 3
+2026-06-12 09:50:54 [INFO] (packet_capture.py:339) - Packets: 79 | Flows: 6 | Feature Records: 18 | Alerts: 4 | New Alerts: 3
+2026-06-12 09:50:56 [INFO] (packet_capture.py:148) - Using all capture interfaces: 1. \Device\NPF_{1E70B5F6-758F-4FEF-8CDE-2218D57EE7A2} (Local Area Connection* 10), 2. \Device\NPF_{266C9694-9D98-4E73-9C07-6FBF66C4CE8B} (Local Area Connection* 9), 3. \Device\NPF_{B511B518-B485-45A5-9A07-A95EB2D7DA1A} (Local Area Connection* 8), 4. \Device\NPF_{4781F233-8E57-4699-AC6E-DDD44EF35A51} (Bluetooth Network Connection), 5. \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2), 6. \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi), 7. \Device\NPF_{2754D11B-EC61-4BC0-BBD1-ACBCDEF677DC} (Local Area Connection* 12), 8. \Device\NPF_{37AFD563-EADF-4453-B745-E29E15C8BE8A} (Local Area Connection* 11), 9. \Device\NPF_{7F874DB3-84E5-4A6A-A70B-AF18BD063AA5} (Ethernet 2), 10. \Device\NPF_Loopback (Adapter for loopback traffic capture), 11. \Device\NPF_{D5CBE07C-0092-4352-A245-D745F5767F7F} (Ethernet)
+2026-06-12 09:50:56 [INFO] (packet_capture.py:235) - Capturing up to 500 packets for 5.0s on interface(s) 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 -> E:\ai-powered-nids\data\raw_packets\capture_20260612_095056_372832.pcap
+2026-06-12 09:50:56 [INFO] (packet_capture.py:240) - Capturing 500 packets → E:\ai-powered-nids\data\raw_packets\capture_20260612_095056_372832.pcap
+2026-06-12 11:12:59 [INFO] (logger.py:105) - 📝 Logging initialized (Level: INFO, File: logs/capture.log)
+2026-06-12 11:12:59 [INFO] (packet_capture.py:287) - 🚀 Starting IDS Capture Pipeline
+2026-06-12 11:13:01 [INFO] (packet_capture.py:148) - Using all capture interfaces: 1. \Device\NPF_{1E70B5F6-758F-4FEF-8CDE-2218D57EE7A2} (Local Area Connection* 10), 2. \Device\NPF_{266C9694-9D98-4E73-9C07-6FBF66C4CE8B} (Local Area Connection* 9), 3. \Device\NPF_{B511B518-B485-45A5-9A07-A95EB2D7DA1A} (Local Area Connection* 8), 4. \Device\NPF_{4781F233-8E57-4699-AC6E-DDD44EF35A51} (Bluetooth Network Connection), 5. \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2), 6. \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi), 7. \Device\NPF_{2754D11B-EC61-4BC0-BBD1-ACBCDEF677DC} (Local Area Connection* 12), 8. \Device\NPF_{37AFD563-EADF-4453-B745-E29E15C8BE8A} (Local Area Connection* 11), 9. \Device\NPF_{7F874DB3-84E5-4A6A-A70B-AF18BD063AA5} (Ethernet 2), 10. \Device\NPF_Loopback (Adapter for loopback traffic capture), 11. \Device\NPF_{D5CBE07C-0092-4352-A245-D745F5767F7F} (Ethernet)
+2026-06-12 11:13:01 [INFO] (packet_capture.py:297) - 🔌 Using interface(s): 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
+2026-06-12 11:13:03 [INFO] (packet_capture.py:148) - Using all capture interfaces: 1. \Device\NPF_{1E70B5F6-758F-4FEF-8CDE-2218D57EE7A2} (Local Area Connection* 10), 2. \Device\NPF_{266C9694-9D98-4E73-9C07-6FBF66C4CE8B} (Local Area Connection* 9), 3. \Device\NPF_{B511B518-B485-45A5-9A07-A95EB2D7DA1A} (Local Area Connection* 8), 4. \Device\NPF_{4781F233-8E57-4699-AC6E-DDD44EF35A51} (Bluetooth Network Connection), 5. \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2), 6. \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi), 7. \Device\NPF_{2754D11B-EC61-4BC0-BBD1-ACBCDEF677DC} (Local Area Connection* 12), 8. \Device\NPF_{37AFD563-EADF-4453-B745-E29E15C8BE8A} (Local Area Connection* 11), 9. \Device\NPF_{7F874DB3-84E5-4A6A-A70B-AF18BD063AA5} (Ethernet 2), 10. \Device\NPF_Loopback (Adapter for loopback traffic capture), 11. \Device\NPF_{D5CBE07C-0092-4352-A245-D745F5767F7F} (Ethernet)
+2026-06-12 11:13:03 [INFO] (packet_capture.py:235) - Capturing up to 500 packets for 5.0s on interface(s) 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 -> E:\ai-powered-nids\data\raw_packets\capture_20260612_111303_230179.pcap
+2026-06-12 11:13:03 [INFO] (packet_capture.py:240) - Capturing 500 packets → E:\ai-powered-nids\data\raw_packets\capture_20260612_111303_230179.pcap
+2026-06-12 11:13:10 [INFO] (packet_capture.py:279) - ✅ Capture complete: E:\ai-powered-nids\data\raw_packets\capture_20260612_111303_230179.pcap (68496 bytes)
+2026-06-12 11:13:11 [INFO] (packet_parser.py:132) - 📊 Parsed packets: 376
+2026-06-12 11:13:11 [INFO] (flow_builder.py:191) - Flows built: 10
+2026-06-12 11:13:11 [INFO] (packet_parser.py:141) - 📊 Flows: 10
+2026-06-12 11:13:11 [INFO] (signature_engine.py:80) - 📜 Rules loaded successfully: 22
+2026-06-12 11:13:11 [INFO] (feature_engine.py:106) - Processed flows: 10
+2026-06-12 11:13:11 [INFO] (packet_parser.py:152) - Features: 10
+2026-06-12 11:13:15 [INFO] (model_pipeline.py:45) - Stage 1 model loaded: stage1_XGBOOST.pkl
+2026-06-12 11:13:15 [INFO] (model_pipeline.py:45) - Stage 2 model loaded: stage2_xgboost.pkl
+2026-06-12 11:13:15 [INFO] (model_pipeline.py:194) - ML stage results generated: 10
+2026-06-12 11:13:15 [INFO] (packet_parser.py:159) - ML feature results: 10
+2026-06-12 11:13:15 [INFO] (anomaly_engine.py:194) - Anomaly results generated: 10 | Alerts: 5
+2026-06-12 11:13:15 [INFO] (packet_parser.py:168) - Anomaly feature results: 10
+2026-06-12 11:13:16 [WARNING] (alert_manager.py:60) - 🚨 New alerts saved: 5
+2026-06-12 11:13:16 [INFO] (packet_capture.py:339) - Packets: 376 | Flows: 10 | Feature Records: 30 | Alerts: 5 | New Alerts: 5
+2026-06-12 11:13:18 [INFO] (packet_capture.py:148) - Using all capture interfaces: 1. \Device\NPF_{1E70B5F6-758F-4FEF-8CDE-2218D57EE7A2} (Local Area Connection* 10), 2. \Device\NPF_{266C9694-9D98-4E73-9C07-6FBF66C4CE8B} (Local Area Connection* 9), 3. \Device\NPF_{B511B518-B485-45A5-9A07-A95EB2D7DA1A} (Local Area Connection* 8), 4. \Device\NPF_{4781F233-8E57-4699-AC6E-DDD44EF35A51} (Bluetooth Network Connection), 5. \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2), 6. \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi), 7. \Device\NPF_{2754D11B-EC61-4BC0-BBD1-ACBCDEF677DC} (Local Area Connection* 12), 8. \Device\NPF_{37AFD563-EADF-4453-B745-E29E15C8BE8A} (Local Area Connection* 11), 9. \Device\NPF_{7F874DB3-84E5-4A6A-A70B-AF18BD063AA5} (Ethernet 2), 10. \Device\NPF_Loopback (Adapter for loopback traffic capture), 11. \Device\NPF_{D5CBE07C-0092-4352-A245-D745F5767F7F} (Ethernet)
+2026-06-12 11:13:18 [INFO] (packet_capture.py:235) - Capturing up to 500 packets for 5.0s on interface(s) 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 -> E:\ai-powered-nids\data\raw_packets\capture_20260612_111318_548888.pcap
+2026-06-12 11:13:18 [INFO] (packet_capture.py:240) - Capturing 500 packets → E:\ai-powered-nids\data\raw_packets\capture_20260612_111318_548888.pcap
+2026-06-12 11:13:25 [INFO] (packet_capture.py:279) - ✅ Capture complete: E:\ai-powered-nids\data\raw_packets\capture_20260612_111318_548888.pcap (121068 bytes)
+2026-06-12 11:13:25 [INFO] (packet_parser.py:132) - 📊 Parsed packets: 168
+2026-06-12 11:13:25 [INFO] (flow_builder.py:191) - Flows built: 4
+2026-06-12 11:13:25 [INFO] (packet_parser.py:141) - 📊 Flows: 4
+2026-06-12 11:13:25 [INFO] (feature_engine.py:106) - Processed flows: 4
+2026-06-12 11:13:25 [INFO] (packet_parser.py:152) - Features: 4
+2026-06-12 11:13:26 [INFO] (model_pipeline.py:194) - ML stage results generated: 4
+2026-06-12 11:13:26 [INFO] (packet_parser.py:159) - ML feature results: 4
+2026-06-12 11:13:26 [INFO] (anomaly_engine.py:194) - Anomaly results generated: 4 | Alerts: 1
+2026-06-12 11:13:26 [INFO] (packet_parser.py:168) - Anomaly feature results: 4
+2026-06-12 11:13:26 [WARNING] (fusion_engine.py:95) - Hybrid alerts generated: 1
+2026-06-12 11:13:26 [WARNING] (alert_manager.py:60) - 🚨 New alerts saved: 1
+2026-06-12 11:13:26 [WARNING] (alert_manager.py:60) - 🚨 New alerts saved: 1
+2026-06-12 11:13:26 [WARNING] (alert_manager.py:60) - 🚨 New alerts saved: 1
+2026-06-12 11:13:26 [INFO] (packet_capture.py:339) - Packets: 168 | Flows: 4 | Feature Records: 13 | Alerts: 3 | New Alerts: 3
+2026-06-12 11:13:27 [INFO] (packet_capture.py:148) - Using all capture interfaces: 1. \Device\NPF_{1E70B5F6-758F-4FEF-8CDE-2218D57EE7A2} (Local Area Connection* 10), 2. \Device\NPF_{266C9694-9D98-4E73-9C07-6FBF66C4CE8B} (Local Area Connection* 9), 3. \Device\NPF_{B511B518-B485-45A5-9A07-A95EB2D7DA1A} (Local Area Connection* 8), 4. \Device\NPF_{4781F233-8E57-4699-AC6E-DDD44EF35A51} (Bluetooth Network Connection), 5. \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2), 6. \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi), 7. \Device\NPF_{2754D11B-EC61-4BC0-BBD1-ACBCDEF677DC} (Local Area Connection* 12), 8. \Device\NPF_{37AFD563-EADF-4453-B745-E29E15C8BE8A} (Local Area Connection* 11), 9. \Device\NPF_{7F874DB3-84E5-4A6A-A70B-AF18BD063AA5} (Ethernet 2), 10. \Device\NPF_Loopback (Adapter for loopback traffic capture), 11. \Device\NPF_{D5CBE07C-0092-4352-A245-D745F5767F7F} (Ethernet)
+2026-06-12 11:13:27 [INFO] (packet_capture.py:235) - Capturing up to 500 packets for 5.0s on interface(s) 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 -> E:\ai-powered-nids\data\raw_packets\capture_20260612_111327_891896.pcap
+2026-06-12 11:13:27 [INFO] (packet_capture.py:240) - Capturing 500 packets → E:\ai-powered-nids\data\raw_packets\capture_20260612_111327_891896.pcap
+2026-06-12 11:15:30 [INFO] (logger.py:105) - 📝 Logging initialized (Level: INFO, File: logs/capture.log)
+2026-06-12 11:15:30 [INFO] (packet_capture.py:287) - 🚀 Starting IDS Capture Pipeline
+2026-06-12 11:15:32 [INFO] (packet_capture.py:148) - Using all capture interfaces: 1. \Device\NPF_{1E70B5F6-758F-4FEF-8CDE-2218D57EE7A2} (Local Area Connection* 10), 2. \Device\NPF_{266C9694-9D98-4E73-9C07-6FBF66C4CE8B} (Local Area Connection* 9), 3. \Device\NPF_{B511B518-B485-45A5-9A07-A95EB2D7DA1A} (Local Area Connection* 8), 4. \Device\NPF_{4781F233-8E57-4699-AC6E-DDD44EF35A51} (Bluetooth Network Connection), 5. \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2), 6. \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi), 7. \Device\NPF_{2754D11B-EC61-4BC0-BBD1-ACBCDEF677DC} (Local Area Connection* 12), 8. \Device\NPF_{37AFD563-EADF-4453-B745-E29E15C8BE8A} (Local Area Connection* 11), 9. \Device\NPF_{7F874DB3-84E5-4A6A-A70B-AF18BD063AA5} (Ethernet 2), 10. \Device\NPF_Loopback (Adapter for loopback traffic capture), 11. \Device\NPF_{D5CBE07C-0092-4352-A245-D745F5767F7F} (Ethernet)
+2026-06-12 11:15:32 [INFO] (packet_capture.py:297) - 🔌 Using interface(s): 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
+2026-06-12 11:15:33 [INFO] (packet_capture.py:148) - Using all capture interfaces: 1. \Device\NPF_{1E70B5F6-758F-4FEF-8CDE-2218D57EE7A2} (Local Area Connection* 10), 2. \Device\NPF_{266C9694-9D98-4E73-9C07-6FBF66C4CE8B} (Local Area Connection* 9), 3. \Device\NPF_{B511B518-B485-45A5-9A07-A95EB2D7DA1A} (Local Area Connection* 8), 4. \Device\NPF_{4781F233-8E57-4699-AC6E-DDD44EF35A51} (Bluetooth Network Connection), 5. \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2), 6. \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi), 7. \Device\NPF_{2754D11B-EC61-4BC0-BBD1-ACBCDEF677DC} (Local Area Connection* 12), 8. \Device\NPF_{37AFD563-EADF-4453-B745-E29E15C8BE8A} (Local Area Connection* 11), 9. \Device\NPF_{7F874DB3-84E5-4A6A-A70B-AF18BD063AA5} (Ethernet 2), 10. \Device\NPF_Loopback (Adapter for loopback traffic capture), 11. \Device\NPF_{D5CBE07C-0092-4352-A245-D745F5767F7F} (Ethernet)
+2026-06-12 11:15:33 [INFO] (packet_capture.py:235) - Capturing up to 500 packets for 5.0s on interface(s) 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 -> E:\ai-powered-nids\data\raw_packets\capture_20260612_111533_520080.pcap
+2026-06-12 11:15:33 [INFO] (packet_capture.py:240) - Capturing 500 packets → E:\ai-powered-nids\data\raw_packets\capture_20260612_111533_520080.pcap
+2026-06-12 11:15:40 [INFO] (packet_capture.py:279) - ✅ Capture complete: E:\ai-powered-nids\data\raw_packets\capture_20260612_111533_520080.pcap (5356 bytes)
+2026-06-12 11:15:41 [INFO] (packet_parser.py:132) - 📊 Parsed packets: 19
+2026-06-12 11:15:41 [INFO] (flow_builder.py:191) - Flows built: 8
+2026-06-12 11:15:41 [INFO] (packet_parser.py:141) - 📊 Flows: 8
+2026-06-12 11:15:41 [INFO] (signature_engine.py:80) - 📜 Rules loaded successfully: 22
+2026-06-12 11:15:41 [INFO] (feature_engine.py:106) - Processed flows: 8
+2026-06-12 11:15:41 [INFO] (packet_parser.py:152) - Features: 8
+2026-06-12 11:15:45 [INFO] (model_pipeline.py:45) - Stage 1 model loaded: stage1_XGBOOST.pkl
+2026-06-12 11:15:45 [INFO] (model_pipeline.py:45) - Stage 2 model loaded: stage2_xgboost.pkl
+2026-06-12 11:15:45 [INFO] (model_pipeline.py:194) - ML stage results generated: 8
+2026-06-12 11:15:45 [INFO] (packet_parser.py:159) - ML feature results: 8
+2026-06-12 11:15:45 [INFO] (anomaly_engine.py:194) - Anomaly results generated: 8 | Alerts: 2
+2026-06-12 11:15:45 [INFO] (packet_parser.py:168) - Anomaly feature results: 8
+2026-06-12 11:15:45 [WARNING] (alert_manager.py:60) - 🚨 New alerts saved: 2
+2026-06-12 11:15:45 [INFO] (packet_capture.py:339) - Packets: 19 | Flows: 8 | Feature Records: 24 | Alerts: 2 | New Alerts: 2
+2026-06-12 11:15:46 [INFO] (packet_capture.py:148) - Using all capture interfaces: 1. \Device\NPF_{1E70B5F6-758F-4FEF-8CDE-2218D57EE7A2} (Local Area Connection* 10), 2. \Device\NPF_{266C9694-9D98-4E73-9C07-6FBF66C4CE8B} (Local Area Connection* 9), 3. \Device\NPF_{B511B518-B485-45A5-9A07-A95EB2D7DA1A} (Local Area Connection* 8), 4. \Device\NPF_{4781F233-8E57-4699-AC6E-DDD44EF35A51} (Bluetooth Network Connection), 5. \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2), 6. \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi), 7. \Device\NPF_{2754D11B-EC61-4BC0-BBD1-ACBCDEF677DC} (Local Area Connection* 12), 8. \Device\NPF_{37AFD563-EADF-4453-B745-E29E15C8BE8A} (Local Area Connection* 11), 9. \Device\NPF_{7F874DB3-84E5-4A6A-A70B-AF18BD063AA5} (Ethernet 2), 10. \Device\NPF_Loopback (Adapter for loopback traffic capture), 11. \Device\NPF_{D5CBE07C-0092-4352-A245-D745F5767F7F} (Ethernet)
+2026-06-12 11:15:46 [INFO] (packet_capture.py:235) - Capturing up to 500 packets for 5.0s on interface(s) 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 -> E:\ai-powered-nids\data\raw_packets\capture_20260612_111546_916934.pcap
+2026-06-12 11:15:46 [INFO] (packet_capture.py:240) - Capturing 500 packets → E:\ai-powered-nids\data\raw_packets\capture_20260612_111546_916934.pcap
+2026-06-12 11:15:57 [INFO] (packet_capture.py:279) - ✅ Capture complete: E:\ai-powered-nids\data\raw_packets\capture_20260612_111546_916934.pcap (6012 bytes)
+2026-06-12 11:15:57 [INFO] (packet_parser.py:132) - 📊 Parsed packets: 21
+2026-06-12 11:15:57 [INFO] (flow_builder.py:191) - Flows built: 6
+2026-06-12 11:15:57 [INFO] (packet_parser.py:141) - 📊 Flows: 6
+2026-06-12 11:15:57 [INFO] (feature_engine.py:106) - Processed flows: 6
+2026-06-12 11:15:57 [INFO] (packet_parser.py:152) - Features: 6
+2026-06-12 11:15:57 [INFO] (model_pipeline.py:194) - ML stage results generated: 6
+2026-06-12 11:15:57 [INFO] (packet_parser.py:159) - ML feature results: 6
+2026-06-12 11:15:57 [INFO] (anomaly_engine.py:194) - Anomaly results generated: 6 | Alerts: 2
+2026-06-12 11:15:57 [INFO] (packet_parser.py:168) - Anomaly feature results: 6
+2026-06-12 11:15:58 [WARNING] (alert_manager.py:60) - 🚨 New alerts saved: 2
+2026-06-12 11:15:58 [INFO] (packet_capture.py:339) - Packets: 21 | Flows: 6 | Feature Records: 18 | Alerts: 2 | New Alerts: 2
+2026-06-12 11:15:59 [INFO] (packet_capture.py:148) - Using all capture interfaces: 1. \Device\NPF_{1E70B5F6-758F-4FEF-8CDE-2218D57EE7A2} (Local Area Connection* 10), 2. \Device\NPF_{266C9694-9D98-4E73-9C07-6FBF66C4CE8B} (Local Area Connection* 9), 3. \Device\NPF_{B511B518-B485-45A5-9A07-A95EB2D7DA1A} (Local Area Connection* 8), 4. \Device\NPF_{4781F233-8E57-4699-AC6E-DDD44EF35A51} (Bluetooth Network Connection), 5. \Device\NPF_{9F9EFC8F-1DCC-4C5B-A82D-8613BFEA4C1C} (Wi-Fi 2), 6. \Device\NPF_{C2FC09EC-F8BE-4E3B-9147-8B255A04973D} (Wi-Fi), 7. \Device\NPF_{2754D11B-EC61-4BC0-BBD1-ACBCDEF677DC} (Local Area Connection* 12), 8. \Device\NPF_{37AFD563-EADF-4453-B745-E29E15C8BE8A} (Local Area Connection* 11), 9. \Device\NPF_{7F874DB3-84E5-4A6A-A70B-AF18BD063AA5} (Ethernet 2), 10. \Device\NPF_Loopback (Adapter for loopback traffic capture), 11. \Device\NPF_{D5CBE07C-0092-4352-A245-D745F5767F7F} (Ethernet)
+2026-06-12 11:15:59 [INFO] (packet_capture.py:235) - Capturing up to 500 packets for 5.0s on interface(s) 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 -> E:\ai-powered-nids\data\raw_packets\capture_20260612_111559_311373.pcap
+2026-06-12 11:15:59 [INFO] (packet_capture.py:240) - Capturing 500 packets → E:\ai-powered-nids\data\raw_packets\capture_20260612_111559_311373.pcap
+2026-06-12 11:16:05 [INFO] (packet_capture.py:279) - ✅ Capture complete: E:\ai-powered-nids\data\raw_packets\capture_20260612_111559_311373.pcap (6384 bytes)
+2026-06-12 11:16:06 [INFO] (packet_parser.py:132) - 📊 Parsed packets: 26
+2026-06-12 11:16:06 [INFO] (flow_builder.py:191) - Flows built: 8
+2026-06-12 11:16:06 [INFO] (packet_parser.py:141) - 📊 Flows: 8
+2026-06-12 11:16:06 [INFO] (feature_engine.py:106) - Processed flows: 8
+2026-06-12 11:16:06 [INFO] (packet_parser.py:152) - Features: 8
+2026-06-12 11:16:06 [INFO] (model_pipeline.py:194) - ML stage results generated: 8
+2026-06-12 11:16:06 [INFO] (packet_parser.py:159) - ML feature results: 8
+2026-06-12 11:16:06 [INFO] (anomaly_engine.py:194) - Anomaly results generated: 8 | Alerts: 4
+2026-06-12 11:16:06 [INFO] (packet_parser.py:168) - Anomaly feature results: 8

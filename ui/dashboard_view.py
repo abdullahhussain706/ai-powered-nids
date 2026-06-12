@@ -1,5 +1,3 @@
-# dashboard_view.py - Complete Corrected Version
-
 import math
 import re
 import sqlite3
@@ -28,13 +26,16 @@ CAPTURE_RE = re.compile(r"Capturing\b")
 PARSED_RE = re.compile(r"Parsed packets:\s*(\d+)")
 FLOWS_RE = re.compile(r"Flows:\s*(\d+)")
 LOG_TIME_FORMAT = "%Y-%m-%d %H:%M:%S,%f"
+LOG_TIME_FORMAT_NO_MS = "%Y-%m-%d %H:%M:%S"
 
 
 def _parse_log_time(line):
-    try:
-        return datetime.strptime(line[:23], LOG_TIME_FORMAT)
-    except ValueError:
-        return None
+    for width, fmt in ((23, LOG_TIME_FORMAT), (19, LOG_TIME_FORMAT_NO_MS)):
+        try:
+            return datetime.strptime(line[:width], fmt)
+        except ValueError:
+            continue
+    return None
 
 
 def load_traffic_series(limit=30):

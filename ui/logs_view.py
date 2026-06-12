@@ -1,4 +1,3 @@
-# logs_view.py - Real log file reader with pagination
 
 import re
 from datetime import datetime
