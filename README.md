@@ -1,119 +1,195 @@
-# 🛡️ AI Hybrid NIDS (Network Intrusion Detection System)
+# AI-Powered Network Intrusion Detection System
 
-An **AI-powered Hybrid Network Intrusion Detection System (NIDS)** designed to monitor network traffic in real-time and detect malicious activities using both **signature-based** and **anomaly-based** detection techniques.
+A desktop-based Network Intrusion Detection System (NIDS) for real-time packet capture, flow extraction, signature-based detection, alert storage, and security monitoring through a PySide6 dashboard.
 
----
+## Features
 
-## 🚀 Features
+- Live packet capture using `tshark`
+- PCAP storage for captured traffic
+- Packet parsing and flow building
+- Flow-based feature extraction
+- Signature/rule-based detection using JSON rules
+- Alert deduplication and persistence
+- SQLite alert database
+- JSONL alert logging
+- Dashboard with packets/sec, flows/sec, timeline graph, alerts, and host stats
+- Alerts view with severity stats, filters, pagination, and CSV export
+- Logs view with level filtering and pagination
+- Settings view with rule management
+- Cross-platform path handling for Windows and Ubuntu Linux
 
-* 🔍 Real-time packet capture and analysis
-* 🧠 Machine Learning-based anomaly detection
-* 🧾 Signature-based attack detection (SQLi, XSS, Port Scanning)
-* 🔗 Hybrid detection engine (Fusion of ML + Rules)
-* 📊 Desktop-based monitoring dashboard
-* 🚨 Alert generation and logging system
-* 🗄️ SQLite-based data storage
-* ⚙️ Modular and scalable architecture
+## Screenshots
 
----
+Add real screenshots from your running project in `docs/screenshots/` and keep these names:
 
-## 🏗️ Project Architecture
-
-```
-nids-desktop/
-│
-├── core/              # Detection engines (signature, anomaly, fusion)
-├── ml/                # Machine learning pipeline
-├── ui/                # Desktop interface
-├── services/          # Background monitoring services
-├── rules/             # Attack signatures
-├── data/              # Captured packets & datasets
-├── database/          # SQLite database
-├── utils/             # Helper functions
-└── run.py             # Main entry point
+```text
+docs/screenshots/dashboard.png
+docs/screenshots/alerts.png
+docs/screenshots/logs.png
+docs/screenshots/settings.png
 ```
 
----
+When screenshots exist, they will render here:
 
-## ⚙️ Technologies Used
+### Dashboard
+![Dashboard](docs/screenshots/dashboard.png)
 
-* Python
-* Scapy (Packet Capture)
-* Scikit-learn / ML Libraries
-* SQLite
-* PyQt / Tkinter (UI)
+### Alerts
+![Alerts](docs/screenshots/alerts.png)
 
----
+### Logs
+![Logs](docs/screenshots/logs.png)
 
-## 🧠 Detection Techniques
+### Settings
+![Settings](docs/screenshots/settings.png)
 
-### 1. Signature-Based Detection
+## Project Structure
 
-Detects known attacks using predefined rules:
+```text
+core/        Backend IDS pipeline: capture, parsing, flows, features, rules, alerts
+ui/          PySide6 desktop interface
+database/    SQLite schema and database helpers
+rule/        Active JSON detection rules
+rules/       Extended/alternate rule corpus
+logs/        Runtime logs, ignored from git
+data/        Runtime captures and processed data
+ml/          ML placeholders/pipeline files
+services/    Service placeholders
+docs/        Documentation and screenshots
+tests/       Test placeholders
+```
 
-* SQL Injection
-* Cross-Site Scripting (XSS)
-* Port Scanning
+## Main Data Flow
 
-### 2. Anomaly-Based Detection
+```text
+Network Interface
+  -> tshark capture
+  -> data/raw_packets/*.pcap
+  -> packet parser
+  -> flow builder
+  -> feature engine
+  -> signature engine + rule/*.json
+  -> alert manager
+  -> database/ids.db + logs/alerts.jsonl
+  -> desktop UI
+```
 
-* Learns normal traffic behavior
-* Detects unknown and zero-day attacks
+## Requirements
 
-### 3. Hybrid Engine
+- Python 3.10+
+- Wireshark/tshark installed and available in PATH
+- Administrator/root permissions may be required for live packet capture
+- Windows or Ubuntu Linux
 
-Combines both techniques to improve:
-
-* Accuracy
-* Detection rate
-* False positive reduction
-
----
-
-## ▶️ How to Run
+Python dependencies are listed in:
 
 ```bash
-git clone https://github.com/your-username/ai-hybrid-nids.git
-cd ai-hybrid-nids
+requirements.txt
+```
+
+## Setup
+
+### Ubuntu Linux
+
+```bash
+sudo apt update
+sudo apt install tshark python3 python3-venv
+python3 -m venv venv
+source venv/bin/activate
 pip install -r requirements.txt
+```
+
+### Windows
+
+1. Install Wireshark and include `tshark` in PATH.
+2. Create and activate a virtual environment:
+
+```powershell
+python -m venv venv
+.\venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+## Run
+
+### Ubuntu Linux
+
+```bash
+./run.py
+```
+
+or:
+
+```bash
 python run.py
 ```
 
----
+### Windows
 
-## 📊 Use Cases
+```powershell
+python run.py
+```
 
-* University Lab Network Monitoring
-* Small Enterprise Security
-* Educational Cybersecurity Demonstrations
+`run.py` starts both:
 
----
+- Backend capture pipeline: `core/packet_capture.py`
+- Frontend desktop UI: `ui.main_window`
 
-## 📌 Future Improvements
+## Capture Interface
 
-* 🌐 Web-based dashboard
-* 🤖 Deep Learning models
-* ☁️ Cloud deployment
-* 📡 Distributed IDS support
+By default, the system tries to select the first interface reported by `tshark -D`.
 
----
+To manually set an interface:
 
-## 👨‍🎓 Academic Info
+### Ubuntu Linux
 
-This project is developed as a **Final Year Project (FYP)** to demonstrate practical implementation of modern intrusion detection techniques.
+```bash
+IDS_INTERFACE=wlan0 python run.py
+```
 
----
+### Windows PowerShell
 
-## 📜 License
+```powershell
+$env:IDS_INTERFACE="1"
+python run.py
+```
 
-This project is licensed under the MIT License.
+## Environment Variables
 
----
+```text
+IDS_INTERFACE        Capture interface name or tshark interface number
+IDS_PACKET_LIMIT     Packets per capture cycle, default 500
+IDS_DELAY            Delay between capture cycles, default 1
+IDS_MAX_FILES        Max retained pcap files, default 50
+IDS_TSHARK_TIMEOUT   Capture timeout in seconds, default 120
+```
 
-## 🙌 Author
+## Runtime Files
 
-**Muhammad Abdullah**
-Cybersecurity & DevOps Enthusiast
+These files are generated locally and should not be committed:
 
-**Faizan Ali**
-Software Developer / Artificial Intelligence Enthusiast
+```text
+database/*.db
+logs/
+data/raw_packets/
+*.pcap
+*.pcapng
+```
+
+They are ignored through `.gitignore`.
+
+## Important Notes
+
+- `rule/` contains the active rules used by the current signature engine.
+- `rules/` contains an extended/alternate rule corpus and is not the primary runtime rule path.
+- The current operational detection path is signature/rule based.
+- ML/anomaly/fusion modules are present as project extension areas.
+
+## License
+
+MIT License
+
+## Authors
+
+Muhammad Abdullah  
+Faizan Ali

@@ -2,3 +2,28 @@
 venv/
 *.pyc
 __pycache__/
+
+# Runtime database files
+database/*.db
+database/*.sqlite
+database/*.sqlite3
+
+# Runtime logs
+logs/
+*.log
+*.jsonl
+
+# Captured/generated traffic data
+data/raw_packets/
+*.pcap
+*.pcapng
+
+# Generated exports
+*_export.csv
+alerts_export.csv
+
+# Local OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
